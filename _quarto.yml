@@ -1,0 +1,46 @@
+project:
+  type: website
+  output-dir: _site
+  resources: 
+    - "*.mp4"
+    - "*.txt"
+    - "*.csv"
+
+format: fminxyz-html
+
+execute:
+  freeze: auto
+
+filters:
+  - fminxyz
+
+website:
+  navbar:
+    left: 
+        - program.md
+        - homework.md 
+    title: false
+    logo: logo.svg
+    logo-alt: hse26.fmin.xyz
+    tools:
+      - icon: github
+        href: https://github.com/MerkulovDaniil/hse26
+      - icon: youtube
+        href: https://www.youtube.com/@fmin
+      - icon: telegram
+        href: https://t.me/hse26_fmin
+      - icon: person-workspace
+        href: https://classroom.google.com/c/ODM4ODc5OTUyODQx
+      - icon: table
+        href: 
+      - icon: gem
+        href: https://fmin.xyz
+  repo-url: https://github.com/MerkulovDaniil/hse26
+  repo-branch: main
+  repo-actions: [edit]
+  search: 
+    location: navbar
+    type: textbox
+  twitter-card: true
+  open-graph: true
+  favicon: favicon.svg
