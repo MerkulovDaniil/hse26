@@ -1,0 +1,52 @@
+- name: Даниил Меркулов
+  role: Преподаватель
+  image: photos/dm.jpeg
+- name: Алексей Ребриков
+  role: Семинарист
+  image: photos/ar.jpeg
+- name: Всеволод Куйбида
+  role: Семинарист
+  image: photos/vk.jpeg
+- name: Екатерина Бородич
+  role: Семинарист
+  image: photos/eb.jpeg
+- name: Илья Забара
+  role: Семинарист
+  image: photos/iz.jpeg
+- name: Кирилл Муравьев
+  role: Семинарист
+  image: photos/km.jpeg
+- name: Степан Дергачев
+  role: Ментор проектов
+  image: photos/sd.jpeg
+- name: Ян Максимов
+  role: Семинарист
+  image: photos/ym.jpeg
+
+
+
+- name: Арина Зайцева
+  role: Ассистент
+  image: photos/az.jpeg
+- name: Владислав Гарбуз
+  role: Ассистент
+  image: photos/rus.jpeg
+- name: Григорий Злотин
+  role: Ассистент
+  image: photos/gz.jpeg
+- name: Даниил Тихонов
+  role: Ассистент
+  image: photos/dt.jpeg
+- name: Артём Потарусов
+  role: Ассистент
+  image: photos/rus.jpeg
+- name: Артем Митин
+  role: Ассистент
+  image: photos/am.jpeg
+- name: Амир Афлятунов
+  role: Ассистент
+  image: photos/aa.jpeg
+- name: Максим Панов
+  role: Ассистент
+  image: photos/mp.jpeg
+
