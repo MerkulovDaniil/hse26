@@ -24,29 +24,27 @@
   image: photos/ym.jpeg
 
 
-
+- name: Амир Афлятунов
+  role: Ассистент
+  image: photos/aa.jpeg
 - name: Арина Зайцева
   role: Ассистент
   image: photos/az.jpeg
+- name: Артем Митин
+  role: Ассистент
+  image: photos/am.jpeg
+- name: Артём Потарусов
+  role: Ассистент
+  image: photos/ap.jpeg
 - name: Владислав Гарбуз
   role: Ассистент
-  image: photos/rus.jpeg
+  image: photos/vg.jpeg
 - name: Григорий Злотин
   role: Ассистент
   image: photos/gz.jpeg
 - name: Даниил Тихонов
   role: Ассистент
   image: photos/dt.jpeg
-- name: Артём Потарусов
-  role: Ассистент
-  image: photos/rus.jpeg
-- name: Артем Митин
-  role: Ассистент
-  image: photos/am.jpeg
-- name: Амир Афлятунов
-  role: Ассистент
-  image: photos/aa.jpeg
 - name: Максим Панов
   role: Ассистент
   image: photos/mp.jpeg
-
