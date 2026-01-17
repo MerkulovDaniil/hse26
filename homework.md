@@ -69,7 +69,7 @@ toc: true
         * $\Sigma_k$ is a diagonal matrix with the top $k$ singular values.
         * **Relative Error**: Measures the fidelity of the compressed image compared to the original. 
             $$
-            \text{Relative Error} = \frac{\| A - A_k \|}{\| A \|}
+            \text{Relative Error} = \frac{\| A - A_k \|_F}{\| A \|_F}
             $$
 
     ```python
@@ -144,12 +144,12 @@ toc: true
         ani = animation.FuncAnimation(fig, update_plot, frames=len(frames), fargs=(img_plot, error_plot, U, S, V, image, errors, ranks, ax1, ax2), interval=50, blit=True)
         ani.save(filename, writer='ffmpeg', fps=8, dpi=300)
 
-        # URL of the image
-        url = ""
+    # URL of the image
+    url = ""
 
-        # Download the image and create the animation
-        image = download_image(url)
-        create_animation(image)
+    # Download the image and create the animation
+    image = download_image(url)
+    create_animation(image)
     ```
 
 
