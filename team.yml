@@ -22,8 +22,14 @@
 - name: Ян Максимов
   role: Семинарист
   image: photos/ym.jpeg
+  
 
-
+- name: Алина Мирзоева
+  role: Ассистент
+  image: photos/alm.jpeg
+- name: Анастасия Белоцерковец
+  role: Ассистент
+  image: photos/ab.jpeg
 - name: Амир Афлятунов
   role: Ассистент
   image: photos/aa.jpeg
@@ -48,3 +54,6 @@
 - name: Максим Панов
   role: Ассистент
   image: photos/mp.jpeg
+- name: Полина Рыльцева
+  role: Ассистент
+  image: photos/pr.jpeg
