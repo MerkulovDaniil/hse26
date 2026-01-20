@@ -9,10 +9,10 @@
 - title: Одномерная оптимизация. Неточная одномерная оптимизация. Градиент. Гессиан. Матрично-векторное дифференцирование.
   number: 2
   materials: /lectures/2.pdf
-  # notes: /notes/2.pdf
+  notes: /notes/2.pdf
   seminar: /seminars/2.pdf
-  youtube:
-  download:
+  youtube: https://youtu.be/mqlA02ThNfk
+  download: https://disk.yandex.ru/i/XWj5kuTs3o2W4g
 
 - title: Автоматическое дифференцирование. Вычислительный граф.
   number: 3
