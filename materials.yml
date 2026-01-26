@@ -17,10 +17,10 @@
 - title: Автоматическое дифференцирование. Вычислительный граф.
   number: 3
   materials: /lectures/3.pdf
-  # notes: /notes/3.pdf
+  notes: /notes/3.pdf
   seminar: /seminars/3.pdf
-  youtube:
-  download:
+  youtube: https://youtu.be/kRtIeH_li-M
+  download: https://disk.yandex.ru/i/quwxhbwqNfun7g
 
 - title: Выпуклость. Выпуклые множества. Выпуклые функции. Неравенство Йенсена. Сильно выпуклые функции. Условие Поляка - Лоясиевича. Минимумы линейных нейронных сетей.
   number: 4
