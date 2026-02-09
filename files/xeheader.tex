@@ -73,15 +73,26 @@
 \newcommand{\ra}{\rangle}
 
 %%% === BACKGROUND IMAGE SETUP
+\newsavebox{\coverbox}
 \AtBeginDocument{
   \ifthenelse{\isundefined{\bgimage}}{
     % No background image specified
   }{
     \setbeamertemplate{title page}{
+      \sbox{\coverbox}{\includegraphics{\bgimage}}%
       \begin{tikzpicture}[remember picture,overlay]
-        \node[anchor=center, xshift=0pt, yshift=0pt] at (current page.center) {
-          \includegraphics[width=1.05\paperwidth, height=1.05\paperheight]{\bgimage}
-        };
+        \begin{scope}
+          \clip (current page.south west) rectangle (current page.north east);
+          \pgfmathtruncatemacro{\iscoverwide}{%
+            (\wd\coverbox/\ht\coverbox)>(\the\paperwidth/\the\paperheight)?1:0}%
+          \ifnum\iscoverwide=1
+            \node[anchor=center, inner sep=0pt] at (current page.center) {%
+              \includegraphics[height=1.05\paperheight]{\bgimage}};
+          \else
+            \node[anchor=center, inner sep=0pt] at (current page.center) {%
+              \includegraphics[width=1.05\paperwidth]{\bgimage}};
+          \fi
+        \end{scope}
         \node[fill=white, fill opacity=0.7, text opacity=1, inner sep=10pt, rounded corners=10pt] at (current page.center) {
           \begin{minipage}{0.5\paperwidth}
             \centering
