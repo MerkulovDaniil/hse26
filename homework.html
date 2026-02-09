@@ -206,6 +206,7 @@ window.Quarto = {
   <ul>
   <li><a href="#linear-algebra-basics" id="toc-linear-algebra-basics" class="nav-link active" data-scroll-target="#linear-algebra-basics">Linear algebra basics</a></li>
   <li><a href="#convergence-rates" id="toc-convergence-rates" class="nav-link" data-scroll-target="#convergence-rates">Convergence rates</a></li>
+  <li><a href="#line-search" id="toc-line-search" class="nav-link" data-scroll-target="#line-search">Line search</a></li>
   <li><a href="#matrix-calculus" id="toc-matrix-calculus" class="nav-link" data-scroll-target="#matrix-calculus">Matrix calculus</a></li>
   <li><a href="#automatic-differentiation-and-jax" id="toc-automatic-differentiation-and-jax" class="nav-link" data-scroll-target="#automatic-differentiation-and-jax">Automatic differentiation and jax</a></li>
   </ul>
@@ -373,8 +374,12 @@ r_k = \dfrac{1}{k!}
 </span></p></li>
 <li><p>[8 points] Consider the recursive sequence defined by <span class="math display">
 r_{k+1} = \lambda\,r_k + (1-\lambda)\,r_k^p,\quad k\ge0,
-</span> where <span class="math inline">\lambda\in [0,1)</span> and <span class="math inline">p&gt;1</span>. Which additional conditions on <span class="math inline">r_0</span> should be satisfied for the sequence to converge? Show that when <span class="math inline">\lambda&gt;0</span> the sequence converges to 0 with a linear rate (with asymptotic constant <span class="math inline">\lambda</span>), and when <span class="math inline">\lambda=0</span> determine the convergence rate in terms of <span class="math inline">p</span>. In particular, for <span class="math inline">p=2</span> decide whether the convergence is quadratic.</p>
-<h3 id="line-search" class="anchored">Line search</h3></li>
+</span> where <span class="math inline">\lambda\in [0,1)</span> and <span class="math inline">p&gt;1</span>. Which additional conditions on <span class="math inline">r_0</span> should be satisfied for the sequence to converge? Show that when <span class="math inline">\lambda&gt;0</span> the sequence converges to 0 with a linear rate (with asymptotic constant <span class="math inline">\lambda</span>), and when <span class="math inline">\lambda=0</span> determine the convergence rate in terms of <span class="math inline">p</span>. In particular, for <span class="math inline">p=2</span> decide whether the convergence is quadratic.</p></li>
+</ol>
+</section>
+<section id="line-search" class="level3">
+<h3 class="anchored" data-anchor-id="line-search">Line search</h3>
+<ol type="1">
 <li><p>[10 points] Consider a strongly convex quadratic function <span class="math inline">f: \mathbb{R}^n \rightarrow \mathbb{R}</span>, and let us start from a point <span class="math inline">x_k \in \mathbb{R}^n</span> moving in the direction of the antigradient <span class="math inline">-\nabla f(x_k)</span>, note that <span class="math inline">\nabla f(x_k)\neq 0</span>. Show that the minimum of <span class="math inline">f</span> along this direction as a function of the step size <span class="math inline">\alpha</span>, for a decreasing function at <span class="math inline">x_k</span>, satisfies Armijo’s condition for any <span class="math inline">c_1</span> in the range <span class="math inline">0 \leq c_1 \leq \frac{1}{2}</span>. Specifically, demonstrate that the following inequality holds at the optimal <span class="math inline">\alpha^*</span>: <span class="math display">
 \varphi(\alpha) = f(x_{k+1}) = f(x_k - \alpha \nabla f(x_k)) \leq f(x_k) - c_1 \alpha \|\nabla f(x_k)\|_2^2
 </span></p></li>
