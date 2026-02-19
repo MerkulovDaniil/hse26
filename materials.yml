@@ -41,10 +41,10 @@
 - title: Функция Лагранжа. Задачи с ограничениями-равенствами. Задачи с ограничениями-равенствами. Теорема Каруша - Куна - Таккера.Двойственность.
   number: 6
   materials: /lectures/6.pdf
-  # notes: /notes/6.pdf
+  notes: /notes/6.pdf
   seminar: /seminars/6.pdf
-  youtube:
-  download:
+  youtube: https://youtu.be/FOFE_IObfKM
+  download: https://disk.360.yandex.com/i/px_fVdFxG7kvTQ
 
 - title: Задача линейного программирования. Симплекс метод.
   number: 7
