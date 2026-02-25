@@ -144,12 +144,12 @@ toc: true
         ani = animation.FuncAnimation(fig, update_plot, frames=len(frames), fargs=(img_plot, error_plot, U, S, V, image, errors, ranks, ax1, ax2), interval=50, blit=True)
         ani.save(filename, writer='ffmpeg', fps=8, dpi=300)
 
-        # URL of the image
-        url = ""
+    # URL of the image
+    url = ""
 
-        # Download the image and create the animation
-        image = download_image(url)
-        create_animation(image)
+    # Download the image and create the animation
+    image = download_image(url)
+    create_animation(image)
     ```
 
 
