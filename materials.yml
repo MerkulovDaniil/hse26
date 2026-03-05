@@ -66,13 +66,14 @@
   download:
   test: /tests/8.html
 
-- title: Ускоренные градиентные методы. Метод Поляка, Нестерова.
+- title: "Стохастический градиентный спуск. Mini-batch SGD. Расписания шагов. Шумовой пол."
   number: 9
   materials: /lectures/9.pdf
   # notes: /notes/9.pdf
   seminar: /seminars/9.pdf
   youtube:
   download:
+  test: /tests/9.html
 
 - title: Метод сопряженных градиентов.
   number: 10
