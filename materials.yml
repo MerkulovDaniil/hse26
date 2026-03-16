@@ -30,7 +30,7 @@
   youtube: https://youtu.be/w5J_seo4uec
   download: https://disk.360.yandex.ru/i/6XejfMFTHXU6eQ
 
-- title: Критерии сильной выпуклости. Условия оптимальности в безусловных задачах. 
+- title: Критерии сильной выпуклости. Условия оптимальности в безусловных задачах.
   number: 5
   materials: /lectures/5.pdf
   notes: /notes/5.pdf
@@ -38,7 +38,7 @@
   youtube: https://youtu.be/w9ySZNm1YzE
   download: https://disk.360.yandex.ru/i/ngfY3IeSHW1tFg
 
-- title: Функция Лагранжа. Задачи с ограничениями-равенствами. Задачи с ограничениями-равенствами. Теорема Каруша - Куна - Таккера.Двойственность.
+- title: Функция Лагранжа. Задачи с ограничениями-равенствами. Теорема Каруша - Куна - Таккера. Двойственность.
   number: 6
   materials: /lectures/6.pdf
   notes: /notes/6.pdf
@@ -62,7 +62,7 @@
   youtube:
   download:
 
-- title: Ускоренные градиентные методы. Метод Поляка, Нестерова.
+- title: "Ускоренные градиентные методы. Метод Поляка, Нестерова."
   number: 9
   materials: /lectures/9.pdf
   # notes: /notes/9.pdf
