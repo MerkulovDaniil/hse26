@@ -567,17 +567,6 @@ In this section, you can consider either the arbitrary norm or the Euclidian nor
     \end{split}
     $$
 
-1. [20 points] Show, that the following problem has a unique solution and find it:
-
-    $$
-    \begin{split}
-    & \langle C^{-1}, X\rangle - \log \det X \to \min\limits_{x \in \mathbb{R}^{n \times n} }\\
-    \text{s.t. } & \langle Xa, a\rangle \leq 1,
-    \end{split}
-    $$
-
-    where $C \in \mathbb{S}^n_{++}, a \in \mathbb{R}^n \neq 0$. The answer should not involve inversion of the matrix $C$.
-
 1. **Maximum entropy and the softmax.** [15 points] In machine learning, the softmax function plays a central role in classification. Here we derive it from first principles using the maximum entropy principle. Given $n$ classes with features $z_1, \ldots, z_n \in \mathbb{R}$, find the probability distribution $p = (p_1, \ldots, p_n)$ that maximizes entropy subject to a feature-matching constraint:
 
     $$
@@ -1025,7 +1014,34 @@ should be made to maximize the profit?
     1. [5 points] Train the model for 30 epochs with at least 6 different combinations of batch size $B \in \{32, 64, 128, 256, 512, 1024\}$ and corresponding learning rates that follow the linear scaling rule. Record the final test accuracy for each combination.
     1. [5 points] Plot the final test accuracy as a function of $\eta / B$ (on a log scale). Does the linear scaling rule hold? At what batch sizes does it start to break down? Discuss the results in the context of the critical batch size concept from the lectures.
 
+1. **Matrix Sensing: GD vs SGD generalization.** [15 points]
+
+    Let $X^* \in \mathbb{R}^{n \times n}$ be an unknown rank-$r$ symmetric positive semidefinite (PSD) matrix with unit 2-norm. Given $m$ symmetric measurement matrices $A_1, \ldots, A_m \in \mathbb{R}^{n \times n}$, we observe linear measurements $y_i = \langle A_i, X^* \rangle = \text{trace}(A_i^T X^*)$. We parametrize $X = UU^\top$ with $U \in \mathbb{R}^{n \times r}$ and minimize
+
+    $$
+    L(U) = \frac{1}{m} \sum_{i=1}^m L_i(U), \quad L_i(U) = \frac{1}{2}(y_i - \langle A_i, UU^\top \rangle)^2
+    $$
+
+    Note that $\nabla L_i(U) = -2 \cdot (y_i - \langle A_i, UU^\top \rangle) \cdot A_i U$.
+
+    1. [5 points] Implement GD and SGD for this problem. Generate synthetic data with $n = 10$, $r = 2$, $m = 200$. Compare GD and SGD (with different batch sizes $B$) in terms of **train loss** and **test loss** (on held-out measurements). Report your observations.
+    1. [5 points] Study the effect of **batch size** $B$ on generalization: for $B \in \{1, 5, 10, 50, m\}$, plot final train and test loss. Does SGD with small batch size achieve better generalization (lower test loss) than GD?
+    1. [5 points] Study the effect of **problem rank** $r$ and **dimension** $n$ on the GD-vs-SGD generalization gap. Draw conclusions about when stochastic methods have a clear advantage.
+
 ### Neural network training
+
+1. **Deep Chain: how depth affects the optimization landscape.** [15 points]
+
+    Consider the scalar deep linear network loss:
+    $$
+    L(w) = \frac{1}{2}(w_L w_{L-1} \cdots w_1 - 1)^2,
+    $$
+    where $w = (w_1, w_2, \ldots, w_L) \in \mathbb{R}^L$ are scalar parameters.
+
+    1. [4 points] Compute the gradient $\nabla L(w)$ and the Hessian $\nabla^2 L(w)$ analytically. Verify your formulas numerically using JAX automatic differentiation.
+    1. [4 points] For several depths $L \in \{2, 5, 10, 20, 50\}$, randomly initialize $w_i \in [0, 1]$ and compute the Hessian eigenvalues. What do you observe as depth $L$ increases? Plot the condition number of the Hessian as a function of $L$.
+    1. [4 points] Assume all $w_i \in [0,1]$ are equal: $w_i = w$ for all $i$. Study the Hessian convergence as $L \to \infty$. Show that the Hessian eigenvalues vanish, implying the landscape becomes increasingly flat.
+    1. [3 points] Run gradient descent on this problem for different depths $L$. Compare convergence speed. Relate your observations to the Hessian analysis above.
 
 1. **Anomaly detection with neural network.** [30 points]
 
