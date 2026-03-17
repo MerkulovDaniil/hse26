@@ -441,7 +441,7 @@ toc: true
     \text{dom } f = \{ (x, y, z) \in \mathbb{R}^3 : x + y > 0, \, z > 0 \}.
     $$
 
-1. [8 points] Show, that $\mathbf{conv}\{xx^\top: x \in \mathbb{R}^n, \Vert x\Vert  = 1\} = \{A \in \mathbb{S}^n_+: \text{tr}(A) = 1\}$.
+1. [8 points] Show, that $\text{conv}\{xx^\top: x \in \mathbb{R}^n, \Vert x\Vert  = 1\} = \{A \in \mathbb{S}^n_+: \text{tr}(A) = 1\}$.
 1. [5 points] Prove that the set of $\{x \in \mathbb{R}^2 \mid e^{x_1}\le x_2\}$ is convex.
 1. [8 points] Consider the function $f(x) = x^d$, where $x \in \mathbb{R}_{+}$. Fill the following table with ✅ or ❎. Explain your answers (with proofs).
 
@@ -454,7 +454,7 @@ toc: true
     |$1$ | | | | |
     | $\in (1; 2)$ | | | | |
     | $2$| | | | |
-    | $> 2$| | | |
+    | $> 2$| | | | |
 
     : {.responsive}
 
@@ -462,7 +462,7 @@ toc: true
     $$
     f(x) = -\sum_{i=1}^n x_i \log(x_i),
     $$
-    with $\text{dom}(f) = \{x \in \R^n_{++} : \sum_{i=1}^n x_i = 1\}$, is strictly concave.
+    with $\text{dom}(f) = \{x \in \mathbb{R}^n_{++} : \sum_{i=1}^n x_i = 1\}$, is strictly concave.
 
 1. [8 points] Show that the maximum of a convex function $f$ over the polyhedron $P = \text{conv}\{v_1, \ldots, v_k\}$ is achieved at one of its vertices, i.e.,
     $$
@@ -501,7 +501,7 @@ In this section, you can consider either the arbitrary norm or the Euclidian nor
     $$
 
     1. Give the feasible set, the optimal value, and the optimal solution.
-    1.  Plot the objective $x^2 +1$ versus $x$. On the same plot, show the feasible set, optimal point, and value, and plot the Lagrangian $L(x,\mu)$ versus $x$ for a few positive values of $\mu$. Verify the lower bound property ($p^* \geq \inf_x L(x, \mu)$for $\mu \geq 0$). Derive and sketch the Lagrange dual function $g$.
+    1.  Plot the objective $x^2 +1$ versus $x$. On the same plot, show the feasible set, optimal point, and value, and plot the Lagrangian $L(x,\mu)$ versus $x$ for a few positive values of $\mu$. Verify the lower bound property ($p^* \geq \inf_x L(x, \mu)$ for $\mu \geq 0$). Derive and sketch the Lagrange dual function $g$.
     1. State the dual problem, and verify that it is a concave maximization problem. Find the dual optimal value and dual optimal solution $\mu^*$. Does strong duality hold?
     1.  Let $p^*(u)$ denote the optimal value of the problem
 
@@ -524,7 +524,7 @@ In this section, you can consider either the arbitrary norm or the Euclidian nor
     $$
     Suppose, we would like to design the family of optimization methods that will be defined as:
     $$
-    x_{k+1} = \text{arg}\min_{x} \left\{f^I_{x_k}(\delta x) + \frac{\lambda}{2} \|\delta x\|^2\right\},
+    x_{k+1} = \text{arg}\min_{\delta x} \left\{f^I_{x_k}(\delta x) + \frac{\lambda}{2} \|\delta x\|^2\right\},
     $$
     where $\lambda > 0$ is a parameter.
 
@@ -557,7 +557,7 @@ In this section, you can consider either the arbitrary norm or the Euclidian nor
     \end{split}
     $$
 
-1. [20 points] Derive the dual problem for the support vector machine problem with $A \in \mathbb{R}^{m \times n}, \mathbf{1} \in \mathbb{R}^m \in \mathbb{R}^m, \lambda > 0$:
+1. [20 points] Derive the dual problem for the support vector machine problem with $A \in \mathbb{R}^{m \times n}, \mathbf{1} \in \mathbb{R}^m, \lambda > 0$:
 
     $$
     \begin{split}
@@ -580,7 +580,7 @@ In this section, you can consider either the arbitrary norm or the Euclidian nor
 
     where $\mu \in (\min_i z_i,\, \max_i z_i)$ is a given expected feature value. Here $0 \ln 0 := 0$ by continuity.
 
-    1. [5 points] Write the Lagrangian (ignoring the inequality constraints $p_i \geq 0$ for now). Using the stationarity condition, show that the optimal distribution has the form:
+    1. [5 points] Write the Lagrangian with multipliers $\lambda_0$ for $\sum p_i = 1$ and $\alpha$ for $\sum p_i z_i = \mu$ (ignoring the inequality constraints $p_i \geq 0$ for now). Using the stationarity condition, show that the optimal distribution has the form:
         $$
         p_i^* = \frac{e^{\alpha z_i}}{\sum_{j=1}^n e^{\alpha z_j}}
         $$
@@ -671,7 +671,7 @@ should be made to maximize the profit?
         \|\nabla f(x^k)\|_2^2 \leq \frac{2}{\alpha} \left( f(x^k) - f(x^{k+1}) \right).
         $$
 
-    * Sum the previous result over all iterations from $1,\ldots,k+1$ to establish
+    * Sum the previous result over all iterations from $0,\ldots,k$ to establish
 
         $$
         \sum_{i=0}^k \|\nabla f(x^{i})\|_2^2 \leq
@@ -768,7 +768,7 @@ should be made to maximize the profit?
         from sklearn.datasets import load_svmlight_file
 
         # URL of the file to download
-        url = 'https://hse24.fmin.xyz/files/mushrooms.txt'
+        url = 'https://hse26.fmin.xyz/files/mushrooms.txt'
 
         # Download the file and save it locally
         response = requests.get(url)
@@ -801,7 +801,6 @@ should be made to maximize the profit?
     1. Using gradient descent with the step $\frac{1}{L}$, train a model. Plot: accuracy versus iteration number.
 
         $$
-        \tag{HB}
         x_{k+1} = x_k - \alpha \nabla f(x_k) + \beta (x_k - x_{k-1})
         $$
 
@@ -833,7 +832,7 @@ should be made to maximize the profit?
             iter = 0
             while iter < maxiter :
                 y = x - 1 / L * h
-                if f(y) <= fx - 1 / L gradx.dot(h) + 1 / (2 * L) h.dot(h):
+                if f(y) <= fx - 1 / L * gradx.dot(h) + 1 / (2 * L) * h.dot(h):
                     break
                 else:
                     L = L * rho
@@ -926,7 +925,7 @@ should be made to maximize the profit?
     1. (2 points) Damped Newton: stability with learning rate adjustment.
     1. (2 points) GD with $\mu = 0$: find max learning rate, discuss reaching $\varepsilon$-tolerance.
     1. (2 points) Newton with $\mu = 0$: analyze convergence, compare with damped variants.
-    1. (5 points) **Newton-CG:** Use CG (`jax.scipy.sparse.linalg.cg`) to solve $\nabla^2 f(x_k) d_k = - \nabla f(x_k)$. Compare efficiency vs standard Newton.
+    1. (5 points) **Newton-CG:** Use CG (`jax.scipy.sparse.linalg.cg`) to solve $\nabla^2 f(w_k) d_k = - \nabla f(w_k)$, then update $w_{k+1} = w_k + \alpha d_k$. Compare efficiency vs standard Newton.
     1. (5 points) **Hessian-Free Newton (HFN):** Use autograd for Hessian-vector products (no explicit Hessian storage). Compare time/memory vs previous methods.
 
 ### Conditional gradient methods
@@ -986,13 +985,13 @@ should be made to maximize the profit?
     $$
     \min_{W \in \mathbb{R}^{c \times d}} -\sum_{i=1}^{N} \log P(y_i | x_i; W) + \lambda \| W \|_1
     $$
-    where $P(y = j | x; W) = \frac{e^{W_j^T x}}{\sum_{i=1}^{c} e^{W_i^T x}}$.
+    where $P(y = j | x; W) = \frac{e^{W_j^T x}}{\sum_{l=1}^{c} e^{W_l^T x}}$.
 
     We use 3-class classification on [Predicting Students' Dropout and Academic Success](https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success).
 
     1. [4 points] Write exact update rules for subgradient and proximal gradient methods.
     1. [6 points] With $\lambda = 0$: find max learning rates, report convergence and sparsity.
-    1. [10 points] Fill convergence table for $\lambda \in \{10^{-2}, 10^{-3}, 10^{-1}, 1\}$ and $\varepsilon \in \{10^{-1}, \ldots, 10^{-5}\}$: iterations, sparsity, test accuracy.
+    1. [10 points] Fill convergence table for $\lambda \in \{10^{-3}, 10^{-2}, 10^{-1}, 1\}$ and $\varepsilon \in \{10^{-1}, \ldots, 10^{-5}\}$: iterations, sparsity, test accuracy.
 
 ### Stochastic gradient methods
 
@@ -1024,7 +1023,7 @@ should be made to maximize the profit?
 
     Note that $\nabla L_i(U) = -2 \cdot (y_i - \langle A_i, UU^\top \rangle) \cdot A_i U$.
 
-    1. [5 points] Implement GD and SGD for this problem. Generate synthetic data with $n = 10$, $r = 2$, $m = 200$. Compare GD and SGD (with different batch sizes $B$) in terms of **train loss** and **test loss** (on held-out measurements). Report your observations.
+    1. [5 points] Implement GD and SGD for this problem. Generate synthetic data: $n = 10$, $r = 2$, $m = 200$. Use $X^* = VV^\top / \|VV^\top\|_2$ where $V \in \mathbb{R}^{n \times r}$ has i.i.d. $\mathcal{N}(0,1)$ entries. Generate symmetric measurement matrices $A_i = (G_i + G_i^\top)/2$ where $G_i$ has i.i.d. $\mathcal{N}(0,1)$ entries. Generate an additional $m_{\text{test}} = 100$ measurements for evaluation. Compare GD and SGD (with different batch sizes $B$) in terms of **train loss** and **test loss**. Report your observations.
     1. [5 points] Study the effect of **batch size** $B$ on generalization: for $B \in \{1, 5, 10, 50, m\}$, plot final train and test loss. Does SGD with small batch size achieve better generalization (lower test loss) than GD?
     1. [5 points] Study the effect of **problem rank** $r$ and **dimension** $n$ on the GD-vs-SGD generalization gap. Draw conclusions about when stochastic methods have a clear advantage.
 
@@ -1040,7 +1039,7 @@ should be made to maximize the profit?
 
     1. [4 points] Compute the gradient $\nabla L(w)$ and the Hessian $\nabla^2 L(w)$ analytically. Verify your formulas numerically using JAX automatic differentiation.
     1. [4 points] For several depths $L \in \{2, 5, 10, 20, 50\}$, randomly initialize $w_i \in [0, 1]$ and compute the Hessian eigenvalues. What do you observe as depth $L$ increases? Plot the condition number of the Hessian as a function of $L$.
-    1. [4 points] Assume all $w_i \in [0,1]$ are equal: $w_i = w$ for all $i$. Study the Hessian convergence as $L \to \infty$. Show that the Hessian eigenvalues vanish, implying the landscape becomes increasingly flat.
+    1. [4 points] Assume all $w_i$ are equal: $w_i = w$ for some fixed $w \in (0, 1)$. Study the Hessian as the depth $L \to \infty$. Show that all Hessian eigenvalues converge to $0$, implying the landscape becomes increasingly flat.
     1. [3 points] Run gradient descent on this problem for different depths $L$. Compare convergence speed. Relate your observations to the Hessian analysis above.
 
 1. **Anomaly detection with neural network.** [30 points]
@@ -1079,10 +1078,10 @@ should be made to maximize the profit?
 
     For each unique trick for memory optimization, you will get 3 points (maximum 15 points). The maximum grade is bounded with the size of the trained model:
 
-    * If the model size you train is $\leq$ 125M — maximum of 6 points.
-    * If the model size you train is 126M $\leq$ 350M — maximum of 8 points.
-    * If the model size you train is 350M $\leq$ 1B — maximum of 12 points.
-    * If you fit 1B model or more — maximum 15 points.
+    * $\leq$ 125M — maximum of 6 points.
+    * 125M $<$ size $\leq$ 350M — maximum of 8 points.
+    * 350M $<$ size $\leq$ 1B — maximum of 12 points.
+    * $>$ 1B — maximum of 15 points.
 
 ### ADMM (Dual methods)
 
@@ -1102,7 +1101,7 @@ should be made to maximize the profit?
         $$
         Derive explicit closed-form expressions for each ADMM update:
         * **$X$-update:** singular-value soft-thresholding (SVT);
-        * **$Z$-update:** projection onto the observed entries;
+        * **$Z$-update:** closed-form entrywise update (treat observed and unobserved entries separately);
         * **dual-variable update.**
         State a practical stopping rule based on primal and dual residuals.
 
