@@ -362,18 +362,18 @@ y^{(i)} &amp;:= \frac{x^{(i)} - \frac{1}{m}\sum_{j=1}^{m} x^{(j)}}{\sigma}.
 <span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a>    ani <span class="op">=</span> animation.FuncAnimation(fig, update_plot, frames<span class="op">=</span><span class="bu">len</span>(frames), fargs<span class="op">=</span>(img_plot, error_plot, U, S, V, image, errors, ranks, ax1, ax2), interval<span class="op">=</span><span class="dv">50</span>, blit<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>    ani.save(filename, writer<span class="op">=</span><span class="st">'ffmpeg'</span>, fps<span class="op">=</span><span class="dv">8</span>, dpi<span class="op">=</span><span class="dv">300</span>)</span>
 <span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a>    <span class="co"># URL of the image</span></span>
-<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>    url <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a><span class="co"># URL of the image</span></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">""</span></span>
 <span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Download the image and create the animation</span></span>
-<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>    image <span class="op">=</span> download_image(url)</span>
-<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>    create_animation(image)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the image and create the animation</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a>image <span class="op">=</span> download_image(url)</span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a>create_animation(image)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
 </ol>
 </section>
 <section id="convergence-rates" class="level3">
 <h3 class="anchored" data-anchor-id="convergence-rates">Convergence rates</h3>
 <ol type="1">
-<li><p>[6 points] Determine (it means to prove the character of convergence if it is convergent) the convergence or divergence of a given sequences</p>
+<li><p>[6 points] Determine (it means to prove the character of convergence if it is convergent) the convergence or divergence of the given sequences</p>
 <ul>
 <li><span class="math inline">r_{k} = \frac{1}{\sqrt{k+5}}</span>.</li>
 <li><span class="math inline">r_{k} = 0.101^k</span>.</li>
@@ -601,7 +601,7 @@ S = Q \Lambda Q^T,
 <ul>
 <li>Plot the timing results for the three methods on the same graph. For each method, display error bars corresponding to the standard deviation over the runs.</li>
 <li>Label the axes clearly (e.g., “Number of Layers” vs.&nbsp;“Computation Time (seconds)”) and include a legend indicating which curve corresponds to which method.</li>
-<li>Analyze the scaling behavior. Try analytically derive the scaling of the methods and compare it with the experimental results.</li>
+<li>Analyze the scaling behavior. Try to analytically derive the scaling of the methods and compare it with the experimental results.</li>
 </ul></li>
 <li><p>[15 points] We can use automatic differentiation not only to calculate necessary gradients but also for tuning hyperparameters of the algorithm like learning rate in gradient descent (with gradient descent 🤯). Suppose, we have the following function <span class="math inline">f(x) = \frac{1}{2}\Vert x\Vert^2</span>, select a random point <span class="math inline">x_0 \in \mathbb{B}^{1000} = \{0 \leq x_i \leq 1 \mid \forall i\}</span>. Consider <span class="math inline">10</span> steps of the gradient descent starting from the point <span class="math inline">x_0</span>: <span class="math display">
 x_{k+1} = x_k - \alpha_k \nabla f(x_k)
@@ -717,7 +717,7 @@ f(\lambda x_1 + (1 - \lambda)x_2) \le \lambda f(x_1) + (1 - \lambda)f(x_2) - \fr
 </section>
 <section id="optimality-conditions.-kkt.-duality" class="level3">
 <h3 class="anchored" data-anchor-id="optimality-conditions.-kkt.-duality">Optimality conditions. KKT. Duality</h3>
-<p>In this section, you can consider either the arbitrary norm or the Euclidian norm if nothing else is specified.</p>
+<p>In this section, you can consider either the arbitrary norm or the Euclidean norm if nothing else is specified.</p>
 <ol type="1">
 <li><p><strong>Toy example</strong> [10 points] <span class="math display">
 \begin{split}
@@ -875,7 +875,7 @@ f(y) \leq f(x) + \nabla f(x)^T (y-x) + \frac{L}{2} \|y-x\|_2^2, \;\;\;
 </ul></li>
 <li><p><strong>How gradient descent convergence depends on the condition number and dimensionality.</strong> [20 points] Investigate how the number of iterations required for gradient descent to converge depends on the following two parameters: the condition number <span class="math inline">\kappa \geq 1</span> of the function being optimized, and the dimensionality <span class="math inline">n</span> of the space of variables being optimized.</p>
 <p>To do this, for given parameters <span class="math inline">n</span> and <span class="math inline">\kappa</span>, randomly generate a quadratic problem of size <span class="math inline">n</span> with condition number <span class="math inline">\kappa</span> and run gradient descent on it with some fixed required precision. Measure the number of iterations <span class="math inline">T(n, \kappa)</span> that the method required for convergence (successful termination based on the stopping criterion).</p>
-<p>Recommendation: The simplest way to generate a random quadratic problem of size <span class="math inline">n</span> with a given condition number <span class="math inline">\kappa</span> is as follows. It is convenient to take a diagonal matrix <span class="math inline">A \in S_{n}^{++}</span> as simply the diagonal matrix <span class="math inline">A = \text{Diag}(a)</span>, whose diagonal elements are randomly generated within <span class="math inline">[1, \kappa]</span>, and where <span class="math inline">\min(a) = 1</span>, <span class="math inline">\max(a) = \kappa</span>. As the vector <span class="math inline">b \in \mathbb{R}^n</span>, you can take a vector with random elements. Diagonal matrices are convenient to consider since they can be efficiently processed with even for large values of <span class="math inline">n</span>.</p>
+<p>Recommendation: The simplest way to generate a random quadratic problem of size <span class="math inline">n</span> with a given condition number <span class="math inline">\kappa</span> is as follows. It is convenient to take a diagonal matrix <span class="math inline">A \in \mathbb{S}_{n}^{++}</span> as simply the diagonal matrix <span class="math inline">A = \text{Diag}(a)</span>, whose diagonal elements are randomly generated within <span class="math inline">[1, \kappa]</span>, and where <span class="math inline">\min(a) = 1</span>, <span class="math inline">\max(a) = \kappa</span>. As the vector <span class="math inline">b \in \mathbb{R}^n</span>, you can take a vector with random elements. Diagonal matrices are convenient to consider since they can be efficiently processed with even for large values of <span class="math inline">n</span>.</p>
 <p>Fix a certain value of the dimensionality <span class="math inline">n</span>. Iterate over different condition numbers <span class="math inline">\kappa</span> on a grid and plot the dependence of <span class="math inline">T(n,\kappa)</span> against <span class="math inline">\kappa</span>. Since the quadratic problem is generated randomly each time, repeat this experiment several times. As a result, for a fixed value of <span class="math inline">n</span>, you should obtain a whole family of curves showing the dependence of <span class="math inline">T(n, \kappa)</span> on <span class="math inline">\kappa</span>. Draw all these curves in the same color for clarity (for example, red).</p>
 <p>Now increase the value of <span class="math inline">n</span> and repeat the experiment. You should obtain a new family of curves <span class="math inline">T(n',\kappa)</span> against <span class="math inline">\kappa</span>. Draw all these curves in the same color but different from the previous one (for example, blue).</p>
 <p>Repeat this procedure several times for other values of <span class="math inline">n</span>. Eventually, you should have several different families of curves - some red (corresponding to one value of <span class="math inline">n</span>), some blue (corresponding to another value of <span class="math inline">n</span>), some green, etc.</p>
@@ -1008,7 +1008,7 @@ f(x) = \frac{1}{2} \|\hat{A}x - \hat{b}\|^2_2 = \frac{1}{2} \sum_{i=1}^m (\hat{a
 </span></p>
 <p>where the <span class="math inline">\hat{a}_i \in \mathbb{R}^n</span> denote the rows of <span class="math inline">\hat{A}</span>.</p>
 <p><em>Preconditioners</em></p>
-<p>We know, that the convergence bound of the CG applied for the problem depends on the condition number of the matrix. Note, that for the problem above we have the matrix <span class="math inline">\hat{A}^T \hat{A}</span> and the condition number is squared after this operation (<span class="math inline">\kappa (X^T X) =  \kappa^2 \left(X \right)</span>). That is the reason, why we typically need to use <em>preconditioners</em> (<a href="https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf">read 12. for more details</a>) with CG.</p>
+<p>We know, that the convergence bound of the CG applied to the problem depends on the condition number of the matrix. Note, that for the problem above we have the matrix <span class="math inline">\hat{A}^T \hat{A}</span> and the condition number is squared after this operation (<span class="math inline">\kappa (X^T X) =  \kappa^2 \left(X \right)</span>). That is the reason, why we typically need to use <em>preconditioners</em> (<a href="https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf">read 12. for more details</a>) with CG.</p>
 <p>The general idea of using preconditioners implies switching from solving <span class="math inline">Ax = b</span> to <span class="math inline">MAx = Mb</span> with hope, that <span class="math inline">\kappa \left( MA\right) \ll \kappa \left( A\right)</span> or eigenvalues of <span class="math inline">MA</span> are better clustered than those of <span class="math inline">A</span> (note, that matrix <span class="math inline">A</span> here is for the general case, here we have <span class="math inline">\hat{A}^T\hat{A}</span> instead).</p>
 <p>This idea can also be viewed as coordinate change <span class="math inline">x = T \hat{x}, \; \hat{x} = T^{-1}x</span>, which leads to the problem <span class="math inline">T^T A T \hat{x} = T^Tb</span>. Note, that the spectrum of <span class="math inline">T^TAT</span> is the same as the spectrum of <span class="math inline">MA</span>.</p>
 <p>The best choice of <span class="math inline">M</span> is <span class="math inline">A^{-1}</span>, because <span class="math inline">\kappa (A^{-1} A) = \kappa (I) = 1</span>. However, if we know <span class="math inline">A^{-1}</span>, the original problem is already solved, that is why we need to find some trade-off between enhanced convergence, and extra cost of working with <span class="math inline">M</span>. The goal is to find <span class="math inline">M</span> that is cheap to multiply, and approximate inverse of <span class="math inline">A</span> (or at least has a more clustered spectrum than <span class="math inline">A</span>).</p>
@@ -1024,8 +1024,8 @@ H_2 = \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; -1 \end{bmatrix}, \quad \text{and} \q
 <ol type="1">
 <li>Let <span class="math inline">S = \text{diag}(S_{11}, \ldots, S_{mm})</span>, where <span class="math inline">S_{jj}</span> are random <span class="math inline">\{-1,+1\}</span> signs</li>
 <li>Let <span class="math inline">p \in \mathbb{Z}^+</span> be a small positive integer, say <span class="math inline">20</span> for this problem.</li>
-<li>Let <span class="math inline">R \in \{0, 1\}^{n+p \times m}</span> be a <em>row selection matrix</em>, meaning that each row of <span class="math inline">R</span> has only 1 non-zero entry, chosen uniformly at random.</li>
-<li>Define <span class="math inline">\Phi = R H^{(\text{norm})}_m S \in \mathbb{R}^{n+p \times m}</span></li>
+<li>Let <span class="math inline">R \in \{0, 1\}^{(n+p) \times m}</span> be a <em>row selection matrix</em>, meaning that each row of <span class="math inline">R</span> has only 1 non-zero entry, chosen uniformly at random.</li>
+<li>Define <span class="math inline">\Phi = R H^{(\text{norm})}_m S \in \mathbb{R}^{(n+p) \times m}</span></li>
 </ol>
 <p>We then define the matrix <span class="math inline">M</span> via its inverse <span class="math inline">M^{-1} = \hat{A}^T \Phi^T \Phi \hat{A} \in \mathbb{R}^{n \times n}</span>.</p>
 <p><em>Questions</em></p>
