@@ -618,7 +618,7 @@ f(x, y, z) = z \log \left(e^{\frac{x}{z}} + e^{\frac{y}{z}}\right) + (z - 2)^2 +
 </span> where the function <span class="math inline">f : \mathbb{R}^3 \to \mathbb{R}</span> has its domain defined as: <span class="math display">
 \text{dom } f = \{ (x, y, z) \in \mathbb{R}^3 : x + y &gt; 0, \, z &gt; 0 \}.
 </span></p></li>
-<li><p>[8 points] Show, that <span class="math inline">\mathbf{conv}\{xx^\top: x \in \mathbb{R}^n, \Vert x\Vert  = 1\} = \{A \in \mathbb{S}^n_+: \text{tr}(A) = 1\}</span>.</p></li>
+<li><p>[8 points] Show, that <span class="math inline">\text{conv}\{xx^\top: x \in \mathbb{R}^n, \Vert x\Vert  = 1\} = \{A \in \mathbb{S}^n_+: \text{tr}(A) = 1\}</span>.</p></li>
 <li><p>[5 points] Prove that the set of <span class="math inline">\{x \in \mathbb{R}^2 \mid e^{x_1}\le x_2\}</span> is convex.</p></li>
 <li><p>[8 points] Consider the function <span class="math inline">f(x) = x^d</span>, where <span class="math inline">x \in \mathbb{R}_{+}</span>. Fill the following table with ✅ or ❎. Explain your answers (with proofs).</p>
 <div class="table-responsive">
@@ -694,7 +694,7 @@ f(x, y, z) = z \log \left(e^{\frac{x}{z}} + e^{\frac{y}{z}}\right) + (z - 2)^2 +
 </div></li>
 <li><p>[6 points] Prove that the entropy function, defined as <span class="math display">
 f(x) = -\sum_{i=1}^n x_i \log(x_i),
-</span> with <span class="math inline">\text{dom}(f) = \{x \in \R^n_{++} : \sum_{i=1}^n x_i = 1\}</span>, is strictly concave.</p></li>
+</span> with <span class="math inline">\text{dom}(f) = \{x \in \mathbb{R}^n_{++} : \sum_{i=1}^n x_i = 1\}</span>, is strictly concave.</p></li>
 <li><p>[8 points] Show that the maximum of a convex function <span class="math inline">f</span> over the polyhedron <span class="math inline">P = \text{conv}\{v_1, \ldots, v_k\}</span> is achieved at one of its vertices, i.e., <span class="math display">
 \sup_{x \in P} f(x) = \max_{i=1, \ldots, k} f(v_i).
 </span></p>
@@ -727,7 +727,7 @@ f(\lambda x_1 + (1 - \lambda)x_2) \le \lambda f(x_1) + (1 - \lambda)f(x_2) - \fr
 </span></p>
 <ol type="1">
 <li>Give the feasible set, the optimal value, and the optimal solution.</li>
-<li>Plot the objective <span class="math inline">x^2 +1</span> versus <span class="math inline">x</span>. On the same plot, show the feasible set, optimal point, and value, and plot the Lagrangian <span class="math inline">L(x,\mu)</span> versus <span class="math inline">x</span> for a few positive values of <span class="math inline">\mu</span>. Verify the lower bound property (<span class="math inline">p^* \geq \inf_x L(x, \mu)</span>for <span class="math inline">\mu \geq 0</span>). Derive and sketch the Lagrange dual function <span class="math inline">g</span>.</li>
+<li>Plot the objective <span class="math inline">x^2 +1</span> versus <span class="math inline">x</span>. On the same plot, show the feasible set, optimal point, and value, and plot the Lagrangian <span class="math inline">L(x,\mu)</span> versus <span class="math inline">x</span> for a few positive values of <span class="math inline">\mu</span>. Verify the lower bound property (<span class="math inline">p^* \geq \inf_x L(x, \mu)</span> for <span class="math inline">\mu \geq 0</span>). Derive and sketch the Lagrange dual function <span class="math inline">g</span>.</li>
 <li>State the dual problem, and verify that it is a concave maximization problem. Find the dual optimal value and dual optimal solution <span class="math inline">\mu^*</span>. Does strong duality hold?</li>
 <li>Let <span class="math inline">p^*(u)</span> denote the optimal value of the problem</li>
 </ol>
@@ -743,7 +743,7 @@ f^I_{x_k}(x) = f(x_k) + \nabla f(x_k)^\top (x - x_k),
 </span> where we can define <span class="math inline">\delta x = x - x_k</span> and <span class="math inline">g = \nabla f(x_k)</span>. Thus, the expansion can be rewritten as: <span class="math display">
 f^I_{x_k}(\delta x) = f(x_k) + g^\top \delta x.
 </span> Suppose, we would like to design the family of optimization methods that will be defined as: <span class="math display">
-x_{k+1} = \text{arg}\min_{x} \left\{f^I_{x_k}(\delta x) + \frac{\lambda}{2} \|\delta x\|^2\right\},
+x_{k+1} = \text{arg}\min_{\delta x} \left\{f^I_{x_k}(\delta x) + \frac{\lambda}{2} \|\delta x\|^2\right\},
 </span> where <span class="math inline">\lambda &gt; 0</span> is a parameter.</p>
 <ol type="1">
 <li>[5 points] Show, that this method is equivalent to the gradient descent method with the choice of Euclidean norm of the vector <span class="math inline">\|\delta x\| = \|\delta x\|_2</span>. Find the corresponding learning rate.</li>
@@ -766,7 +766,7 @@ w = \text{vec}(W_1, W_2, \ldots, W_L) \in \mathbb{R}^{n},
 \text{s.t. } &amp; y = Ax
 \end{split}
 </span></p></li>
-<li><p>[20 points] Derive the dual problem for the support vector machine problem with <span class="math inline">A \in \mathbb{R}^{m \times n}, \mathbf{1} \in \mathbb{R}^m \in \mathbb{R}^m, \lambda &gt; 0</span>:</p>
+<li><p>[20 points] Derive the dual problem for the support vector machine problem with <span class="math inline">A \in \mathbb{R}^{m \times n}, \mathbf{1} \in \mathbb{R}^m, \lambda &gt; 0</span>:</p>
 <p><span class="math display">
 \begin{split}
 \langle \mathbf{1}, t\rangle + \dfrac{\lambda}{2}\|x\|^2 &amp;\to \min\limits_{x \in \mathbb{R}^n, t \in \mathbb{R}^m }\\
@@ -785,7 +785,7 @@ w = \text{vec}(W_1, W_2, \ldots, W_L) \in \mathbb{R}^{n},
 </span></p>
 <p>where <span class="math inline">\mu \in (\min_i z_i,\, \max_i z_i)</span> is a given expected feature value. Here <span class="math inline">0 \ln 0 := 0</span> by continuity.</p>
 <ol type="1">
-<li>[5 points] Write the Lagrangian (ignoring the inequality constraints <span class="math inline">p_i \geq 0</span> for now). Using the stationarity condition, show that the optimal distribution has the form: <span class="math display">
+<li>[5 points] Write the Lagrangian with multipliers <span class="math inline">\lambda_0</span> for <span class="math inline">\sum p_i = 1</span> and <span class="math inline">\alpha</span> for <span class="math inline">\sum p_i z_i = \mu</span> (ignoring the inequality constraints <span class="math inline">p_i \geq 0</span> for now). Using the stationarity condition, show that the optimal distribution has the form: <span class="math display">
 p_i^* = \frac{e^{\alpha z_i}}{\sum_{j=1}^n e^{\alpha z_j}}
 </span> for some <span class="math inline">\alpha \in \mathbb{R}</span>. Recognize this as the <strong>softmax function</strong>. Explain why <span class="math inline">p_i^* &gt; 0</span> for all <span class="math inline">i</span>, justifying that the ignored inequality constraints are indeed inactive at the optimum.</li>
 <li>[5 points] Denote <span class="math inline">Z(\alpha) = \sum_{j=1}^n e^{\alpha z_j}</span>. After eliminating <span class="math inline">\lambda_0</span>, write the reduced dual objective <span class="math inline">\phi(\alpha)</span>. Show that the dual problem takes the form: <span class="math display">
@@ -862,7 +862,7 @@ f(y) \leq f(x) + \nabla f(x)^T (y-x) + \frac{L}{2} \|y-x\|_2^2, \;\;\;
 <p><span class="math display">
   \|\nabla f(x^k)\|_2^2 \leq \frac{2}{\alpha} \left( f(x^k) - f(x^{k+1}) \right).
   </span></p></li>
-<li><p>Sum the previous result over all iterations from <span class="math inline">1,\ldots,k+1</span> to establish</p>
+<li><p>Sum the previous result over all iterations from <span class="math inline">0,\ldots,k</span> to establish</p>
 <p><span class="math display">
   \sum_{i=0}^k \|\nabla f(x^{i})\|_2^2 \leq
   \frac{2}{\alpha} ( f(x^{0}) - f^*).
@@ -936,7 +936,7 @@ b(a) := \text{sign}(\langle a, x \rangle).
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_svmlight_file</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># URL of the file to download</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://hse24.fmin.xyz/files/mushrooms.txt'</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://hse26.fmin.xyz/files/mushrooms.txt'</span></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the file and save it locally</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
@@ -963,7 +963,6 @@ b(a) := \text{sign}(\langle a, x \rangle).
 <li><p>For the training part <span class="math inline">A_{train}</span>, <span class="math inline">b_{train}</span>, estimate the constants <span class="math inline">\mu, L</span> of the training/optimization problem. Use the same small value <span class="math inline">\lambda</span> for all experiments</p></li>
 <li><p>Using gradient descent with the step <span class="math inline">\frac{1}{L}</span>, train a model. Plot: accuracy versus iteration number.</p>
 <p><span class="math display">
-\tag{HB}
 x_{k+1} = x_k - \alpha \nabla f(x_k) + \beta (x_k - x_{k-1})
 </span></p>
 <p>Fix a step <span class="math inline">\alpha = \frac{1}{L}</span> and search for different values of the momentum <span class="math inline">\beta</span> from <span class="math inline">-1</span> to <span class="math inline">1</span>. Choose your own convergence criterion and plot convergence for several values of momentum on the same graph. Is the convergence always monotonic?</p></li>
@@ -987,7 +986,7 @@ f(y) \leq f(x^k) + \langle \nabla f(x^k), y - x^k \rangle + \frac{L}{2}\|x^k - y
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">iter</span> <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="bu">iter</span> <span class="op">&lt;</span> maxiter :</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> x <span class="op">-</span> <span class="dv">1</span> <span class="op">/</span> L <span class="op">*</span> h</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> f(y) <span class="op">&lt;=</span> fx <span class="op">-</span> <span class="dv">1</span> <span class="op">/</span> L gradx.dot(h) <span class="op">+</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> L) h.dot(h):</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> f(y) <span class="op">&lt;=</span> fx <span class="op">-</span> <span class="dv">1</span> <span class="op">/</span> L <span class="op">*</span> gradx.dot(h) <span class="op">+</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> L) <span class="op">*</span> h.dot(h):</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            L <span class="op">=</span> L <span class="op">*</span> rho</span>
@@ -1060,7 +1059,7 @@ f(w) = -\sum_{i=1}^n \left[ y_i \log\left(p\left(y_i=1 | x_i; w\right)\right) + 
 <li>(2 points) Damped Newton: stability with learning rate adjustment.</li>
 <li>(2 points) GD with <span class="math inline">\mu = 0</span>: find max learning rate, discuss reaching <span class="math inline">\varepsilon</span>-tolerance.</li>
 <li>(2 points) Newton with <span class="math inline">\mu = 0</span>: analyze convergence, compare with damped variants.</li>
-<li>(5 points) <strong>Newton-CG:</strong> Use CG (<code>jax.scipy.sparse.linalg.cg</code>) to solve <span class="math inline">\nabla^2 f(x_k) d_k = - \nabla f(x_k)</span>. Compare efficiency vs standard Newton.</li>
+<li>(5 points) <strong>Newton-CG:</strong> Use CG (<code>jax.scipy.sparse.linalg.cg</code>) to solve <span class="math inline">\nabla^2 f(w_k) d_k = - \nabla f(w_k)</span>, then update <span class="math inline">w_{k+1} = w_k + \alpha d_k</span>. Compare efficiency vs standard Newton.</li>
 <li>(5 points) <strong>Hessian-Free Newton (HFN):</strong> Use autograd for Hessian-vector products (no explicit Hessian storage). Compare time/memory vs previous methods.</li>
 </ol></li>
 </ol>
@@ -1118,12 +1117,12 @@ B_n = \{ X \in \mathbb{R}^{n \times n} \mid X_{ij} \ge 0 \;\forall i,j, \quad X 
 <li><p><strong>Proximal Method for Sparse Softmax Regression</strong> [20 points]</p>
 <p>Softmax regression with L1 regularization: <span class="math display">
 \min_{W \in \mathbb{R}^{c \times d}} -\sum_{i=1}^{N} \log P(y_i | x_i; W) + \lambda \| W \|_1
-</span> where <span class="math inline">P(y = j | x; W) = \frac{e^{W_j^T x}}{\sum_{i=1}^{c} e^{W_i^T x}}</span>.</p>
+</span> where <span class="math inline">P(y = j | x; W) = \frac{e^{W_j^T x}}{\sum_{l=1}^{c} e^{W_l^T x}}</span>.</p>
 <p>We use 3-class classification on <a href="https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success">Predicting Students’ Dropout and Academic Success</a>.</p>
 <ol type="1">
 <li>[4 points] Write exact update rules for subgradient and proximal gradient methods.</li>
 <li>[6 points] With <span class="math inline">\lambda = 0</span>: find max learning rates, report convergence and sparsity.</li>
-<li>[10 points] Fill convergence table for <span class="math inline">\lambda \in \{10^{-2}, 10^{-3}, 10^{-1}, 1\}</span> and <span class="math inline">\varepsilon \in \{10^{-1}, \ldots, 10^{-5}\}</span>: iterations, sparsity, test accuracy.</li>
+<li>[10 points] Fill convergence table for <span class="math inline">\lambda \in \{10^{-3}, 10^{-2}, 10^{-1}, 1\}</span> and <span class="math inline">\varepsilon \in \{10^{-1}, \ldots, 10^{-5}\}</span>: iterations, sparsity, test accuracy.</li>
 </ol></li>
 </ol>
 </section>
@@ -1152,7 +1151,7 @@ L(U) = \frac{1}{m} \sum_{i=1}^m L_i(U), \quad L_i(U) = \frac{1}{2}(y_i - \langle
 </span></p>
 <p>Note that <span class="math inline">\nabla L_i(U) = -2 \cdot (y_i - \langle A_i, UU^\top \rangle) \cdot A_i U</span>.</p>
 <ol type="1">
-<li>[5 points] Implement GD and SGD for this problem. Generate synthetic data with <span class="math inline">n = 10</span>, <span class="math inline">r = 2</span>, <span class="math inline">m = 200</span>. Compare GD and SGD (with different batch sizes <span class="math inline">B</span>) in terms of <strong>train loss</strong> and <strong>test loss</strong> (on held-out measurements). Report your observations.</li>
+<li>[5 points] Implement GD and SGD for this problem. Generate synthetic data: <span class="math inline">n = 10</span>, <span class="math inline">r = 2</span>, <span class="math inline">m = 200</span>. Use <span class="math inline">X^* = VV^\top / \|VV^\top\|_2</span> where <span class="math inline">V \in \mathbb{R}^{n \times r}</span> has i.i.d. <span class="math inline">\mathcal{N}(0,1)</span> entries. Generate symmetric measurement matrices <span class="math inline">A_i = (G_i + G_i^\top)/2</span> where <span class="math inline">G_i</span> has i.i.d. <span class="math inline">\mathcal{N}(0,1)</span> entries. Generate an additional <span class="math inline">m_{\text{test}} = 100</span> measurements for evaluation. Compare GD and SGD (with different batch sizes <span class="math inline">B</span>) in terms of <strong>train loss</strong> and <strong>test loss</strong>. Report your observations.</li>
 <li>[5 points] Study the effect of <strong>batch size</strong> <span class="math inline">B</span> on generalization: for <span class="math inline">B \in \{1, 5, 10, 50, m\}</span>, plot final train and test loss. Does SGD with small batch size achieve better generalization (lower test loss) than GD?</li>
 <li>[5 points] Study the effect of <strong>problem rank</strong> <span class="math inline">r</span> and <strong>dimension</strong> <span class="math inline">n</span> on the GD-vs-SGD generalization gap. Draw conclusions about when stochastic methods have a clear advantage.</li>
 </ol></li>
@@ -1168,7 +1167,7 @@ L(w) = \frac{1}{2}(w_L w_{L-1} \cdots w_1 - 1)^2,
 <ol type="1">
 <li>[4 points] Compute the gradient <span class="math inline">\nabla L(w)</span> and the Hessian <span class="math inline">\nabla^2 L(w)</span> analytically. Verify your formulas numerically using JAX automatic differentiation.</li>
 <li>[4 points] For several depths <span class="math inline">L \in \{2, 5, 10, 20, 50\}</span>, randomly initialize <span class="math inline">w_i \in [0, 1]</span> and compute the Hessian eigenvalues. What do you observe as depth <span class="math inline">L</span> increases? Plot the condition number of the Hessian as a function of <span class="math inline">L</span>.</li>
-<li>[4 points] Assume all <span class="math inline">w_i \in [0,1]</span> are equal: <span class="math inline">w_i = w</span> for all <span class="math inline">i</span>. Study the Hessian convergence as <span class="math inline">L \to \infty</span>. Show that the Hessian eigenvalues vanish, implying the landscape becomes increasingly flat.</li>
+<li>[4 points] Assume all <span class="math inline">w_i</span> are equal: <span class="math inline">w_i = w</span> for some fixed <span class="math inline">w \in (0, 1)</span>. Study the Hessian as the depth <span class="math inline">L \to \infty</span>. Show that all Hessian eigenvalues converge to <span class="math inline">0</span>, implying the landscape becomes increasingly flat.</li>
 <li>[3 points] Run gradient descent on this problem for different depths <span class="math inline">L</span>. Compare convergence speed. Relate your observations to the Hessian analysis above.</li>
 </ol></li>
 <li><p><strong>Anomaly detection with neural network.</strong> [30 points]</p>
@@ -1256,10 +1255,10 @@ L(w) = \frac{1}{2}(w_L w_{L-1} \cdots w_1 - 1)^2,
 </div>
 <p>For each unique trick for memory optimization, you will get 3 points (maximum 15 points). The maximum grade is bounded with the size of the trained model:</p>
 <ul>
-<li>If the model size you train is <span class="math inline">\leq</span> 125M — maximum of 6 points.</li>
-<li>If the model size you train is 126M <span class="math inline">\leq</span> 350M — maximum of 8 points.</li>
-<li>If the model size you train is 350M <span class="math inline">\leq</span> 1B — maximum of 12 points.</li>
-<li>If you fit 1B model or more — maximum 15 points.</li>
+<li><span class="math inline">\leq</span> 125M — maximum of 6 points.</li>
+<li>125M <span class="math inline">&lt;</span> size <span class="math inline">\leq</span> 350M — maximum of 8 points.</li>
+<li>350M <span class="math inline">&lt;</span> size <span class="math inline">\leq</span> 1B — maximum of 12 points.</li>
+<li><span class="math inline">&gt;</span> 1B — maximum of 15 points.</li>
 </ul></li>
 </ol>
 </section>
@@ -1277,7 +1276,7 @@ L(w) = \frac{1}{2}(w_L w_{L-1} \cdots w_1 - 1)^2,
 </span> Derive explicit closed-form expressions for each ADMM update:</p>
 <ul>
 <li><strong><span class="math inline">X</span>-update:</strong> singular-value soft-thresholding (SVT);</li>
-<li><strong><span class="math inline">Z</span>-update:</strong> projection onto the observed entries;</li>
+<li><strong><span class="math inline">Z</span>-update:</strong> closed-form entrywise update (treat observed and unobserved entries separately);</li>
 <li><strong>dual-variable update.</strong> State a practical stopping rule based on primal and dual residuals.</li>
 </ul></li>
 <li><p><strong>(b) [10 points] Implement the algorithm on synthetic data.</strong> Use: <code>python      import numpy as np      np.random.seed(0)      m, n, r = 50, 40, 3      U = np.random.randn(m, r)      V = np.random.randn(n, r)      M_star = U @ V.T                      # ground-truth low-rank matrix      mask = np.random.rand(m, n) &lt; 0.3     # 30% observations      noise = 0.01 * np.random.randn(m, n)      M = mask * (M_star + noise)      lambda_ = 1 / np.sqrt(max(m, n))</code> Run from <span class="math inline">X^0 = 0</span> for <span class="math inline">\rho \in \{0.1, 1, 10\}</span>. For each <span class="math inline">\rho</span>: plot objective and relative reconstruction error <span class="math inline">\frac{\|X^k - M_\star\|_F}{\|M_\star\|_F}</span> vs iteration; report iterations until <span class="math inline">\max(\|r_p^k\|_F, \|r_d^k\|_F) \le 10^{-3}</span>.</p></li>
