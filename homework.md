@@ -567,18 +567,6 @@ In this section, you can consider either the arbitrary norm or the Euclidian nor
     \end{split}
     $$
 
-1. [10 points] Give an explicit solution to the following LP.
-
-    $$
-    \begin{split}
-    & c^\top x \to \min\limits_{x \in \mathbb{R}^n }\\
-    \text{s.t. } & 1^\top x = 1, \\
-    & x \succeq 0
-    \end{split}
-    $$
-
-    This problem can be considered the simplest portfolio optimization problem.
-
 1. [20 points] Show, that the following problem has a unique solution and find it:
 
     $$
@@ -589,58 +577,6 @@ In this section, you can consider either the arbitrary norm or the Euclidian nor
     $$
 
     where $C \in \mathbb{S}^n_{++}, a \in \mathbb{R}^n \neq 0$. The answer should not involve inversion of the matrix $C$.
-
-1. [20 points] Give an explicit solution to the following QP.
-
-    $$
-    \begin{split}
-    & c^\top x \to \min\limits_{x \in \mathbb{R}^n }\\
-    \text{s.t. } & (x - x_c)^\top A (x - x_c) \leq 1,
-    \end{split}
-    $$
-
-    where $A \in \mathbb{S}^n_{++}, c \neq 0, x_c \in \mathbb{R}^n$.
-
-1. [10 points] Consider the equality-constrained least-squares problem
-
-    $$
-    \begin{split}
-    & \|Ax - b\|_2^2 \to \min\limits_{x \in \mathbb{R}^n }\\
-    \text{s.t. } & Cx = d,
-    \end{split}
-    $$
-
-    where $A \in \mathbb{R}^{m \times n}$ with $\mathbf{rank }A = n$, and $C \in \mathbb{R}^{k \times n}$ with $\mathbf{rank }C = k$. Give the KKT conditions, and derive expressions for the primal solution $x^*$ and the dual solution $\lambda^*$.
-
-
-
-1. **Supporting hyperplane interpretation of KKT conditions**. [10 points]  Consider a **convex** problem with no equality constraints
-
-    $$
-    \begin{split}
-    & f_0(x) \to \min\limits_{x \in \mathbb{R}^n }\\
-    \text{s.t. } & f_i(x) \leq 0, \quad i = [1,m]
-    \end{split}
-    $$
-
-    Assume, that $\exists x^* \in \mathbb{R}^n, \mu^* \in \mathbb{R}^m$ satisfy the KKT conditions
-
-    $$
-    \begin{split}
-    & \nabla_x L (x^*, \mu^*) = \nabla f_0(x^*) + \sum\limits_{i=1}^m\mu_i^*\nabla f_i(x^*) = 0 \\
-    & \mu^*_i \geq 0, \quad i = [1,m] \\
-    & \mu^*_i f_i(x^*) = 0, \quad i = [1,m]\\
-    & f_i(x^*) \leq 0, \quad i = [1,m]
-    \end{split}
-    $$
-
-    Show that
-
-    $$
-    \nabla f_0(x^*)^\top (x - x^*) \geq 0
-    $$
-
-    for all feasible $x$. In other words, the KKT conditions imply the simple optimality criterion or $\nabla f_0(x^*)$ defines a supporting hyperplane to the feasible set at $x^*$.
 
 1. **Maximum entropy and the softmax.** [15 points] In machine learning, the softmax function plays a central role in classification. Here we derive it from first principles using the maximum entropy principle. Given $n$ classes with features $z_1, \ldots, z_n \in \mathbb{R}$, find the probability distribution $p = (p_1, \ldots, p_n)$ that maximizes entropy subject to a feature-matching constraint:
 
@@ -722,3 +658,199 @@ should be made to maximize the profit?
     1. Sketch the feasible set and determine $p^*$ and $x^*$
     1. Find the dual problem, then determine $d^*$ and $\lambda^*$. Note that we can interpret the Lagrange multipliers $\lambda_k$ associated with the constraints on wood and paint as the prices for each piece of wood and tin of paint, so that $−d^*$ is how much money would be obtained from selling the inventory for those prices. Strong duality says a buyer should not pay more for the inventory than what the toy store would make by producing and selling toys from it, and that the toy store should not sell the inventory for less than that.
     1. The other interpretation of the Lagrange multipliers is as sensitivities to changes in the constraints. Suppose the toymaker found some more pieces of wood; the $\lambda_k$ associated with the wood constraint will equal the partial derivative of $−p^*$ with respect to how much more wood became available. Suppose the inventory increases by one piece of wood. Use $\lambda^*$ to estimate how much the profit would increase, without solving the updated optimization problem. How is this consistent with the price interpretation given above for the Lagrange multipliers? [source](https://tleise.people.amherst.edu/Math294Spring2017/TeXfiles/LagrangeDualityHW.pdf)
+
+### Gradient Descent
+
+1. **Convergence of Gradient Descent in non-convex smooth case** [10 points]
+
+    We will assume nothing about the convexity of $f$.  We will show that gradient descent reaches an $\varepsilon$-substationary point $x$, such that $\|\nabla f(x)\|_2 \leq \varepsilon$, in $O(1/\varepsilon^2)$ iterations. Important note: you may use here Lipschitz parabolic upper bound:
+
+    $$
+    f(y) \leq f(x) + \nabla f(x)^T (y-x) + \frac{L}{2} \|y-x\|_2^2, \;\;\;
+    \text{for all $x,y$}.
+    $$ {#eq-quad_ub}
+
+    * Plug in $y = x^{k+1} = x^{k} - \alpha \nabla f(x^k), x = x^k$ to (@eq-quad_ub) to show that
+
+        $$
+        f(x^{k+1}) \leq f(x^k) - \Big (1-\frac{L\alpha}{2} \Big) \alpha \|\nabla f(x^k)\|_2^2.
+        $$
+
+    * Use $\alpha \leq 1/L$, and rearrange the previous result, to get
+
+        $$
+        \|\nabla f(x^k)\|_2^2 \leq \frac{2}{\alpha} \left( f(x^k) - f(x^{k+1}) \right).
+        $$
+
+    * Sum the previous result over all iterations from $1,\ldots,k+1$ to establish
+
+        $$
+        \sum_{i=0}^k \|\nabla f(x^{i})\|_2^2 \leq
+        \frac{2}{\alpha} ( f(x^{0}) - f^*).
+        $$
+
+    * Lower bound the sum in the previous result to get
+
+        $$
+        \min_{i=0,\ldots,k} \|\nabla f(x^{i}) \|_2
+        \leq \sqrt{\frac{2}{\alpha(k+1)} (f(x^{0}) - f^*)},
+        $$
+        which establishes the desired $O(1/\varepsilon^2)$ rate for achieving $\varepsilon$-substationarity.
+
+1. **How gradient descent convergence depends on the condition number and dimensionality.** [20 points] Investigate how the number of iterations required for gradient descent to converge depends on the following two parameters: the condition number $\kappa \geq 1$ of the function being optimized, and the dimensionality $n$ of the space of variables being optimized.
+
+    To do this, for given parameters $n$ and $\kappa$, randomly generate a quadratic problem of size $n$ with condition number $\kappa$ and run gradient descent on it with some fixed required precision. Measure the number of iterations $T(n, \kappa)$ that the method required for convergence (successful termination based on the stopping criterion).
+
+    Recommendation: The simplest way to generate a random quadratic problem of size $n$ with a given condition number $\kappa$ is as follows. It is convenient to take a diagonal matrix $A \in S_{n}^{++}$ as simply the diagonal matrix $A = \text{Diag}(a)$, whose diagonal elements are randomly generated within $[1, \kappa]$, and where $\min(a) = 1$, $\max(a) = \kappa$. As the vector $b \in \mathbb{R}^n$, you can take a vector with random elements. Diagonal matrices are convenient to consider since they can be efficiently processed with even for large values of $n$.
+
+    Fix a certain value of the dimensionality $n$. Iterate over different condition numbers $\kappa$ on a grid and plot the dependence of $T(n,\kappa)$ against $\kappa$. Since the quadratic problem is generated randomly each time, repeat this experiment several times. As a result, for a fixed value of $n$, you should obtain a whole family of curves showing the dependence of $T(n, \kappa)$ on $\kappa$. Draw all these curves in the same color for clarity (for example, red).
+
+    Now increase the value of $n$ and repeat the experiment. You should obtain a new family of curves $T(n',\kappa)$ against $\kappa$. Draw all these curves in the same color but different from the previous one (for example, blue).
+
+    Repeat this procedure several times for other values of $n$. Eventually, you should have several different families of curves - some red (corresponding to one value of $n$), some blue (corresponding to another value of $n$), some green, etc.
+
+    Note that it makes sense to iterate over the values of the dimensionality $n$ on a logarithmic grid (for example, $n = 10, n = 100, n = 1000$, etc.). Use the following stopping criterion: $\|\nabla f(x_k)\|_2^2 \leq \varepsilon \|\nabla f(x_0)\|_2^2$ with $\varepsilon = 10^{-5}$. Select the starting point $x_0 = (1, \ldots, 1)^T$
+
+    What conclusions can be drawn from the resulting picture?
+
+
+### Accelerated methods
+
+1. **Local Convergence of Heavy Ball Method.** [20 points] We will work with the heavy ball method in this problem
+
+    $$
+    \tag{HB}
+    x_{k+1} = x_k - \alpha \nabla f(x_k) + \beta (x_k - x_{k-1})
+    $$
+
+    It is known, that for the quadratics the best choice of hyperparameters is $\alpha^* = \dfrac{4}{(\sqrt{L} + \sqrt{\mu})^2}, \beta^* = \dfrac{(\sqrt{L} - \sqrt{\mu})^2}{(\sqrt{L} + \sqrt{\mu})^2}$, which ensures accelerated linear convergence for a strongly convex quadratic function.
+
+    Consider the following continuously differentiable, strongly convex with parameter $\mu$, and smooth function with parameter $L$:
+
+    $$
+    f(x) =
+    \begin{cases}
+    \frac{25}{2}x^2, & \text{if } x < 1 \\
+    \frac12x^2 + 24x - 12, & \text{if } 1 \leq x < 2 \\
+    \frac{25}{2}x^2 - 24x + 36, & \text{if } x \geq 2
+    \end{cases}
+    \quad
+    \nabla f(x) =
+    \begin{cases}
+    25x, & \text{if } x < 1 \\
+    x + 24, & \text{if } 1 \leq x < 2 \\
+    25x - 24, & \text{if } x \geq 2
+    \end{cases}
+    $$
+
+    1. How to prove, that the given function is convex? Strongly convex? Smooth?
+    1. Find the constants $\mu$ and $L$ for a given function.
+    1. Plot the function value for $x \in [-4, 4]$.
+    1. Run the Heavy Ball method for the function with optimal hyperparameters $\alpha^* = \dfrac{4}{(\sqrt{L} + \sqrt{\mu})^2}, \beta^* = \dfrac{(\sqrt{L} - \sqrt{\mu})^2}{(\sqrt{L} + \sqrt{\mu})^2}$ for quadratic function, starting from $x_0 = 3.5$.
+    1. Change the starting point to $x_0 = 3.4$. What do you see? How could you name such a behavior of the method?
+    1. Change the hyperparameter $\alpha^{\text{Global}} = \frac2L, \beta^{\text{Global}} = \frac{\mu}{L}$ and run the method again from $x_0 = 3.4$. Check whether you have accelerated convergence here.
+
+    Context: this counterexample was provided in the [paper](https://arxiv.org/pdf/1408.3595.pdf), while the global convergence of the heavy ball method for general smooth strongly convex function was introduced in another [paper](https://arxiv.org/pdf/1412.7457.pdf). Recently, it was [suggested](https://arxiv.org/pdf/2307.11291.pdf), that the heavy-ball (HB) method provably does not reach an accelerated convergence rate on smooth strongly convex problems.
+
+1. [40 points] In this problem we will work with accelerated methods applied to the logistic regression problem. A good visual introduction to the topic is available [here](https://mlu-explain.github.io/logistic-regression/).
+
+    Logistic regression is a standard model in classification tasks. For simplicity, consider only the case of binary classification. Informally, the problem is formulated as follows: There is a training sample $\{(a_i, b_i)\}_{i=1}^m$, consisting of $m$ vectors $a_i \in \mathbb{R}^n$ (referred to as features) and corresponding numbers $b_i \in \{-1, 1\}$ (referred to as classes or labels). The goal is to construct an algorithm $b(\cdot)$, which for any new feature vector $a$ automatically determines its class $b(a) \in \{-1, 1\}$.
+
+    In the logistic regression model, the class determination is performed based on the sign of the linear combination of the components of the vector $a$ with some fixed coefficients $x \in \mathbb{R}^n$:
+
+    $$
+    b(a) := \text{sign}(\langle a, x \rangle).
+    $$
+
+    The coefficients $x$ are the parameters of the model and are adjusted by solving the following optimization problem:
+
+    $$
+    \tag{LogReg}
+    \min_{x \in \mathbb{R}^n} \left( \frac{1}{m} \sum_{i=1}^m \ln(1 + \exp(-b_i \langle a_i, x \rangle)) + \frac{\lambda}{2} \|x\|^2 \right),
+    $$
+
+    where $\lambda \geq 0$ is the regularization coefficient (a model parameter).
+
+    1. Will the LogReg problem be convex for $\lambda = 0$? What is the gradient of the objective function? Will it be strongly convex? What if you will add regularization with $\lambda > 0$?
+    1. We will work with the real-world data for $A$ and $b$: take the mushroom dataset. Be careful, you will need to predict if the mushroom is poisonous or edible. A poor model can cause death in this exercise.
+
+        ```python
+        import requests
+        from sklearn.datasets import load_svmlight_file
+
+        # URL of the file to download
+        url = 'https://hse24.fmin.xyz/files/mushrooms.txt'
+
+        # Download the file and save it locally
+        response = requests.get(url)
+        dataset = 'mushrooms.txt'
+
+        # Ensure the request was successful
+        if response.status_code == 200:
+            with open(dataset, 'wb') as f:
+                f.write(response.content)
+
+            # Load the dataset from the downloaded file
+            data = load_svmlight_file(dataset)
+            A, b = data[0].toarray(), data[1]
+            n, d = A.shape
+
+            print("Data loaded successfully.")
+            print(f"Number of samples: {n}, Number of features: {d}")
+        else:
+            print(f"Failed to download the file. Status code: {response.status_code}")
+
+        ```
+    1. Divide the data into two parts: training and test. We will train the model on the $A_{train}$, $b_{train}$ and measure the accuracy of the model on the $A_{test}$, $b_{test}$.
+
+        ```python
+        from sklearn.model_selection import train_test_split
+        # Split the data into training and test sets
+        A_train, A_test, b_train, b_test = train_test_split(A, b, test_size=0.2, random_state=214)
+        ```
+    1. For the training part $A_{train}$, $b_{train}$, estimate the constants $\mu, L$ of the training/optimization problem. Use the same small value $\lambda$ for all experiments
+    1. Using gradient descent with the step $\frac{1}{L}$, train a model. Plot: accuracy versus iteration number.
+
+        $$
+        \tag{HB}
+        x_{k+1} = x_k - \alpha \nabla f(x_k) + \beta (x_k - x_{k-1})
+        $$
+
+        Fix a step $\alpha = \frac{1}{L}$ and search for different values of the momentum $\beta$ from $-1$ to $1$. Choose your own convergence criterion and plot convergence for several values of momentum on the same graph. Is the convergence always monotonic?
+
+    1. For the best value of momentum $\beta$, plot the dependence of the model accuracy on the test sample on the running time of the method. Add to the same graph the convergence of gradient descent with step $\frac{1}{L}$. Draw a conclusion. Ensure, that you use the same value of $\lambda$ for both methods.
+    1. Solve the logistic regression problem using the Nesterov method.
+
+        $$
+        \tag{NAG}
+        x_{k+1} = x_k - \alpha \nabla f(x_k + \beta (x_k - x_{k-1})) + \beta (x_k - x_{k-1})
+        $$
+
+        Fix a step $\frac{1}{L}$ and search for different values of momentum $\beta$ from $-1$ to $1$. Check also the momentum values equal to $\frac{k}{k+3}$, $\frac{k}{k+2}$, $\frac{k}{k+1}$ ($k$ is the number of iterations), and if you are solving a strongly convex problem, also $\frac{\sqrt{L} - \sqrt{\mu}}{\sqrt{L} + \sqrt{\mu}}$. Plot the convergence of the method as a function of the number of iterations (choose the convergence criterion yourself) for different values of the momentum. Is the convergence always monotonic?
+    1. For the best value of momentum $\beta$, plot the dependence of the model accuracy on the test sample on the running time of the method. Add this graph to the graphs for the heavy ball and gradient descent from the previous steps. Make a conclusion.
+    1. Now we drop the estimated value of $L$ and will try to do it adaptively. Let us make the selection of the constant $L$ adaptive.
+
+        $$
+        f(y) \leq f(x^k) + \langle \nabla f(x^k), y - x^k \rangle + \frac{L}{2}\|x^k - y\|_2^2
+        $$
+
+        In particular, the procedure might work:
+
+        ```python
+        def backtracking_L(f, grad, x, h, L0, rho, maxiter=100):
+            L = L0
+            fx = f(x)
+            gradx = grad(x)
+            iter = 0
+            while iter < maxiter :
+                y = x - 1 / L * h
+                if f(y) <= fx - 1 / L gradx.dot(h) + 1 / (2 * L) h.dot(h):
+                    break
+                else:
+                    L = L * rho
+
+                iter += 1
+            return L
+        ```
+
+        What should $h$ be taken as? Should $\rho$ be greater or less than $1$? Should $L_0$ be taken as large or small? Draw a similar figure as it was in the previous step for L computed adaptively (6 lines - GD, HB, NAG, GD adaptive L, HB adaptive L, NAG adaptive L)
