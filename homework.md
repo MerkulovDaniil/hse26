@@ -1004,3 +1004,117 @@ should be made to maximize the profit?
     1. [4 points] Write exact update rules for subgradient and proximal gradient methods.
     1. [6 points] With $\lambda = 0$: find max learning rates, report convergence and sparsity.
     1. [10 points] Fill convergence table for $\lambda \in \{10^{-2}, 10^{-3}, 10^{-1}, 1\}$ and $\varepsilon \in \{10^{-1}, \ldots, 10^{-5}\}$: iterations, sparsity, test accuracy.
+
+### Stochastic gradient methods
+
+1. **Variance reduction for stochastic gradient methods**. [20 points]
+
+    Implement SAG and SVRG methods and compare them with SGD on two problem types.
+
+    1. [5 points] Linear least squares (convex, $\mu = 0$): $m = 50$, $n = 100$. Compare SGD (batch size 2 and full batch), SAG (batch size 2), SVRG (batch size 2, epoch length 2). Report convergence curves.
+    1. [5 points] Strongly convex linear least squares ($\mu = 0.1$): same setup, 2000 iterations. Compare convergence behavior.
+    1. [5 points] Convex binary logistic regression ($\mu = 0$): $m = 100$, $n = 200$. Compare SGD (batch 2 and full), SAG (batch 2), SVRG (batch 2, epoch 3). Describe convergence.
+    1. [5 points] Strongly convex logistic regression ($\mu = 0.1$): same setup, 3000 iterations. Describe obtained convergence and compare methods across all settings.
+
+1. **Batch size scaling law for SGD.** [10 points]
+
+    In the lectures, we discussed the linear scaling rule: when the batch size $B$ is increased by a factor $k$, the learning rate $\eta$ should also be increased by a factor $k$ to maintain similar training dynamics. This leads to the rule $\eta / B = \text{const}$.
+
+    Verify this scaling law empirically by training a shallow MLP on Fashion MNIST.
+
+    1. [5 points] Train the model for 30 epochs with at least 6 different combinations of batch size $B \in \{32, 64, 128, 256, 512, 1024\}$ and corresponding learning rates that follow the linear scaling rule. Record the final test accuracy for each combination.
+    1. [5 points] Plot the final test accuracy as a function of $\eta / B$ (on a log scale). Does the linear scaling rule hold? At what batch sizes does it start to break down? Discuss the results in the context of the critical batch size concept from the lectures.
+
+### Neural network training
+
+1. **Anomaly detection with neural network.** [30 points]
+
+    In this problem we will try to detect anomalies in time series with neural network. We will train the model to reconstruct normal data and when the reconstruction error for the actual data on trained model is high, we report an anomaly. The default solution uses Adam and after training it can detect 4 out of 5 anomalies. Train and compare several methods on the same problem. For each method try to find hyperparameters which ensure at least 3 out of 5 anomaly detections. Present learning curves and anomaly predictions for each method.
+
+    * SGD with momentum [5 points] from optax
+    * Adadelta [5 points] from optax
+    * BFGS [10 points] implemented manually
+    * [Muon](https://github.com/KellerJordan/Muon) [optimizer](https://arxiv.org/pdf/2502.16982) [10 points] implemented manually
+
+### Big models
+
+1. **Fit the largest model you can on a single GPU.** [15 points]
+
+    In this assignment, you will train a language model (LM) using the TinyStories dataset, focusing on optimizing model performance within the constraints of Google Colab's hardware (~ 16GB VRAM).
+
+    Your objective is to maximize the size of the model without exceeding the available computational resources. You could experiment with various memory optimization techniques, such as (but not limited to):
+
+    * Different batch size
+    * Different optimizer
+    * Gradient accumulation
+    * Activation checkpointing
+    * CPU offloading
+    * 8bit optimizers
+
+    You have to fill the comparison table with your description/observations.
+
+    | Setup | # of parameters | GPU peak memory, MB | Final eval loss | Batch Size | Time to run 5 epochs, s | Generation example | Comment |
+    |:---:|:---:|:---:|:---:|:---:|:---:|:---------:|:---------:|
+    | Baseline (OPT-125M) | 125 M | 9044 | 1.928 | 8 | 442.34 | `A long time ago...` |  |
+    | Baseline (GPT2-S) | 124 M | 13016 | 2.001 | 8 | 487.75 | `A long time ago...` |  |
+    |  |  |  |  |  |  |  |  |
+
+    : {.responsive}
+
+    For each unique trick for memory optimization, you will get 3 points (maximum 15 points). The maximum grade is bounded with the size of the trained model:
+
+    * If the model size you train is $\leq$ 125M — maximum of 6 points.
+    * If the model size you train is 126M $\leq$ 350M — maximum of 8 points.
+    * If the model size you train is 350M $\leq$ 1B — maximum of 12 points.
+    * If you fit 1B model or more — maximum 15 points.
+
+### ADMM (Dual methods)
+
+1. **Low-Rank Matrix Completion via ADMM** [25 points]
+
+    **Background.** In many applications such as recommender systems, computer vision and system identification, the data matrix is approximately low-rank but only a subset of its entries are observed. We are given a partially observed matrix $M \in \mathbb{R}^{m\times n}$ and the index set of observed entries $\Omega$. Define the sampling operator $P_\Omega$ by $(P_\Omega(X))_{ij}= X_{ij}$ if $(i,j)\in\Omega$ and $0$ otherwise.
+
+    We consider the optimization problem
+    $$
+    \min_{X\in\mathbb{R}^{m\times n}}\;\frac12\|P_\Omega(X-M)\|_F^2\; + \;\lambda\|X\|_*,
+    $$
+    where $\|X\|_* = \sum_k \sigma_k(X)$ is the nuclear norm.
+
+    1. **(a) [10 points] Derive a two-block ADMM algorithm.** Introduce an auxiliary variable $Z$ and rewrite as
+        $$
+        \min_{X,Z}\; \frac12\|P_\Omega(Z-M)\|_F^2 + \lambda\|X\|_* \quad\text{s.t. } X-Z = 0.
+        $$
+        Derive explicit closed-form expressions for each ADMM update:
+        * **$X$-update:** singular-value soft-thresholding (SVT);
+        * **$Z$-update:** projection onto the observed entries;
+        * **dual-variable update.**
+        State a practical stopping rule based on primal and dual residuals.
+
+    1. **(b) [10 points] Implement the algorithm on synthetic data.** Use:
+        ```python
+        import numpy as np
+        np.random.seed(0)
+        m, n, r = 50, 40, 3
+        U = np.random.randn(m, r)
+        V = np.random.randn(n, r)
+        M_star = U @ V.T                      # ground-truth low-rank matrix
+        mask = np.random.rand(m, n) < 0.3     # 30% observations
+        noise = 0.01 * np.random.randn(m, n)
+        M = mask * (M_star + noise)
+        lambda_ = 1 / np.sqrt(max(m, n))
+        ```
+        Run from $X^0 = 0$ for $\rho \in \{0.1, 1, 10\}$. For each $\rho$: plot objective and relative reconstruction error $\frac{\|X^k - M_\star\|_F}{\|M_\star\|_F}$ vs iteration; report iterations until $\max(\|r_p^k\|_F, \|r_d^k\|_F) \le 10^{-3}$.
+
+    1. **(c) [5 points] Discussion.** Compare convergence for three $\rho$ values. How does $\rho$ influence primal/dual residual decrease? Comment on rank of iterates, data-fit vs nuclear-norm trade-off, and reconstruction quality.
+
+### Bonus: Continuous time methods
+
+1. **SGD as a splitting scheme and the importance of batch order** [30 points]
+
+    **Background.** The standard GD for minimizing $f(x) = \frac{1}{n} \sum_{i=1}^n f_i(x)$ can be viewed as an Euler discretization of the gradient flow ODE. SGD with cycling through batches without replacement can be interpreted as a *splitting scheme*. For linear least squares $f(x) = \frac{1}{2n}\|X x - y\|^2$, splitting $X$ into row blocks $X_i$ with projectors $\Pi_i = I - Q_i Q_i^*$ (from QR decomposition of $X_i^T$), the asymptotic error of the splitting scheme depends on the product $\|\prod_{i=1}^m \Pi_{\sigma(i)}\|$ for permutation $\sigma$.
+
+    1. **[5 points] Investigating the bound distribution.** Generate $X \in \mathbb{R}^{80 \times 20}$, split into $m=8$ blocks of size $10 \times 20$. Compute projectors $\Pi_i$. Calculate $E(\sigma) = \|\prod_{j=1}^m \Pi_{\sigma(j)}\|_2$ for all $8! = 40320$ permutations. Plot histogram of $E(\sigma)$.
+
+    1. **[20 points] Maximizing order dependence.** Modify $X$ to create a scenario where the ratio $\max E(\sigma) / \min E(\sigma)$ is maximized. *Hint: think about how projector null spaces interact.* Explain your reasoning. Repeat Task 1 for the modified problem.
+
+    1. **[5 points] Testing SGD convergence.** Using the adversarial dataset, pick $\sigma_{\text{low}}$ and $\sigma_{\text{high}}$. Run deterministic-order SGD (fixed small $\alpha = 0.01/L$) for 50-100 epochs with each ordering. Plot convergence curves. Does the observed speed correlate with $E(\sigma)$?
