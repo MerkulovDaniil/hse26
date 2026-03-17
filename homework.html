@@ -214,6 +214,13 @@ window.Quarto = {
   <li><a href="#convexity" id="toc-convexity" class="nav-link" data-scroll-target="#convexity">Convexity</a></li>
   <li><a href="#optimality-conditions.-kkt.-duality" id="toc-optimality-conditions.-kkt.-duality" class="nav-link" data-scroll-target="#optimality-conditions.-kkt.-duality">Optimality conditions. KKT. Duality</a></li>
   <li><a href="#linear-programming" id="toc-linear-programming" class="nav-link" data-scroll-target="#linear-programming">Linear programming</a></li>
+  <li><a href="#gradient-descent" id="toc-gradient-descent" class="nav-link" data-scroll-target="#gradient-descent">Gradient Descent</a></li>
+  <li><a href="#accelerated-methods" id="toc-accelerated-methods" class="nav-link" data-scroll-target="#accelerated-methods">Accelerated methods</a></li>
+  <li><a href="#conjugate-gradients" id="toc-conjugate-gradients" class="nav-link" data-scroll-target="#conjugate-gradients">Conjugate gradients</a></li>
+  <li><a href="#newton-and-quasi-newton-methods" id="toc-newton-and-quasi-newton-methods" class="nav-link" data-scroll-target="#newton-and-quasi-newton-methods">Newton and quasi-Newton methods</a></li>
+  <li><a href="#conditional-gradient-methods" id="toc-conditional-gradient-methods" class="nav-link" data-scroll-target="#conditional-gradient-methods">Conditional gradient methods</a></li>
+  <li><a href="#subgradient-method" id="toc-subgradient-method" class="nav-link" data-scroll-target="#subgradient-method">Subgradient method</a></li>
+  <li><a href="#proximal-gradient-method" id="toc-proximal-gradient-method" class="nav-link" data-scroll-target="#proximal-gradient-method">Proximal gradient method</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/MerkulovDaniil/hse26/edit/main/homework.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -762,15 +769,6 @@ w = \text{vec}(W_1, W_2, \ldots, W_L) \in \mathbb{R}^{n},
 &amp; t \succeq 0
 \end{split}
 </span></p></li>
-<li><p>[10 points] Give an explicit solution to the following LP.</p>
-<p><span class="math display">
-\begin{split}
-&amp; c^\top x \to \min\limits_{x \in \mathbb{R}^n }\\
-\text{s.t. } &amp; 1^\top x = 1, \\
-&amp; x \succeq 0
-\end{split}
-</span></p>
-<p>This problem can be considered the simplest portfolio optimization problem.</p></li>
 <li><p>[20 points] Show, that the following problem has a unique solution and find it:</p>
 <p><span class="math display">
 \begin{split}
@@ -779,43 +777,6 @@ w = \text{vec}(W_1, W_2, \ldots, W_L) \in \mathbb{R}^{n},
 \end{split}
 </span></p>
 <p>where <span class="math inline">C \in \mathbb{S}^n_{++}, a \in \mathbb{R}^n \neq 0</span>. The answer should not involve inversion of the matrix <span class="math inline">C</span>.</p></li>
-<li><p>[20 points] Give an explicit solution to the following QP.</p>
-<p><span class="math display">
-\begin{split}
-&amp; c^\top x \to \min\limits_{x \in \mathbb{R}^n }\\
-\text{s.t. } &amp; (x - x_c)^\top A (x - x_c) \leq 1,
-\end{split}
-</span></p>
-<p>where <span class="math inline">A \in \mathbb{S}^n_{++}, c \neq 0, x_c \in \mathbb{R}^n</span>.</p></li>
-<li><p>[10 points] Consider the equality-constrained least-squares problem</p>
-<p><span class="math display">
-\begin{split}
-&amp; \|Ax - b\|_2^2 \to \min\limits_{x \in \mathbb{R}^n }\\
-\text{s.t. } &amp; Cx = d,
-\end{split}
-</span></p>
-<p>where <span class="math inline">A \in \mathbb{R}^{m \times n}</span> with <span class="math inline">\mathbf{rank }A = n</span>, and <span class="math inline">C \in \mathbb{R}^{k \times n}</span> with <span class="math inline">\mathbf{rank }C = k</span>. Give the KKT conditions, and derive expressions for the primal solution <span class="math inline">x^*</span> and the dual solution <span class="math inline">\lambda^*</span>.</p></li>
-<li><p><strong>Supporting hyperplane interpretation of KKT conditions</strong>. [10 points] Consider a <strong>convex</strong> problem with no equality constraints</p>
-<p><span class="math display">
-\begin{split}
-&amp; f_0(x) \to \min\limits_{x \in \mathbb{R}^n }\\
-\text{s.t. } &amp; f_i(x) \leq 0, \quad i = [1,m]
-\end{split}
-</span></p>
-<p>Assume, that <span class="math inline">\exists x^* \in \mathbb{R}^n, \mu^* \in \mathbb{R}^m</span> satisfy the KKT conditions</p>
-<p><span class="math display">
-\begin{split}
-&amp; \nabla_x L (x^*, \mu^*) = \nabla f_0(x^*) + \sum\limits_{i=1}^m\mu_i^*\nabla f_i(x^*) = 0 \\
-&amp; \mu^*_i \geq 0, \quad i = [1,m] \\
-&amp; \mu^*_i f_i(x^*) = 0, \quad i = [1,m]\\
-&amp; f_i(x^*) \leq 0, \quad i = [1,m]
-\end{split}
-</span></p>
-<p>Show that</p>
-<p><span class="math display">
-\nabla f_0(x^*)^\top (x - x^*) \geq 0
-</span></p>
-<p>for all feasible <span class="math inline">x</span>. In other words, the KKT conditions imply the simple optimality criterion or <span class="math inline">\nabla f_0(x^*)</span> defines a supporting hyperplane to the feasible set at <span class="math inline">x^*</span>.</p></li>
 <li><p><strong>Maximum entropy and the softmax.</strong> [15 points] In machine learning, the softmax function plays a central role in classification. Here we derive it from first principles using the maximum entropy principle. Given <span class="math inline">n</span> classes with features <span class="math inline">z_1, \ldots, z_n \in \mathbb{R}</span>, find the probability distribution <span class="math inline">p = (p_1, \ldots, p_n)</span> that maximizes entropy subject to a feature-matching constraint:</p>
 <p><span class="math display">
 \begin{split}
@@ -883,6 +844,289 @@ x = \left(\frac{7}{3} , 0, \frac{1}{3}\right)^T
 <li>Sketch the feasible set and determine <span class="math inline">p^*</span> and <span class="math inline">x^*</span></li>
 <li>Find the dual problem, then determine <span class="math inline">d^*</span> and <span class="math inline">\lambda^*</span>. Note that we can interpret the Lagrange multipliers <span class="math inline">\lambda_k</span> associated with the constraints on wood and paint as the prices for each piece of wood and tin of paint, so that <span class="math inline">−d^*</span> is how much money would be obtained from selling the inventory for those prices. Strong duality says a buyer should not pay more for the inventory than what the toy store would make by producing and selling toys from it, and that the toy store should not sell the inventory for less than that.</li>
 <li>The other interpretation of the Lagrange multipliers is as sensitivities to changes in the constraints. Suppose the toymaker found some more pieces of wood; the <span class="math inline">\lambda_k</span> associated with the wood constraint will equal the partial derivative of <span class="math inline">−p^*</span> with respect to how much more wood became available. Suppose the inventory increases by one piece of wood. Use <span class="math inline">\lambda^*</span> to estimate how much the profit would increase, without solving the updated optimization problem. How is this consistent with the price interpretation given above for the Lagrange multipliers? <a href="https://tleise.people.amherst.edu/Math294Spring2017/TeXfiles/LagrangeDualityHW.pdf">source</a></li>
+</ol></li>
+</ol>
+</section>
+<section id="gradient-descent" class="level3">
+<h3 class="anchored" data-anchor-id="gradient-descent">Gradient Descent</h3>
+<ol type="1">
+<li><p><strong>Convergence of Gradient Descent in non-convex smooth case</strong> [10 points]</p>
+<p>We will assume nothing about the convexity of <span class="math inline">f</span>. We will show that gradient descent reaches an <span class="math inline">\varepsilon</span>-substationary point <span class="math inline">x</span>, such that <span class="math inline">\|\nabla f(x)\|_2 \leq \varepsilon</span>, in <span class="math inline">O(1/\varepsilon^2)</span> iterations. Important note: you may use here Lipschitz parabolic upper bound:</p>
+<p><span id="eq-quad_ub"><span class="math display">
+f(y) \leq f(x) + \nabla f(x)^T (y-x) + \frac{L}{2} \|y-x\|_2^2, \;\;\;
+\text{for all $x,y$}.
+  \tag{1}</span></span></p>
+<ul>
+<li><p>Plug in <span class="math inline">y = x^{k+1} = x^{k} - \alpha \nabla f(x^k), x = x^k</span> to (<a href="#eq-quad_ub" class="quarto-xref">Equation&nbsp;1</a>) to show that</p>
+<p><span class="math display">
+  f(x^{k+1}) \leq f(x^k) - \Big (1-\frac{L\alpha}{2} \Big) \alpha \|\nabla f(x^k)\|_2^2.
+  </span></p></li>
+<li><p>Use <span class="math inline">\alpha \leq 1/L</span>, and rearrange the previous result, to get</p>
+<p><span class="math display">
+  \|\nabla f(x^k)\|_2^2 \leq \frac{2}{\alpha} \left( f(x^k) - f(x^{k+1}) \right).
+  </span></p></li>
+<li><p>Sum the previous result over all iterations from <span class="math inline">1,\ldots,k+1</span> to establish</p>
+<p><span class="math display">
+  \sum_{i=0}^k \|\nabla f(x^{i})\|_2^2 \leq
+  \frac{2}{\alpha} ( f(x^{0}) - f^*).
+  </span></p></li>
+<li><p>Lower bound the sum in the previous result to get</p>
+<p><span class="math display">
+  \min_{i=0,\ldots,k} \|\nabla f(x^{i}) \|_2
+  \leq \sqrt{\frac{2}{\alpha(k+1)} (f(x^{0}) - f^*)},
+  </span> which establishes the desired <span class="math inline">O(1/\varepsilon^2)</span> rate for achieving <span class="math inline">\varepsilon</span>-substationarity.</p></li>
+</ul></li>
+<li><p><strong>How gradient descent convergence depends on the condition number and dimensionality.</strong> [20 points] Investigate how the number of iterations required for gradient descent to converge depends on the following two parameters: the condition number <span class="math inline">\kappa \geq 1</span> of the function being optimized, and the dimensionality <span class="math inline">n</span> of the space of variables being optimized.</p>
+<p>To do this, for given parameters <span class="math inline">n</span> and <span class="math inline">\kappa</span>, randomly generate a quadratic problem of size <span class="math inline">n</span> with condition number <span class="math inline">\kappa</span> and run gradient descent on it with some fixed required precision. Measure the number of iterations <span class="math inline">T(n, \kappa)</span> that the method required for convergence (successful termination based on the stopping criterion).</p>
+<p>Recommendation: The simplest way to generate a random quadratic problem of size <span class="math inline">n</span> with a given condition number <span class="math inline">\kappa</span> is as follows. It is convenient to take a diagonal matrix <span class="math inline">A \in S_{n}^{++}</span> as simply the diagonal matrix <span class="math inline">A = \text{Diag}(a)</span>, whose diagonal elements are randomly generated within <span class="math inline">[1, \kappa]</span>, and where <span class="math inline">\min(a) = 1</span>, <span class="math inline">\max(a) = \kappa</span>. As the vector <span class="math inline">b \in \mathbb{R}^n</span>, you can take a vector with random elements. Diagonal matrices are convenient to consider since they can be efficiently processed with even for large values of <span class="math inline">n</span>.</p>
+<p>Fix a certain value of the dimensionality <span class="math inline">n</span>. Iterate over different condition numbers <span class="math inline">\kappa</span> on a grid and plot the dependence of <span class="math inline">T(n,\kappa)</span> against <span class="math inline">\kappa</span>. Since the quadratic problem is generated randomly each time, repeat this experiment several times. As a result, for a fixed value of <span class="math inline">n</span>, you should obtain a whole family of curves showing the dependence of <span class="math inline">T(n, \kappa)</span> on <span class="math inline">\kappa</span>. Draw all these curves in the same color for clarity (for example, red).</p>
+<p>Now increase the value of <span class="math inline">n</span> and repeat the experiment. You should obtain a new family of curves <span class="math inline">T(n',\kappa)</span> against <span class="math inline">\kappa</span>. Draw all these curves in the same color but different from the previous one (for example, blue).</p>
+<p>Repeat this procedure several times for other values of <span class="math inline">n</span>. Eventually, you should have several different families of curves - some red (corresponding to one value of <span class="math inline">n</span>), some blue (corresponding to another value of <span class="math inline">n</span>), some green, etc.</p>
+<p>Note that it makes sense to iterate over the values of the dimensionality <span class="math inline">n</span> on a logarithmic grid (for example, <span class="math inline">n = 10, n = 100, n = 1000</span>, etc.). Use the following stopping criterion: <span class="math inline">\|\nabla f(x_k)\|_2^2 \leq \varepsilon \|\nabla f(x_0)\|_2^2</span> with <span class="math inline">\varepsilon = 10^{-5}</span>. Select the starting point <span class="math inline">x_0 = (1, \ldots, 1)^T</span></p>
+<p>What conclusions can be drawn from the resulting picture?</p></li>
+</ol>
+</section>
+<section id="accelerated-methods" class="level3">
+<h3 class="anchored" data-anchor-id="accelerated-methods">Accelerated methods</h3>
+<ol type="1">
+<li><p><strong>Local Convergence of Heavy Ball Method.</strong> [20 points] We will work with the heavy ball method in this problem</p>
+<p><span class="math display">
+\tag{HB}
+x_{k+1} = x_k - \alpha \nabla f(x_k) + \beta (x_k - x_{k-1})
+</span></p>
+<p>It is known, that for the quadratics the best choice of hyperparameters is <span class="math inline">\alpha^* = \dfrac{4}{(\sqrt{L} + \sqrt{\mu})^2}, \beta^* = \dfrac{(\sqrt{L} - \sqrt{\mu})^2}{(\sqrt{L} + \sqrt{\mu})^2}</span>, which ensures accelerated linear convergence for a strongly convex quadratic function.</p>
+<p>Consider the following continuously differentiable, strongly convex with parameter <span class="math inline">\mu</span>, and smooth function with parameter <span class="math inline">L</span>:</p>
+<p><span class="math display">
+f(x) =
+\begin{cases}
+\frac{25}{2}x^2, &amp; \text{if } x &lt; 1 \\
+\frac12x^2 + 24x - 12, &amp; \text{if } 1 \leq x &lt; 2 \\
+\frac{25}{2}x^2 - 24x + 36, &amp; \text{if } x \geq 2
+\end{cases}
+\quad
+\nabla f(x) =
+\begin{cases}
+25x, &amp; \text{if } x &lt; 1 \\
+x + 24, &amp; \text{if } 1 \leq x &lt; 2 \\
+25x - 24, &amp; \text{if } x \geq 2
+\end{cases}
+</span></p>
+<ol type="1">
+<li>How to prove, that the given function is convex? Strongly convex? Smooth?</li>
+<li>Find the constants <span class="math inline">\mu</span> and <span class="math inline">L</span> for a given function.</li>
+<li>Plot the function value for <span class="math inline">x \in [-4, 4]</span>.</li>
+<li>Run the Heavy Ball method for the function with optimal hyperparameters <span class="math inline">\alpha^* = \dfrac{4}{(\sqrt{L} + \sqrt{\mu})^2}, \beta^* = \dfrac{(\sqrt{L} - \sqrt{\mu})^2}{(\sqrt{L} + \sqrt{\mu})^2}</span> for quadratic function, starting from <span class="math inline">x_0 = 3.5</span>.</li>
+<li>Change the starting point to <span class="math inline">x_0 = 3.4</span>. What do you see? How could you name such a behavior of the method?</li>
+<li>Change the hyperparameter <span class="math inline">\alpha^{\text{Global}} = \frac2L, \beta^{\text{Global}} = \frac{\mu}{L}</span> and run the method again from <span class="math inline">x_0 = 3.4</span>. Check whether you have accelerated convergence here.</li>
+</ol>
+<p>Context: this counterexample was provided in the <a href="https://arxiv.org/pdf/1408.3595.pdf">paper</a>, while the global convergence of the heavy ball method for general smooth strongly convex function was introduced in another <a href="https://arxiv.org/pdf/1412.7457.pdf">paper</a>. Recently, it was <a href="https://arxiv.org/pdf/2307.11291.pdf">suggested</a>, that the heavy-ball (HB) method provably does not reach an accelerated convergence rate on smooth strongly convex problems.</p></li>
+<li><p>[40 points] In this problem we will work with accelerated methods applied to the logistic regression problem. A good visual introduction to the topic is available <a href="https://mlu-explain.github.io/logistic-regression/">here</a>.</p>
+<p>Logistic regression is a standard model in classification tasks. For simplicity, consider only the case of binary classification. Informally, the problem is formulated as follows: There is a training sample <span class="math inline">\{(a_i, b_i)\}_{i=1}^m</span>, consisting of <span class="math inline">m</span> vectors <span class="math inline">a_i \in \mathbb{R}^n</span> (referred to as features) and corresponding numbers <span class="math inline">b_i \in \{-1, 1\}</span> (referred to as classes or labels). The goal is to construct an algorithm <span class="math inline">b(\cdot)</span>, which for any new feature vector <span class="math inline">a</span> automatically determines its class <span class="math inline">b(a) \in \{-1, 1\}</span>.</p>
+<p>In the logistic regression model, the class determination is performed based on the sign of the linear combination of the components of the vector <span class="math inline">a</span> with some fixed coefficients <span class="math inline">x \in \mathbb{R}^n</span>:</p>
+<p><span class="math display">
+b(a) := \text{sign}(\langle a, x \rangle).
+</span></p>
+<p>The coefficients <span class="math inline">x</span> are the parameters of the model and are adjusted by solving the following optimization problem:</p>
+<p><span class="math display">
+\tag{LogReg}
+\min_{x \in \mathbb{R}^n} \left( \frac{1}{m} \sum_{i=1}^m \ln(1 + \exp(-b_i \langle a_i, x \rangle)) + \frac{\lambda}{2} \|x\|^2 \right),
+</span></p>
+<p>where <span class="math inline">\lambda \geq 0</span> is the regularization coefficient (a model parameter).</p>
+<ol type="1">
+<li><p>Will the LogReg problem be convex for <span class="math inline">\lambda = 0</span>? What is the gradient of the objective function? Will it be strongly convex? What if you will add regularization with <span class="math inline">\lambda &gt; 0</span>?</p></li>
+<li><p>We will work with the real-world data for <span class="math inline">A</span> and <span class="math inline">b</span>: take the mushroom dataset. Be careful, you will need to predict if the mushroom is poisonous or edible. A poor model can cause death in this exercise.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> requests</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> load_svmlight_file</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># URL of the file to download</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://hse24.fmin.xyz/files/mushrooms.txt'</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Download the file and save it locally</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>response <span class="op">=</span> requests.get(url)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>dataset <span class="op">=</span> <span class="st">'mushrooms.txt'</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure the request was successful</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> response.status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(dataset, <span class="st">'wb'</span>) <span class="im">as</span> f:</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>        f.write(response.content)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Load the dataset from the downloaded file</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    data <span class="op">=</span> load_svmlight_file(dataset)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    A, b <span class="op">=</span> data[<span class="dv">0</span>].toarray(), data[<span class="dv">1</span>]</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    n, d <span class="op">=</span> A.shape</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Data loaded successfully."</span>)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Number of samples: </span><span class="sc">{</span>n<span class="sc">}</span><span class="ss">, Number of features: </span><span class="sc">{</span>d<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Failed to download the file. Status code: </span><span class="sc">{</span>response<span class="sc">.</span>status_code<span class="sc">}</span><span class="ss">"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>Divide the data into two parts: training and test. We will train the model on the <span class="math inline">A_{train}</span>, <span class="math inline">b_{train}</span> and measure the accuracy of the model on the <span class="math inline">A_{test}</span>, <span class="math inline">b_{test}</span>.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Split the data into training and test sets</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>A_train, A_test, b_train, b_test <span class="op">=</span> train_test_split(A, b, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">214</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div></li>
+<li><p>For the training part <span class="math inline">A_{train}</span>, <span class="math inline">b_{train}</span>, estimate the constants <span class="math inline">\mu, L</span> of the training/optimization problem. Use the same small value <span class="math inline">\lambda</span> for all experiments</p></li>
+<li><p>Using gradient descent with the step <span class="math inline">\frac{1}{L}</span>, train a model. Plot: accuracy versus iteration number.</p>
+<p><span class="math display">
+\tag{HB}
+x_{k+1} = x_k - \alpha \nabla f(x_k) + \beta (x_k - x_{k-1})
+</span></p>
+<p>Fix a step <span class="math inline">\alpha = \frac{1}{L}</span> and search for different values of the momentum <span class="math inline">\beta</span> from <span class="math inline">-1</span> to <span class="math inline">1</span>. Choose your own convergence criterion and plot convergence for several values of momentum on the same graph. Is the convergence always monotonic?</p></li>
+<li><p>For the best value of momentum <span class="math inline">\beta</span>, plot the dependence of the model accuracy on the test sample on the running time of the method. Add to the same graph the convergence of gradient descent with step <span class="math inline">\frac{1}{L}</span>. Draw a conclusion. Ensure, that you use the same value of <span class="math inline">\lambda</span> for both methods.</p></li>
+<li><p>Solve the logistic regression problem using the Nesterov method.</p>
+<p><span class="math display">
+\tag{NAG}
+x_{k+1} = x_k - \alpha \nabla f(x_k + \beta (x_k - x_{k-1})) + \beta (x_k - x_{k-1})
+</span></p>
+<p>Fix a step <span class="math inline">\frac{1}{L}</span> and search for different values of momentum <span class="math inline">\beta</span> from <span class="math inline">-1</span> to <span class="math inline">1</span>. Check also the momentum values equal to <span class="math inline">\frac{k}{k+3}</span>, <span class="math inline">\frac{k}{k+2}</span>, <span class="math inline">\frac{k}{k+1}</span> (<span class="math inline">k</span> is the number of iterations), and if you are solving a strongly convex problem, also <span class="math inline">\frac{\sqrt{L} - \sqrt{\mu}}{\sqrt{L} + \sqrt{\mu}}</span>. Plot the convergence of the method as a function of the number of iterations (choose the convergence criterion yourself) for different values of the momentum. Is the convergence always monotonic?</p></li>
+<li><p>For the best value of momentum <span class="math inline">\beta</span>, plot the dependence of the model accuracy on the test sample on the running time of the method. Add this graph to the graphs for the heavy ball and gradient descent from the previous steps. Make a conclusion.</p></li>
+<li><p>Now we drop the estimated value of <span class="math inline">L</span> and will try to do it adaptively. Let us make the selection of the constant <span class="math inline">L</span> adaptive.</p>
+<p><span class="math display">
+f(y) \leq f(x^k) + \langle \nabla f(x^k), y - x^k \rangle + \frac{L}{2}\|x^k - y\|_2^2
+</span></p>
+<p>In particular, the procedure might work:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> backtracking_L(f, grad, x, h, L0, rho, maxiter<span class="op">=</span><span class="dv">100</span>):</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    L <span class="op">=</span> L0</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    fx <span class="op">=</span> f(x)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    gradx <span class="op">=</span> grad(x)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="bu">iter</span> <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">while</span> <span class="bu">iter</span> <span class="op">&lt;</span> maxiter :</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        y <span class="op">=</span> x <span class="op">-</span> <span class="dv">1</span> <span class="op">/</span> L <span class="op">*</span> h</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> f(y) <span class="op">&lt;=</span> fx <span class="op">-</span> <span class="dv">1</span> <span class="op">/</span> L gradx.dot(h) <span class="op">+</span> <span class="dv">1</span> <span class="op">/</span> (<span class="dv">2</span> <span class="op">*</span> L) h.dot(h):</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">break</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>            L <span class="op">=</span> L <span class="op">*</span> rho</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">iter</span> <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> L</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>What should <span class="math inline">h</span> be taken as? Should <span class="math inline">\rho</span> be greater or less than <span class="math inline">1</span>? Should <span class="math inline">L_0</span> be taken as large or small? Draw a similar figure as it was in the previous step for L computed adaptively (6 lines - GD, HB, NAG, GD adaptive L, HB adaptive L, NAG adaptive L)</p></li>
+</ol></li>
+</ol>
+</section>
+<section id="conjugate-gradients" class="level3">
+<h3 class="anchored" data-anchor-id="conjugate-gradients">Conjugate gradients</h3>
+<ol type="1">
+<li><p><strong><a href="https://web.stanford.edu/class/ee364b/364b_exercises.pdf">Randomized Preconditioners for Conjugate Gradient Methods.</a></strong> (20 points)</p>
+<p><em>Linear least squares</em></p>
+<p>In this task, we explore the use of some randomization methods for solving overdetermined least-squares problems, focusing on conjugate gradient methods. Let <span class="math inline">\hat{A} \in \mathbb{R}^{m \times n}</span> be a matrix (we assume that <span class="math inline">m \gg n</span>) and <span class="math inline">\hat{b} \in \mathbb{R}^m</span>, we aim to minimize</p>
+<p><span class="math display">
+f(x) = \frac{1}{2} \|\hat{A}x - \hat{b}\|^2_2 = \frac{1}{2} \sum_{i=1}^m (\hat{a}_i^T x - \hat{b}_i)^2,
+</span></p>
+<p>where the <span class="math inline">\hat{a}_i \in \mathbb{R}^n</span> denote the rows of <span class="math inline">\hat{A}</span>.</p>
+<p><em>Preconditioners</em></p>
+<p>We know, that the convergence bound of the CG applied for the problem depends on the condition number of the matrix. Note, that for the problem above we have the matrix <span class="math inline">\hat{A}^T \hat{A}</span> and the condition number is squared after this operation (<span class="math inline">\kappa (X^T X) =  \kappa^2 \left(X \right)</span>). That is the reason, why we typically need to use <em>preconditioners</em> (<a href="https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf">read 12. for more details</a>) with CG.</p>
+<p>The general idea of using preconditioners implies switching from solving <span class="math inline">Ax = b</span> to <span class="math inline">MAx = Mb</span> with hope, that <span class="math inline">\kappa \left( MA\right) \ll \kappa \left( A\right)</span> or eigenvalues of <span class="math inline">MA</span> are better clustered than those of <span class="math inline">A</span> (note, that matrix <span class="math inline">A</span> here is for the general case, here we have <span class="math inline">\hat{A}^T\hat{A}</span> instead).</p>
+<p>This idea can also be viewed as coordinate change <span class="math inline">x = T \hat{x}, \; \hat{x} = T^{-1}x</span>, which leads to the problem <span class="math inline">T^T A T \hat{x} = T^Tb</span>. Note, that the spectrum of <span class="math inline">T^TAT</span> is the same as the spectrum of <span class="math inline">MA</span>.</p>
+<p>The best choice of <span class="math inline">M</span> is <span class="math inline">A^{-1}</span>, because <span class="math inline">\kappa (A^{-1} A) = \kappa (I) = 1</span>. However, if we know <span class="math inline">A^{-1}</span>, the original problem is already solved, that is why we need to find some trade-off between enhanced convergence, and extra cost of working with <span class="math inline">M</span>. The goal is to find <span class="math inline">M</span> that is cheap to multiply, and approximate inverse of <span class="math inline">A</span> (or at least has a more clustered spectrum than <span class="math inline">A</span>).</p>
+<p>Note, that for the linear least squares problem the matrix of quadratic form is <span class="math inline">A = \hat{A}^T\hat{A} \in \mathbb{R}^{n \times n}</span> and the rhs vector is <span class="math inline">b = \hat{A}^T\hat{b} \in \mathbb{R}^n</span>.</p>
+<p><em>Hadamard matrix</em></p>
+<p>Given <span class="math inline">m \in \{2^i, i = 1, 2, \ldots\}</span>, the (unnormalized) Hadamard matrix of order <span class="math inline">m</span> is defined recursively as</p>
+<p><span class="math display">
+H_2 = \begin{bmatrix} 1 &amp; 1 \\ 1 &amp; -1 \end{bmatrix}, \quad \text{and} \quad H_m = \begin{bmatrix} H_{m/2} &amp; H_{m/2} \\ H_{m/2} &amp; -H_{m/2} \end{bmatrix}.
+</span></p>
+<p>The associated normalized Hadamard matrix is given by <span class="math inline">H^{(\text{norm})}_m = \frac{1}{\sqrt{m}} H_m</span>, which evidently satisfies <span class="math inline">H^{(\text{norm})T}_m H^{(\text{norm})}_m = I_{m \times m}</span>. Moreover, via a recursive algorithm, it is possible to compute matvec <span class="math inline">H_m x</span> in time <span class="math inline">O(m \log m)</span>.</p>
+<p>To solve the least squares minimization problem using conjugate gradients, we must solve <span class="math inline">\hat{A}^T \hat{A} x = \hat{A}^T b</span>. Using a preconditioner <span class="math inline">M</span> such that <span class="math inline">M \approx A^{-1}</span> can give substantial speedup.</p>
+<p>Consider the following scheme to generate a randomized preconditioner, assuming that <span class="math inline">m = 2^i</span> for some <span class="math inline">i</span>:</p>
+<ol type="1">
+<li>Let <span class="math inline">S = \text{diag}(S_{11}, \ldots, S_{mm})</span>, where <span class="math inline">S_{jj}</span> are random <span class="math inline">\{-1,+1\}</span> signs</li>
+<li>Let <span class="math inline">p \in \mathbb{Z}^+</span> be a small positive integer, say <span class="math inline">20</span> for this problem.</li>
+<li>Let <span class="math inline">R \in \{0, 1\}^{n+p \times m}</span> be a <em>row selection matrix</em>, meaning that each row of <span class="math inline">R</span> has only 1 non-zero entry, chosen uniformly at random.</li>
+<li>Define <span class="math inline">\Phi = R H^{(\text{norm})}_m S \in \mathbb{R}^{n+p \times m}</span></li>
+</ol>
+<p>We then define the matrix <span class="math inline">M</span> via its inverse <span class="math inline">M^{-1} = \hat{A}^T \Phi^T \Phi \hat{A} \in \mathbb{R}^{n \times n}</span>.</p>
+<p><em>Questions</em></p>
+<ol type="1">
+<li><strong>(2 points)</strong> How many FLOPs are required to compute the matrices <span class="math inline">M^{-1}</span> and <span class="math inline">M</span>, respectively, assuming that you can compute the matrix-vector product <span class="math inline">H_mv</span> in time <span class="math inline">m \log m</span> for any vector <span class="math inline">v \in \mathbb{R}^m</span>?</li>
+<li><strong>(2 points)</strong> How many FLOPs are required to naively compute <span class="math inline">\hat{A}^T \hat{A}</span>, assuming <span class="math inline">\hat{A}</span> is dense?</li>
+<li><strong>(2 points)</strong> How many FLOPs are required to compute <span class="math inline">\hat{A}^T \hat{A} v</span> for a vector <span class="math inline">v \in \mathbb{R}^n</span> by first computing <span class="math inline">u = \hat{A}v</span> and then computing <span class="math inline">\hat{A}^T u</span>?</li>
+<li><strong>(4 points)</strong> Suppose that conjugate gradients runs for <span class="math inline">k</span> iterations. Using the preconditioned conjugate gradient algorithm with <span class="math inline">M = (\hat{A}^T \Phi^T \Phi \hat{A})^{-1}</span>, how many total floating point operations have been performed? How many would be required to directly solve <span class="math inline">\hat{A}^T \hat{A} x = \hat{A}^T b</span>? How large must <span class="math inline">k</span> be to make the conjugate gradient method slower?</li>
+<li><strong>(10 points)</strong> Implement the conjugate gradient algorithm for solving the positive definite linear system <span class="math inline">\hat{A}^T \hat{A} x = \hat{A}^T b</span> both with and without the preconditioner <span class="math inline">M</span>. Set <span class="math inline">m = 2^{12}</span> and <span class="math inline">n = 400</span>. Plot the norm of the residual <span class="math inline">r_k = \hat{A}^T b - \hat{A}^T \hat{A} x_k</span> (relative to <span class="math inline">\|\hat{A}^T b\|_2</span>) as a function of iteration <span class="math inline">k</span>. Additionally, compute and print the condition numbers <span class="math inline">\kappa(\hat{A}^T \hat{A})</span> and <span class="math inline">\kappa(M^{1/2} \hat{A}^T \hat{A} M^{1/2})</span>.</li>
+</ol></li>
+</ol>
+</section>
+<section id="newton-and-quasi-newton-methods" class="level3">
+<h3 class="anchored" data-anchor-id="newton-and-quasi-newton-methods">Newton and quasi-Newton methods</h3>
+<ol type="1">
+<li><p><strong>Newton convergence issue</strong> [10 points]</p>
+<p>Consider the following function:</p>
+<p><span class="math display">
+f(x,y) = \dfrac{x^4}{4} - x^2 + 2x + (y-1)^2
+</span></p>
+<p>And the starting point is <span class="math inline">x_0 = (0,2)^\top</span>. How does Newton’s method behave when started from this point? How can this be explained? How does the gradient descent with fixed step <span class="math inline">\alpha = 0.01</span> and the steepest descent method behave under the same conditions? (It is not necessary to show numerical simulations in this problem).</p></li>
+<li><p><strong>Hessian-Free Newton method</strong> [20 points] In this exercise, we’ll explore the optimization of a binary logistic regression problem using various methods.</p>
+<p>Given a dataset with <span class="math inline">n</span> observations, where each observation consists of a feature vector <span class="math inline">x_i</span> and an associated binary target variable <span class="math inline">y_i \in \{0,1\}</span>, the logistic regression model predicts the probability that <span class="math inline">y_i = 1</span> given <span class="math inline">x_i</span>. The loss function is:</p>
+<p><span class="math display">
+f(w) = -\sum_{i=1}^n \left[ y_i \log\left(p\left(y_i=1 | x_i; w\right)\right) + \left(1-y_i\right) \log\left(1-p(y_i=1 | x_i; w)\right) \right] + \frac{\mu}{2} \|w\|_2^2
+</span></p>
+<p>where <span class="math inline">p(y=1 | x;w) = \frac{1}{1 + e^{-w^T x}}</span>.</p>
+<ol type="1">
+<li>(2 points) GD with <span class="math inline">\mu = 1</span>: find max learning rate, plot convergence.</li>
+<li>(2 points) Newton’s method: convergence analysis.</li>
+<li>(2 points) Damped Newton: stability with learning rate adjustment.</li>
+<li>(2 points) GD with <span class="math inline">\mu = 0</span>: find max learning rate, discuss reaching <span class="math inline">\varepsilon</span>-tolerance.</li>
+<li>(2 points) Newton with <span class="math inline">\mu = 0</span>: analyze convergence, compare with damped variants.</li>
+<li>(5 points) <strong>Newton-CG:</strong> Use CG (<code>jax.scipy.sparse.linalg.cg</code>) to solve <span class="math inline">\nabla^2 f(x_k) d_k = - \nabla f(x_k)</span>. Compare efficiency vs standard Newton.</li>
+<li>(5 points) <strong>Hessian-Free Newton (HFN):</strong> Use autograd for Hessian-vector products (no explicit Hessian storage). Compare time/memory vs previous methods.</li>
+</ol></li>
+</ol>
+</section>
+<section id="conditional-gradient-methods" class="level3">
+<h3 class="anchored" data-anchor-id="conditional-gradient-methods">Conditional gradient methods</h3>
+<ol type="1">
+<li><p><strong>Projection onto the Birkhoff Polytope using Frank-Wolfe</strong> [20 points]</p>
+<p>The Birkhoff polytope <span class="math inline">B_n</span> is the set of <span class="math inline">n \times n</span> doubly stochastic matrices: <span class="math display">
+B_n = \{ X \in \mathbb{R}^{n \times n} \mid X_{ij} \ge 0 \;\forall i,j, \quad X \mathbf{1} = \mathbf{1}, \quad X^T \mathbf{1} = \mathbf{1} \}
+</span> Its extreme points are the permutation matrices.</p>
+<p>Given an arbitrary matrix <span class="math inline">Y \in \mathbb{R}^{n \times n}</span>, we want to find its projection onto <span class="math inline">B_n</span>: <span class="math display">
+\min_{X \in B_n} f(X) = \frac{1}{2} \| X - Y \|_F^2
+</span></p>
+<ol type="1">
+<li>[5 points] Explicitly write down the gradient <span class="math inline">\nabla f(X_k)</span>. Explain how to solve the LMO step <span class="math inline">\min_{S \in B_n} \langle \nabla f(X_k), S \rangle</span>. What kind of matrix is the solution <span class="math inline">S_k</span>? <em>Hint: Consider the connection to the linear assignment problem (Hungarian algorithm).</em></li>
+<li>[10 points] Implement the Frank-Wolfe algorithm using <code>scipy.optimize.linear_sum_assignment</code> to solve the LMO. For the step size, use <span class="math inline">\gamma_k = \frac{\langle X_k - Y, X_k - S_k \rangle}{\| X_k - S_k \|_F^2}</span>, clipped to <span class="math inline">[0, 1]</span>. Plot the objective versus iterations.</li>
+<li>[5 points] Test with <span class="math inline">n=5</span> and random <span class="math inline">Y</span>. Run for 200 iterations. Verify that <span class="math inline">X_{200}</span> is approximately doubly stochastic.</li>
+</ol></li>
+<li><p><strong>Minimizing a Quadratic over the Simplex</strong> [20 points]</p>
+<p><span class="math display">
+\min_{x \in \Delta_n} f(x) = \frac{1}{2} x^T Q x + c^T x
+</span> where <span class="math inline">\Delta_n = \{x \in \mathbb{R}^n \mid \sum_{i=1}^n x_i = 1, x_i \ge 0\}</span>, <span class="math inline">Q \in \mathbb{S}^n_{++}</span>.</p>
+<ol type="1">
+<li>[5 points] Generate data: <span class="math inline">n=20</span>, random <span class="math inline">Q</span> with spectrum <span class="math inline">[\mu; L]</span>, random <span class="math inline">x^* \in \Delta_n</span>, <span class="math inline">c = -Qx^*</span>. Specify 2 starting points.</li>
+<li>[7 points] Implement Frank-Wolfe. Start from a feasible point. Track <span class="math inline">|f(x_k) - f(x^*)|</span>.</li>
+<li>[8 points] Implement Projected Gradient Descent. Use simplex projection (e.g., <a href="https://stanford.edu/~jduchi/projects/DuchiShSiCh08.pdf">Duchi et al., 2008</a>). Justify learning rate.</li>
+<li>Plot <span class="math inline">f(x_k)</span> vs iteration for both methods on the same graph. Compare convergence.</li>
+</ol></li>
+</ol>
+</section>
+<section id="subgradient-method" class="level3">
+<h3 class="anchored" data-anchor-id="subgradient-method">Subgradient method</h3>
+<ol type="1">
+<li><p><strong>Finding a point in the intersection of convex sets.</strong> [30 points] Let <span class="math inline">A \in \mathbb{R}^{n \times n}</span> be some non-degenerate matrix and let <span class="math inline">\Sigma</span> be an <span class="math inline">n \times n</span> diagonal matrix with diagonal entries <span class="math inline">\sigma_1,...,\sigma_n &gt; 0</span>, and <span class="math inline">y</span> a given vector in <span class="math inline">\mathbb{R}^n</span>. Consider the compact convex sets <span class="math inline">U = \{x \in \mathbb{R}^n \mid \|A(x-y)\|_2 \leq 1\}</span> and <span class="math inline">V = \{x \in \mathbb{R}^n \mid \|\Sigma x\|_\infty \leq 1\}</span>.</p>
+<ol type="1">
+<li>[10 points] Minimize <span class="math inline">\min_{x\in\mathbb{R}^n} \max\{\mathbf{dist}(x, U), \mathbf{dist}(x, V)\}</span>. Propose a converging algorithm to find <span class="math inline">x \in U \cap V</span> (assume <span class="math inline">U \cap V \neq \emptyset</span>).</li>
+<li>[15 points] Implement with <span class="math inline">n = 2</span>, <span class="math inline">y = (3, 2)</span>, <span class="math inline">\sigma_1 = 0.5</span>, <span class="math inline">\sigma_2 = 1</span>, <span class="math inline">A = \begin{bmatrix} 1 &amp; 0 \\ -1 &amp; 1 \end{bmatrix}</span>. Plot objective vs iterations for <span class="math inline">x_0 = [(2, -1), (0, 0), (1, 2)]</span>.</li>
+<li>[5 points] Discussion: convexity, smoothness, uniqueness, which start converges fastest/slowest and why.</li>
+</ol></li>
+<li><p><strong>Subgradient methods for Lasso.</strong> [10 points]</p>
+<p><span class="math display">
+\min_{x \in \mathbb{R}^n} f(x) := \frac12 \|Ax - b\|^2 + \lambda \|x\|_1
+</span></p>
+<ul>
+<li>Derive the subdifferential <span class="math inline">\partial f(x)</span>.</li>
+<li>Let <span class="math inline">n = 1000</span>, <span class="math inline">m = 200</span>, <span class="math inline">\lambda = 0.01</span>. Generate data with sparse <span class="math inline">x^*</span>. Implement subgradient method with step size rules: constant, constant length, <span class="math inline">1/\sqrt{k}</span>, <span class="math inline">1/k</span>, Polyak’s step. Plot objective vs iterations.</li>
+<li>Repeat with heavy ball term <span class="math inline">\beta_k(x^k - x^{k-1})</span>, tune <span class="math inline">\beta</span>.</li>
+</ul></li>
+</ol>
+</section>
+<section id="proximal-gradient-method" class="level3">
+<h3 class="anchored" data-anchor-id="proximal-gradient-method">Proximal gradient method</h3>
+<ol type="1">
+<li><p><strong>Proximal Method for Sparse Softmax Regression</strong> [20 points]</p>
+<p>Softmax regression with L1 regularization: <span class="math display">
+\min_{W \in \mathbb{R}^{c \times d}} -\sum_{i=1}^{N} \log P(y_i | x_i; W) + \lambda \| W \|_1
+</span> where <span class="math inline">P(y = j | x; W) = \frac{e^{W_j^T x}}{\sum_{i=1}^{c} e^{W_i^T x}}</span>.</p>
+<p>We use 3-class classification on <a href="https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success">Predicting Students’ Dropout and Academic Success</a>.</p>
+<ol type="1">
+<li>[4 points] Write exact update rules for subgradient and proximal gradient methods.</li>
+<li>[6 points] With <span class="math inline">\lambda = 0</span>: find max learning rates, report convergence and sparsity.</li>
+<li>[10 points] Fill convergence table for <span class="math inline">\lambda \in \{10^{-2}, 10^{-3}, 10^{-1}, 1\}</span> and <span class="math inline">\varepsilon \in \{10^{-1}, \ldots, 10^{-5}\}</span>: iterations, sparsity, test accuracy.</li>
 </ol></li>
 </ol>
 
