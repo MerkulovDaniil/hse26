@@ -854,3 +854,153 @@ should be made to maximize the profit?
         ```
 
         What should $h$ be taken as? Should $\rho$ be greater or less than $1$? Should $L_0$ be taken as large or small? Draw a similar figure as it was in the previous step for L computed adaptively (6 lines - GD, HB, NAG, GD adaptive L, HB adaptive L, NAG adaptive L)
+
+### Conjugate gradients
+
+1. **[Randomized Preconditioners for Conjugate Gradient Methods.](https://web.stanford.edu/class/ee364b/364b_exercises.pdf)**  (20 points)
+
+    *Linear least squares*
+
+    In this task, we explore the use of some randomization methods for solving overdetermined least-squares problems, focusing on conjugate gradient methods. Let $\hat{A} \in \mathbb{R}^{m \times n}$ be a matrix (we assume that $m \gg n$) and $\hat{b} \in \mathbb{R}^m$, we aim to minimize
+
+    $$
+    f(x) = \frac{1}{2} \|\hat{A}x - \hat{b}\|^2_2 = \frac{1}{2} \sum_{i=1}^m (\hat{a}_i^T x - \hat{b}_i)^2,
+    $$
+
+    where the $\hat{a}_i \in \mathbb{R}^n$ denote the rows of $\hat{A}$.
+
+    *Preconditioners*
+
+    We know, that the convergence bound of the CG applied for the problem depends on the condition number of the matrix. Note, that for the problem above we have the matrix $\hat{A}^T \hat{A}$ and the condition number is squared after this operation ($\kappa (X^T X) =  \kappa^2 \left(X \right)$). That is the reason, why we typically need to use *preconditioners* ([read 12. for more details](https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf)) with CG.
+
+    The general idea of using preconditioners implies switching from solving $Ax = b$ to $MAx = Mb$ with hope, that $\kappa \left( MA\right) \ll \kappa \left( A\right)$ or eigenvalues of $MA$ are better clustered than those of $A$ (note, that matrix $A$ here is for the general case, here we have $\hat{A}^T\hat{A}$ instead).
+
+    This idea can also be viewed as coordinate change $x = T \hat{x}, \; \hat{x} = T^{-1}x$, which leads to the problem $T^T A T \hat{x} = T^Tb$. Note, that the spectrum of $T^TAT$ is the same as the spectrum of $MA$.
+
+    The best choice of $M$ is $A^{-1}$, because $\kappa (A^{-1} A) = \kappa (I) = 1$. However, if we know $A^{-1}$, the original problem is already solved, that is why we need to find some trade-off between enhanced convergence, and extra cost of working with $M$. The goal is to find $M$ that is cheap to multiply, and approximate inverse of $A$ (or at least has a more clustered spectrum than $A$).
+
+    Note, that for the linear least squares problem the matrix of quadratic form is $A = \hat{A}^T\hat{A} \in \mathbb{R}^{n \times n}$ and the rhs vector is $b = \hat{A}^T\hat{b} \in \mathbb{R}^n$.
+
+    *Hadamard matrix*
+
+    Given $m \in \{2^i, i = 1, 2, \ldots\}$, the (unnormalized) Hadamard matrix of order $m$ is defined recursively as
+
+    $$
+    H_2 = \begin{bmatrix} 1 & 1 \\ 1 & -1 \end{bmatrix}, \quad \text{and} \quad H_m = \begin{bmatrix} H_{m/2} & H_{m/2} \\ H_{m/2} & -H_{m/2} \end{bmatrix}.
+    $$
+
+    The associated normalized Hadamard matrix is given by $H^{(\text{norm})}_m = \frac{1}{\sqrt{m}} H_m$, which evidently satisfies $H^{(\text{norm})T}_m H^{(\text{norm})}_m = I_{m \times m}$. Moreover, via a recursive algorithm, it is possible to compute matvec $H_m x$ in time $O(m \log m)$.
+
+    To solve the least squares minimization problem using conjugate gradients, we must solve $\hat{A}^T \hat{A} x = \hat{A}^T b$. Using a preconditioner $M$ such that $M \approx A^{-1}$ can give substantial speedup.
+
+    Consider the following scheme to generate a randomized preconditioner, assuming that $m = 2^i$ for some $i$:
+
+    1. Let $S = \text{diag}(S_{11}, \ldots, S_{mm})$, where $S_{jj}$ are random $\{-1,+1\}$ signs
+    2. Let $p \in \mathbb{Z}^+$ be a small positive integer, say $20$ for this problem.
+    3. Let $R \in \{0, 1\}^{n+p \times m}$ be a *row selection matrix*, meaning that each row of $R$ has only 1 non-zero entry, chosen uniformly at random.
+    4. Define $\Phi = R H^{(\text{norm})}_m S \in \mathbb{R}^{n+p \times m}$
+
+    We then define the matrix $M$ via its inverse $M^{-1} = \hat{A}^T \Phi^T \Phi \hat{A} \in \mathbb{R}^{n \times n}$.
+
+    *Questions*
+
+    1. **(2 points)** How many FLOPs are required to compute the matrices $M^{-1}$ and $M$, respectively, assuming that you can compute the matrix-vector product $H_mv$ in time $m \log m$ for any vector $v \in \mathbb{R}^m$?
+    1. **(2 points)** How many FLOPs are required to naively compute $\hat{A}^T \hat{A}$, assuming $\hat{A}$ is dense?
+    1. **(2 points)** How many FLOPs are required to compute $\hat{A}^T \hat{A} v$ for a vector $v \in \mathbb{R}^n$ by first computing $u = \hat{A}v$ and then computing $\hat{A}^T u$?
+    1. **(4 points)** Suppose that conjugate gradients runs for $k$ iterations. Using the preconditioned conjugate gradient algorithm with $M = (\hat{A}^T \Phi^T \Phi \hat{A})^{-1}$, how many total floating point operations have been performed? How many would be required to directly solve $\hat{A}^T \hat{A} x = \hat{A}^T b$? How large must $k$ be to make the conjugate gradient method slower?
+    1. **(10 points)** Implement the conjugate gradient algorithm for solving the positive definite linear system $\hat{A}^T \hat{A} x = \hat{A}^T b$ both with and without the preconditioner $M$. Set $m = 2^{12}$ and $n = 400$. Plot the norm of the residual $r_k = \hat{A}^T b - \hat{A}^T \hat{A} x_k$ (relative to $\|\hat{A}^T b\|_2$) as a function of iteration $k$. Additionally, compute and print the condition numbers $\kappa(\hat{A}^T \hat{A})$ and $\kappa(M^{1/2} \hat{A}^T \hat{A} M^{1/2})$.
+
+### Newton and quasi-Newton methods
+
+1. **Newton convergence issue** [10 points]
+
+    Consider the following function:
+
+    $$
+    f(x,y) = \dfrac{x^4}{4} - x^2 + 2x + (y-1)^2
+    $$
+
+    And the starting point is $x_0 = (0,2)^\top$. How does Newton's method behave when started from this point? How can this be explained? How does the gradient descent with fixed step $\alpha = 0.01$ and the steepest descent method behave under the same conditions? (It is not necessary to show numerical simulations in this problem).
+
+1. **Hessian-Free Newton method** [20 points] In this exercise, we'll explore the optimization of a binary logistic regression problem using various methods.
+
+    Given a dataset with $n$ observations, where each observation consists of a feature vector $x_i$ and an associated binary target variable $y_i \in \{0,1\}$, the logistic regression model predicts the probability that $y_i = 1$ given $x_i$. The loss function is:
+
+    $$
+    f(w) = -\sum_{i=1}^n \left[ y_i \log\left(p\left(y_i=1 | x_i; w\right)\right) + \left(1-y_i\right) \log\left(1-p(y_i=1 | x_i; w)\right) \right] + \frac{\mu}{2} \|w\|_2^2
+    $$
+
+    where $p(y=1 | x;w) = \frac{1}{1 + e^{-w^T x}}$.
+
+    1. (2 points) GD with $\mu = 1$: find max learning rate, plot convergence.
+    1. (2 points) Newton's method: convergence analysis.
+    1. (2 points) Damped Newton: stability with learning rate adjustment.
+    1. (2 points) GD with $\mu = 0$: find max learning rate, discuss reaching $\varepsilon$-tolerance.
+    1. (2 points) Newton with $\mu = 0$: analyze convergence, compare with damped variants.
+    1. (5 points) **Newton-CG:** Use CG (`jax.scipy.sparse.linalg.cg`) to solve $\nabla^2 f(x_k) d_k = - \nabla f(x_k)$. Compare efficiency vs standard Newton.
+    1. (5 points) **Hessian-Free Newton (HFN):** Use autograd for Hessian-vector products (no explicit Hessian storage). Compare time/memory vs previous methods.
+
+### Conditional gradient methods
+
+1. **Projection onto the Birkhoff Polytope using Frank-Wolfe** [20 points]
+
+    The Birkhoff polytope $B_n$ is the set of $n \times n$ doubly stochastic matrices:
+    $$
+    B_n = \{ X \in \mathbb{R}^{n \times n} \mid X_{ij} \ge 0 \;\forall i,j, \quad X \mathbf{1} = \mathbf{1}, \quad X^T \mathbf{1} = \mathbf{1} \}
+    $$
+    Its extreme points are the permutation matrices.
+
+    Given an arbitrary matrix $Y \in \mathbb{R}^{n \times n}$, we want to find its projection onto $B_n$:
+    $$
+    \min_{X \in B_n} f(X) = \frac{1}{2} \| X - Y \|_F^2
+    $$
+
+    1. [5 points] Explicitly write down the gradient $\nabla f(X_k)$. Explain how to solve the LMO step $\min_{S \in B_n} \langle \nabla f(X_k), S \rangle$. What kind of matrix is the solution $S_k$? *Hint: Consider the connection to the linear assignment problem (Hungarian algorithm).*
+    1. [10 points] Implement the Frank-Wolfe algorithm using `scipy.optimize.linear_sum_assignment` to solve the LMO. For the step size, use $\gamma_k = \frac{\langle X_k - Y, X_k - S_k \rangle}{\| X_k - S_k \|_F^2}$, clipped to $[0, 1]$. Plot the objective versus iterations.
+    1. [5 points] Test with $n=5$ and random $Y$. Run for 200 iterations. Verify that $X_{200}$ is approximately doubly stochastic.
+
+1. **Minimizing a Quadratic over the Simplex** [20 points]
+
+    $$
+    \min_{x \in \Delta_n} f(x) = \frac{1}{2} x^T Q x + c^T x
+    $$
+    where $\Delta_n = \{x \in \mathbb{R}^n \mid \sum_{i=1}^n x_i = 1, x_i \ge 0\}$, $Q \in \mathbb{S}^n_{++}$.
+
+    1. [5 points] Generate data: $n=20$, random $Q$ with spectrum $[\mu; L]$, random $x^* \in \Delta_n$, $c = -Qx^*$. Specify 2 starting points.
+    1. [7 points] Implement Frank-Wolfe. Start from a feasible point. Track $|f(x_k) - f(x^*)|$.
+    1. [8 points] Implement Projected Gradient Descent. Use simplex projection (e.g., [Duchi et al., 2008](https://stanford.edu/~jduchi/projects/DuchiShSiCh08.pdf)). Justify learning rate.
+    1. Plot $f(x_k)$ vs iteration for both methods on the same graph. Compare convergence.
+
+### Subgradient method
+
+1. **Finding a point in the intersection of convex sets.** [30 points] Let $A \in \mathbb{R}^{n \times n}$ be some non-degenerate matrix and let $\Sigma$ be an $n \times n$ diagonal matrix with diagonal entries $\sigma_1,...,\sigma_n > 0$, and $y$ a given vector in $\mathbb{R}^n$. Consider the compact convex sets $U = \{x \in \mathbb{R}^n \mid \|A(x-y)\|_2 \leq 1\}$ and $V = \{x \in \mathbb{R}^n \mid \|\Sigma x\|_\infty \leq 1\}$.
+
+    1. [10 points] Minimize $\min_{x\in\mathbb{R}^n} \max\{\mathbf{dist}(x, U), \mathbf{dist}(x, V)\}$. Propose a converging algorithm to find $x \in U \cap V$ (assume $U \cap V \neq \emptyset$).
+    1. [15 points] Implement with $n = 2$, $y = (3, 2)$, $\sigma_1 = 0.5$, $\sigma_2 = 1$, $A = \begin{bmatrix} 1 & 0 \\ -1 & 1 \end{bmatrix}$. Plot objective vs iterations for $x_0 = [(2, -1), (0, 0), (1, 2)]$.
+    1. [5 points] Discussion: convexity, smoothness, uniqueness, which start converges fastest/slowest and why.
+
+1. **Subgradient methods for Lasso.** [10 points]
+
+    $$
+    \min_{x \in \mathbb{R}^n} f(x) := \frac12 \|Ax - b\|^2 + \lambda \|x\|_1
+    $$
+
+    * Derive the subdifferential $\partial f(x)$.
+    * Let $n = 1000$, $m = 200$, $\lambda = 0.01$. Generate data with sparse $x^*$. Implement subgradient method with step size rules: constant, constant length, $1/\sqrt{k}$, $1/k$, Polyak's step. Plot objective vs iterations.
+    * Repeat with heavy ball term $\beta_k(x^k - x^{k-1})$, tune $\beta$.
+
+### Proximal gradient method
+
+1. **Proximal Method for Sparse Softmax Regression** [20 points]
+
+    Softmax regression with L1 regularization:
+    $$
+    \min_{W \in \mathbb{R}^{c \times d}} -\sum_{i=1}^{N} \log P(y_i | x_i; W) + \lambda \| W \|_1
+    $$
+    where $P(y = j | x; W) = \frac{e^{W_j^T x}}{\sum_{i=1}^{c} e^{W_i^T x}}$.
+
+    We use 3-class classification on [Predicting Students' Dropout and Academic Success](https://archive.ics.uci.edu/dataset/697/predict+students+dropout+and+academic+success).
+
+    1. [4 points] Write exact update rules for subgradient and proximal gradient methods.
+    1. [6 points] With $\lambda = 0$: find max learning rates, report convergence and sparsity.
+    1. [10 points] Fill convergence table for $\lambda \in \{10^{-2}, 10^{-3}, 10^{-1}, 1\}$ and $\varepsilon \in \{10^{-1}, \ldots, 10^{-5}\}$: iterations, sparsity, test accuracy.
