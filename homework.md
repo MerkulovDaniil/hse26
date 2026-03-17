@@ -428,4 +428,297 @@ toc: true
     $$
     \alpha_{k+1} = \alpha_k - \beta \frac{\partial L}{\partial \alpha}
     $$
-    Choose any constant $\beta$ and the number of steps you need. Describe the obtained results. How would you understand, that the obtained schedule ($\alpha \in \mathbb{R}^{10}$) becomes better than it was at the start? How do you check numerically local optimality in this problem? 
+    Choose any constant $\beta$ and the number of steps you need. Describe the obtained results. How would you understand, that the obtained schedule ($\alpha \in \mathbb{R}^{10}$) becomes better than it was at the start? How do you check numerically local optimality in this problem?
+
+### Convexity
+
+1. [10 points] Show that this function is convex:
+    $$
+    f(x, y, z) = z \log \left(e^{\frac{x}{z}} + e^{\frac{y}{z}}\right) + (z - 2)^2 + e^{\frac{1}{x + y}}
+    $$
+    where the function $f : \mathbb{R}^3 \to \mathbb{R}$ has its domain defined as:
+    $$
+    \text{dom } f = \{ (x, y, z) \in \mathbb{R}^3 : x + y > 0, \, z > 0 \}.
+    $$
+
+1. [8 points] Show, that $\mathbf{conv}\{xx^\top: x \in \mathbb{R}^n, \Vert x\Vert  = 1\} = \{A \in \mathbb{S}^n_+: \text{tr}(A) = 1\}$.
+1. [5 points] Prove that the set of $\{x \in \mathbb{R}^2 \mid e^{x_1}\le x_2\}$ is convex.
+1. [8 points] Consider the function $f(x) = x^d$, where $x \in \mathbb{R}_{+}$. Fill the following table with ✅ or ❎. Explain your answers (with proofs).
+
+    | $d$ | Convex | Concave | Strictly Convex | $\mu$-strongly convex |
+    |:-:|:-:|:-:|:-:|:-:|
+    | $-2, x \in \mathbb{R}_{++}$| | | | |
+    | $-1, x \in \mathbb{R}_{++}$| | | | |
+    | $0$| | | | |
+    | $0.5$ | | | | |
+    |$1$ | | | | |
+    | $\in (1; 2)$ | | | | |
+    | $2$| | | | |
+    | $> 2$| | | |
+
+    : {.responsive}
+
+1. [6 points] Prove that the entropy function, defined as
+    $$
+    f(x) = -\sum_{i=1}^n x_i \log(x_i),
+    $$
+    with $\text{dom}(f) = \{x \in \R^n_{++} : \sum_{i=1}^n x_i = 1\}$, is strictly concave.
+
+1. [8 points] Show that the maximum of a convex function $f$ over the polyhedron $P = \text{conv}\{v_1, \ldots, v_k\}$ is achieved at one of its vertices, i.e.,
+    $$
+    \sup_{x \in P} f(x) = \max_{i=1, \ldots, k} f(v_i).
+    $$
+
+    A stronger statement is: the maximum of a convex function over a closed bounded convex set is achieved at an extreme point, i.e., a point in the set that is not a convex combination of any other points in the set. (you do not have to prove it). *Hint:* Assume the statement is false, and use Jensen's inequality.
+
+1. [6 points] Show, that the two definitions of $\mu$-strongly convex functions are equivalent:
+    1. $f(x)$ is $\mu$-strongly convex $\iff$ for any $x_1, x_2 \in S$ and $0 \le \lambda \le 1$ for some $\mu > 0$:
+        $$
+        f(\lambda x_1 + (1 - \lambda)x_2) \le \lambda f(x_1) + (1 - \lambda)f(x_2) - \frac{\mu}{2} \lambda (1 - \lambda)\|x_1 - x_2\|^2
+        $$
+
+    1. $f(x)$ is $\mu$-strongly convex $\iff$ if there exists $\mu>0$ such that the function $f(x) - \dfrac{\mu}{2}\Vert x\Vert^2$ is convex.
+
+1. [6 points] **Convexity of the log-sum-exp function.** The function $\text{lse}(x) = \log\left(\sum_{i=1}^n e^{x_i}\right)$, known as the *log-sum-exp*, is one of the most important convex functions in machine learning (it appears in softmax, cross-entropy loss, and logistic regression).
+
+    1. Prove that $\text{lse}(x)$ is convex on $\mathbb{R}^n$ by computing its Hessian and showing it is positive semidefinite. *Hint:* define $p_i = \frac{e^{x_i}}{\sum_j e^{x_j}}$ and express the Hessian as $\text{diag}(p) - pp^T$. To show PSD, consider $z^T H z$ and interpret $p$ as probability weights.
+    2. Using the result from part (a), prove the **log-sum-exp inequality**: for any probability vector $\lambda \in \Delta_n$ (i.e., $\lambda_i \geq 0$, $\sum_i \lambda_i = 1$) and any $x \in \mathbb{R}^n$,
+        $$
+        \sum_{i=1}^n \lambda_i x_i \leq \log\left(\sum_{i=1}^n \lambda_i e^{x_i}\right) \leq \log\left(\sum_{i=1}^n e^{x_i}\right).
+        $$
+        Name the classical inequality that the left-hand bound is a direct consequence of.
+
+### Optimality conditions. KKT. Duality
+
+In this section, you can consider either the arbitrary norm or the Euclidian norm if nothing else is specified.
+
+1. **Toy example** [10 points]
+    $$
+    \begin{split}
+    & x^2 + 1 \to \min\limits_{x \in \mathbb{R} }\\
+    \text{s.t. } & (x-2)(x-4) \leq 0
+    \end{split}
+    $$
+
+    1. Give the feasible set, the optimal value, and the optimal solution.
+    1.  Plot the objective $x^2 +1$ versus $x$. On the same plot, show the feasible set, optimal point, and value, and plot the Lagrangian $L(x,\mu)$ versus $x$ for a few positive values of $\mu$. Verify the lower bound property ($p^* \geq \inf_x L(x, \mu)$for $\mu \geq 0$). Derive and sketch the Lagrange dual function $g$.
+    1. State the dual problem, and verify that it is a concave maximization problem. Find the dual optimal value and dual optimal solution $\mu^*$. Does strong duality hold?
+    1.  Let $p^*(u)$ denote the optimal value of the problem
+
+    $$
+    \begin{split}
+    & x^2 + 1 \to \min\limits_{x \in \mathbb{R} }\\
+    \text{s.t. } & (x-2)(x-4) \leq u
+    \end{split}
+    $$
+
+    as a function of the parameter $u$. Plot $p^*(u)$. Verify that $\dfrac{dp^*(0)}{du} = -\mu^*$
+
+1. Consider a smooth convex function $f(x)$ at some point $x_k$. One can define the first-order Taylor expansion of the function as:
+    $$
+    f^I_{x_k}(x) = f(x_k) + \nabla f(x_k)^\top (x - x_k),
+    $$
+    where we can define $\delta x = x - x_k$ and $g = \nabla f(x_k)$. Thus, the expansion can be rewritten as:
+    $$
+    f^I_{x_k}(\delta x) = f(x_k) + g^\top \delta x.
+    $$
+    Suppose, we would like to design the family of optimization methods that will be defined as:
+    $$
+    x_{k+1} = \text{arg}\min_{x} \left\{f^I_{x_k}(\delta x) + \frac{\lambda}{2} \|\delta x\|^2\right\},
+    $$
+    where $\lambda > 0$ is a parameter.
+
+    1. [5 points] Show, that this method is equivalent to the gradient descent method with the choice of Euclidean norm of the vector $\|\delta x\| = \|\delta x\|_2$. Find the corresponding learning rate.
+    1. [5 points] Prove, that the following holds:
+        $$
+        \text{arg}\min_{\delta x \in \mathbb{R}^n} \left\{ g^T\delta x + \frac{\lambda}{2} \|\delta x\|^2\right\} = - \frac{\|g\|_*}{\lambda} \text{arg}\max_{\|t\|=1} \left\{ t^T g \right\},
+        $$
+        where $\|g\|_*$ is the [dual norm](https://fmin.xyz/docs/theory/Dual%20norm.html) of $g$.
+    1. [3 points] Consider another vector norm $\|\delta x\| = \|\delta x\|_\infty$. Write down explicit expression for the corresponding method.
+    1. [2 points] Consider induced operator matrix norm for any matrix $W \in \mathbb{R}^{d_{out} \times d_{in}}$
+        $$
+        \|W\|_{\alpha \to \beta} = \max_{x \in \mathbb{R}^{d_{in}}} \frac{\|Wx\|_{\beta}}{\|x\|_{\alpha}}.
+        $$
+        Typically, when we solve optimization problems in deep learning, we stack the weight matrices for all layers $l = [1, L]$ into a single vector.
+        $$
+        w = \text{vec}(W_1, W_2, \ldots, W_L) \in \mathbb{R}^{n},
+        $$
+        Can you write down the explicit expression, that relates
+        $$
+        \|w\|_\infty \qquad \text{ and } \qquad \|W_l\|_{\alpha \to \beta}, \; l = [1, L]?
+        $$
+
+1. [10 points] Derive the dual problem for the Ridge regression problem with $A \in \mathbb{R}^{m \times n}, b \in \mathbb{R}^m, \lambda > 0$:
+
+    $$
+    \begin{split}
+    \dfrac{1}{2}\|y-b\|^2 + \dfrac{\lambda}{2}\|x\|^2 &\to \min\limits_{x \in \mathbb{R}^n, y \in \mathbb{R}^m }\\
+    \text{s.t. } & y = Ax
+    \end{split}
+    $$
+
+1. [20 points] Derive the dual problem for the support vector machine problem with $A \in \mathbb{R}^{m \times n}, \mathbf{1} \in \mathbb{R}^m \in \mathbb{R}^m, \lambda > 0$:
+
+    $$
+    \begin{split}
+    \langle \mathbf{1}, t\rangle + \dfrac{\lambda}{2}\|x\|^2 &\to \min\limits_{x \in \mathbb{R}^n, t \in \mathbb{R}^m }\\
+    \text{s.t. } & Ax \succeq \mathbf{1} - t \\
+    & t \succeq 0
+    \end{split}
+    $$
+
+1. [10 points] Give an explicit solution to the following LP.
+
+    $$
+    \begin{split}
+    & c^\top x \to \min\limits_{x \in \mathbb{R}^n }\\
+    \text{s.t. } & 1^\top x = 1, \\
+    & x \succeq 0
+    \end{split}
+    $$
+
+    This problem can be considered the simplest portfolio optimization problem.
+
+1. [20 points] Show, that the following problem has a unique solution and find it:
+
+    $$
+    \begin{split}
+    & \langle C^{-1}, X\rangle - \log \det X \to \min\limits_{x \in \mathbb{R}^{n \times n} }\\
+    \text{s.t. } & \langle Xa, a\rangle \leq 1,
+    \end{split}
+    $$
+
+    where $C \in \mathbb{S}^n_{++}, a \in \mathbb{R}^n \neq 0$. The answer should not involve inversion of the matrix $C$.
+
+1. [20 points] Give an explicit solution to the following QP.
+
+    $$
+    \begin{split}
+    & c^\top x \to \min\limits_{x \in \mathbb{R}^n }\\
+    \text{s.t. } & (x - x_c)^\top A (x - x_c) \leq 1,
+    \end{split}
+    $$
+
+    where $A \in \mathbb{S}^n_{++}, c \neq 0, x_c \in \mathbb{R}^n$.
+
+1. [10 points] Consider the equality-constrained least-squares problem
+
+    $$
+    \begin{split}
+    & \|Ax - b\|_2^2 \to \min\limits_{x \in \mathbb{R}^n }\\
+    \text{s.t. } & Cx = d,
+    \end{split}
+    $$
+
+    where $A \in \mathbb{R}^{m \times n}$ with $\mathbf{rank }A = n$, and $C \in \mathbb{R}^{k \times n}$ with $\mathbf{rank }C = k$. Give the KKT conditions, and derive expressions for the primal solution $x^*$ and the dual solution $\lambda^*$.
+
+
+
+1. **Supporting hyperplane interpretation of KKT conditions**. [10 points]  Consider a **convex** problem with no equality constraints
+
+    $$
+    \begin{split}
+    & f_0(x) \to \min\limits_{x \in \mathbb{R}^n }\\
+    \text{s.t. } & f_i(x) \leq 0, \quad i = [1,m]
+    \end{split}
+    $$
+
+    Assume, that $\exists x^* \in \mathbb{R}^n, \mu^* \in \mathbb{R}^m$ satisfy the KKT conditions
+
+    $$
+    \begin{split}
+    & \nabla_x L (x^*, \mu^*) = \nabla f_0(x^*) + \sum\limits_{i=1}^m\mu_i^*\nabla f_i(x^*) = 0 \\
+    & \mu^*_i \geq 0, \quad i = [1,m] \\
+    & \mu^*_i f_i(x^*) = 0, \quad i = [1,m]\\
+    & f_i(x^*) \leq 0, \quad i = [1,m]
+    \end{split}
+    $$
+
+    Show that
+
+    $$
+    \nabla f_0(x^*)^\top (x - x^*) \geq 0
+    $$
+
+    for all feasible $x$. In other words, the KKT conditions imply the simple optimality criterion or $\nabla f_0(x^*)$ defines a supporting hyperplane to the feasible set at $x^*$.
+
+1. **Maximum entropy and the softmax.** [15 points] In machine learning, the softmax function plays a central role in classification. Here we derive it from first principles using the maximum entropy principle. Given $n$ classes with features $z_1, \ldots, z_n \in \mathbb{R}$, find the probability distribution $p = (p_1, \ldots, p_n)$ that maximizes entropy subject to a feature-matching constraint:
+
+    $$
+    \begin{split}
+    & -\sum_{i=1}^n p_i \ln p_i \to \max\limits_{p \in \mathbb{R}^n }\\
+    \text{s.t. } & \sum_{i=1}^n p_i = 1, \\
+    & \sum_{i=1}^n p_i z_i = \mu, \\
+    & p_i \geq 0, \quad i = [1,n]
+    \end{split}
+    $$
+
+    where $\mu \in (\min_i z_i,\, \max_i z_i)$ is a given expected feature value. Here $0 \ln 0 := 0$ by continuity.
+
+    1. [5 points] Write the Lagrangian (ignoring the inequality constraints $p_i \geq 0$ for now). Using the stationarity condition, show that the optimal distribution has the form:
+        $$
+        p_i^* = \frac{e^{\alpha z_i}}{\sum_{j=1}^n e^{\alpha z_j}}
+        $$
+        for some $\alpha \in \mathbb{R}$. Recognize this as the **softmax function**. Explain why $p_i^* > 0$ for all $i$, justifying that the ignored inequality constraints are indeed inactive at the optimum.
+    1. [5 points] Denote $Z(\alpha) = \sum_{j=1}^n e^{\alpha z_j}$. After eliminating $\lambda_0$, write the reduced dual objective $\phi(\alpha)$. Show that the dual problem takes the form:
+        $$
+        \min_{\alpha \in \mathbb{R}}\ \phi(\alpha), \qquad \phi(\alpha) = \ln\left(\sum_{j=1}^n e^{\alpha z_j}\right) - \alpha \mu
+        $$
+        Find the condition on $\alpha$ from the constraint $\sum_i p_i z_i = \mu$ and show that it is equivalent to $\phi'(\alpha) = 0$. *(Note: the log-sum-exp function from the Convexity section appears here!)*
+    1. [5 points] For the case $n = 3$, $z = (0, 1, 2)$, $\mu = 1$:
+        1. Show that the uniform distribution $p = \left(\frac{1}{3}, \frac{1}{3}, \frac{1}{3}\right)$ is optimal and find the corresponding $\alpha$.
+        1. Verify all the KKT conditions explicitly (including the inequality constraints $p_i \geq 0$).
+        1. Compute the maximum entropy value and compare it with the entropy of the distribution $q = \left(\frac{1}{4}, \frac{1}{2}, \frac{1}{4}\right)$, which also satisfies $\sum_i q_i z_i = 1$.
+
+### Linear programming
+
+1. **📊 Sparse signal recovery via Linear Programming.** [20 points] In machine learning and signal processing, we often want to recover a sparse vector from noisy linear measurements. Consider the following setup: we observe $b = Ax + \varepsilon$, where $A \in \mathbb{R}^{m \times n}$ with $m < n$, $x \in \mathbb{R}^n$ is a sparse signal, and $\varepsilon$ is measurement noise. A classical approach is **Basis Pursuit Denoising**:
+
+    $$
+    \min_{x \in \mathbb{R}^n} \|x\|_1 \quad \text{s.t.} \quad \|Ax - b\|_\infty \leq \delta
+    $$
+
+    where $\delta > 0$ is a noise tolerance parameter.
+
+    1. [7 points] Show that this problem can be reformulated as a **linear program**. Write the LP explicitly, clearly defining all new variables and constraints. *Hint: handle the absolute values in $\|x\|_1$ via splitting $x_i = u_i - v_i$ with $u_i, v_i \geq 0$, and the $\ell_\infty$-constraint via $2m$ linear inequalities.*
+
+    1. [5 points] Write down the dual of the LP you obtained in (a). *Hint: you may find it useful to introduce $\nu = \lambda^- - \lambda^+$ and express the dual in terms of $\nu$.* Give an interpretation: what do the dual variables correspond to in the context of signal recovery?
+
+    1. [8 points] Let $n = 4$, $m = 2$, and
+
+        $$A = \begin{pmatrix} 1 & 1 & 0 & 1 \\ 0 & 1 & 1 & -1 \end{pmatrix}, \quad b = \begin{pmatrix} 1 \\ 1 \end{pmatrix}, \quad \delta = 0.$$
+
+        In the noiseless case ($\delta = 0$), the problem becomes $\min \|x\|_1$ s.t. $Ax = b$.
+
+        1. Solve this LP (you may use any method: simplex by hand, complementary slackness, or a solver).
+
+        1. Using **strong LP duality** (from part (b) with $\delta = 0$), show that $x^\star = (0, 1, 0, 0)^\top$ is optimal by finding a dual vector $\nu \in \mathbb{R}^m$ such that: (1) $\|A^\top \nu\|_\infty \leq 1$ (dual feasibility), and (2) $b^\top \nu = \|x^\star\|_1$ (zero duality gap). Verify both conditions.
+
+        1. Compute the $\ell_2$-minimum-norm solution $x_{\ell_2} = A^\top(AA^\top)^{-1}b$ and compare its sparsity with $x^\star$. Explain geometrically or intuitively why $\ell_1$-minimization promotes sparsity, while $\ell_2$-minimization does not.
+
+1. [10 points] Prove the optimality of the solution
+
+    $$
+    x = \left(\frac{7}{3} , 0, \frac{1}{3}\right)^T
+    $$
+
+    to the following linear programming problem:
+
+    $$
+    \begin{split}
+    & 9x_1 + 3x_2 + 7x_3 \to \max\limits_{x \in \mathbb{R}^3 }\\
+    \text{s.t. } & 2x_1 + x_2 + 3x_3 \leq 6 \\
+    & 5x_1 + 4x_2 + x_3 \leq 12 \\
+    & 3x_3 \leq 1,\\
+    & x_1, x_2, x_3 \geq 0
+    \end{split}
+    $$
+
+    but you cannot use any numerical algorithm here.
+
+1. [10 points] Economic interpretation of the dual problem: Suppose a small shop makes wooden toys, where each toy train requires one piece of wood and $2$ tins of paint, while each toy boat requires one piece of wood and $1$ tin of paint. The profit on each toy train is $\$30$, and the profit on each toy boat is $\$20$. Given an inventory of $80$ pieces of wood and $100$ tins of paint, how many of each toy
+should be made to maximize the profit?
+    1. Write out the optimization problem in standard form, writing all constraints as inequalities.
+    1. Sketch the feasible set and determine $p^*$ and $x^*$
+    1. Find the dual problem, then determine $d^*$ and $\lambda^*$. Note that we can interpret the Lagrange multipliers $\lambda_k$ associated with the constraints on wood and paint as the prices for each piece of wood and tin of paint, so that $−d^*$ is how much money would be obtained from selling the inventory for those prices. Strong duality says a buyer should not pay more for the inventory than what the toy store would make by producing and selling toys from it, and that the toy store should not sell the inventory for less than that.
+    1. The other interpretation of the Lagrange multipliers is as sensitivities to changes in the constraints. Suppose the toymaker found some more pieces of wood; the $\lambda_k$ associated with the wood constraint will equal the partial derivative of $−p^*$ with respect to how much more wood became available. Suppose the inventory increases by one piece of wood. Use $\lambda^*$ to estimate how much the profit would increase, without solving the updated optimization problem. How is this consistent with the price interpretation given above for the Lagrange multipliers? [source](https://tleise.people.amherst.edu/Math294Spring2017/TeXfiles/LagrangeDualityHW.pdf)
