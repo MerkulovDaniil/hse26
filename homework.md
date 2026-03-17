@@ -652,7 +652,7 @@ should be made to maximize the profit?
 
 1. **Convergence of Gradient Descent in non-convex smooth case** [10 points]
 
-    We will assume nothing about the convexity of $f$.  We will show that gradient descent reaches an $\varepsilon$-substationary point $x$, such that $\|\nabla f(x)\|_2 \leq \varepsilon$, in $O(1/\varepsilon^2)$ iterations. Important note: you may use here Lipschitz parabolic upper bound:
+    We will assume nothing about the convexity of $f$, but we do assume that $f$ is bounded below: $f(x) \geq f^* > -\infty$ for all $x$. We will show that gradient descent reaches an $\varepsilon$-substationary point $x$, such that $\|\nabla f(x)\|_2 \leq \varepsilon$, in $O(1/\varepsilon^2)$ iterations. Important note: you may use here Lipschitz parabolic upper bound:
 
     $$
     f(y) \leq f(x) + \nabla f(x)^T (y-x) + \frac{L}{2} \|y-x\|_2^2, \;\;\;
@@ -709,7 +709,7 @@ should be made to maximize the profit?
 
     $$
     \tag{HB}
-    x_{k+1} = x_k - \alpha \nabla f(x_k) + \beta (x_k - x_{k-1})
+    x_{k+1} = x_k - \alpha \nabla f(x_k) + \beta (x_k - x_{k-1}), \quad x_{-1} := x_0.
     $$
 
     It is known, that for the quadratics the best choice of hyperparameters is $\alpha^* = \dfrac{4}{(\sqrt{L} + \sqrt{\mu})^2}, \beta^* = \dfrac{(\sqrt{L} - \sqrt{\mu})^2}{(\sqrt{L} + \sqrt{\mu})^2}$, which ensures accelerated linear convergence for a strongly convex quadratic function.
@@ -799,9 +799,10 @@ should be made to maximize the profit?
         ```
     1. For the training part $A_{train}$, $b_{train}$, estimate the constants $\mu, L$ of the training/optimization problem. Use the same small value $\lambda$ for all experiments
     1. Using gradient descent with the step $\frac{1}{L}$, train a model. Plot: accuracy versus iteration number.
+    1. Now consider the Heavy Ball method:
 
         $$
-        x_{k+1} = x_k - \alpha \nabla f(x_k) + \beta (x_k - x_{k-1})
+        x_{k+1} = x_k - \alpha \nabla f(x_k) + \beta (x_k - x_{k-1}), \quad x_{-1} := x_0.
         $$
 
         Fix a step $\alpha = \frac{1}{L}$ and search for different values of the momentum $\beta$ from $-1$ to $1$. Choose your own convergence criterion and plot convergence for several values of momentum on the same graph. Is the convergence always monotonic?
@@ -811,7 +812,7 @@ should be made to maximize the profit?
 
         $$
         \tag{NAG}
-        x_{k+1} = x_k - \alpha \nabla f(x_k + \beta (x_k - x_{k-1})) + \beta (x_k - x_{k-1})
+        x_{k+1} = x_k - \alpha \nabla f(x_k + \beta (x_k - x_{k-1})) + \beta (x_k - x_{k-1}), \quad x_{-1} := x_0.
         $$
 
         Fix a step $\frac{1}{L}$ and search for different values of momentum $\beta$ from $-1$ to $1$. Check also the momentum values equal to $\frac{k}{k+3}$, $\frac{k}{k+2}$, $\frac{k}{k+1}$ ($k$ is the number of iterations), and if you are solving a strongly convex problem, also $\frac{\sqrt{L} - \sqrt{\mu}}{\sqrt{L} + \sqrt{\mu}}$. Plot the convergence of the method as a function of the number of iterations (choose the convergence criterion yourself) for different values of the momentum. Is the convergence always monotonic?
@@ -879,7 +880,7 @@ should be made to maximize the profit?
 
     The associated normalized Hadamard matrix is given by $H^{(\text{norm})}_m = \frac{1}{\sqrt{m}} H_m$, which evidently satisfies $H^{(\text{norm})T}_m H^{(\text{norm})}_m = I_{m \times m}$. Moreover, via a recursive algorithm, it is possible to compute matvec $H_m x$ in time $O(m \log m)$.
 
-    To solve the least squares minimization problem using conjugate gradients, we must solve $\hat{A}^T \hat{A} x = \hat{A}^T b$. Using a preconditioner $M$ such that $M \approx A^{-1}$ can give substantial speedup.
+    To solve the least squares minimization problem using conjugate gradients, we must solve $\hat{A}^T \hat{A} x = \hat{A}^T \hat{b}$. Using a preconditioner $M$ such that $M \approx A^{-1}$ can give substantial speedup.
 
     Consider the following scheme to generate a randomized preconditioner, assuming that $m = 2^i$ for some $i$:
 
@@ -895,8 +896,8 @@ should be made to maximize the profit?
     1. **(2 points)** How many FLOPs are required to compute the matrices $M^{-1}$ and $M$, respectively, assuming that you can compute the matrix-vector product $H_mv$ in time $m \log m$ for any vector $v \in \mathbb{R}^m$?
     1. **(2 points)** How many FLOPs are required to naively compute $\hat{A}^T \hat{A}$, assuming $\hat{A}$ is dense?
     1. **(2 points)** How many FLOPs are required to compute $\hat{A}^T \hat{A} v$ for a vector $v \in \mathbb{R}^n$ by first computing $u = \hat{A}v$ and then computing $\hat{A}^T u$?
-    1. **(4 points)** Suppose that conjugate gradients runs for $k$ iterations. Using the preconditioned conjugate gradient algorithm with $M = (\hat{A}^T \Phi^T \Phi \hat{A})^{-1}$, how many total floating point operations have been performed? How many would be required to directly solve $\hat{A}^T \hat{A} x = \hat{A}^T b$? How large must $k$ be to make the conjugate gradient method slower?
-    1. **(10 points)** Implement the conjugate gradient algorithm for solving the positive definite linear system $\hat{A}^T \hat{A} x = \hat{A}^T b$ both with and without the preconditioner $M$. Set $m = 2^{12}$ and $n = 400$. Plot the norm of the residual $r_k = \hat{A}^T b - \hat{A}^T \hat{A} x_k$ (relative to $\|\hat{A}^T b\|_2$) as a function of iteration $k$. Additionally, compute and print the condition numbers $\kappa(\hat{A}^T \hat{A})$ and $\kappa(M^{1/2} \hat{A}^T \hat{A} M^{1/2})$.
+    1. **(4 points)** Suppose that conjugate gradients runs for $k$ iterations. Using the preconditioned conjugate gradient algorithm with $M = (\hat{A}^T \Phi^T \Phi \hat{A})^{-1}$, how many total floating point operations have been performed? How many would be required to directly solve $\hat{A}^T \hat{A} x = \hat{A}^T \hat{b}$? How large must $k$ be to make the conjugate gradient method slower?
+    1. **(10 points)** Implement the conjugate gradient algorithm for solving the positive definite linear system $\hat{A}^T \hat{A} x = \hat{A}^T \hat{b}$ both with and without the preconditioner $M$. Set $m = 2^{12}$ and $n = 400$. Plot the norm of the residual $r_k = \hat{A}^T \hat{b} - \hat{A}^T \hat{A} x_k$ (relative to $\|\hat{A}^T \hat{b}\|_2$) as a function of iteration $k$. Additionally, compute and print the condition numbers $\kappa(\hat{A}^T \hat{A})$ and $\kappa(M^{1/2} \hat{A}^T \hat{A} M^{1/2})$.
 
 ### Newton and quasi-Newton methods
 
@@ -910,9 +911,9 @@ should be made to maximize the profit?
 
     And the starting point is $x_0 = (0,2)^\top$. How does Newton's method behave when started from this point? How can this be explained? How does the gradient descent with fixed step $\alpha = 0.01$ and the steepest descent method behave under the same conditions? (It is not necessary to show numerical simulations in this problem).
 
-1. **Hessian-Free Newton method** [20 points] In this exercise, we'll explore the optimization of a binary logistic regression problem using various methods.
+1. **Hessian-Free Newton method** [20 points] In this exercise, we'll explore the optimization of a binary logistic regression problem using various methods. Generate synthetic data: $m = 1000$ observations, $d = 100$ features. Use `X = np.random.randn(m, d)`, generate true weights $w^* \in \mathbb{R}^d$, and set $y_i = \mathbf{1}[\sigma(x_i^\top w^*) > 0.5]$ where $\sigma$ is the sigmoid.
 
-    Given a dataset with $n$ observations, where each observation consists of a feature vector $x_i$ and an associated binary target variable $y_i \in \{0,1\}$, the logistic regression model predicts the probability that $y_i = 1$ given $x_i$. The loss function is:
+    Given a dataset with $m$ observations, where each observation consists of a feature vector $x_i \in \mathbb{R}^d$ and an associated binary target variable $y_i \in \{0,1\}$, the logistic regression model predicts the probability that $y_i = 1$ given $x_i$. The loss function is:
 
     $$
     f(w) = -\sum_{i=1}^n \left[ y_i \log\left(p\left(y_i=1 | x_i; w\right)\right) + \left(1-y_i\right) \log\left(1-p(y_i=1 | x_i; w)\right) \right] + \frac{\mu}{2} \|w\|_2^2
@@ -1010,8 +1011,8 @@ should be made to maximize the profit?
 
     Verify this scaling law empirically by training a shallow MLP on Fashion MNIST.
 
-    1. [5 points] Train the model for 30 epochs with at least 6 different combinations of batch size $B \in \{32, 64, 128, 256, 512, 1024\}$ and corresponding learning rates that follow the linear scaling rule. Record the final test accuracy for each combination.
-    1. [5 points] Plot the final test accuracy as a function of $\eta / B$ (on a log scale). Does the linear scaling rule hold? At what batch sizes does it start to break down? Discuss the results in the context of the critical batch size concept from the lectures.
+    1. [5 points] For each batch size $B \in \{32, 64, 128, 256, 512, 1024\}$, train the model for 30 epochs with several learning rates $\eta$. For each $(B, \eta)$ pair, record the final test accuracy.
+    1. [5 points] Plot the final test accuracy as a function of $B$ (on a log scale) for several fixed values of $\eta / B$. Does the linear scaling rule hold (i.e., is accuracy roughly constant along each $\eta/B = \text{const}$ curve)? At what batch sizes does it start to break down? Discuss the results in the context of the critical batch size concept from the lectures.
 
 1. **Matrix Sensing: GD vs SGD generalization.** [15 points]
 
