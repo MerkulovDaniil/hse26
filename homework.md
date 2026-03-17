@@ -144,18 +144,18 @@ toc: true
         ani = animation.FuncAnimation(fig, update_plot, frames=len(frames), fargs=(img_plot, error_plot, U, S, V, image, errors, ranks, ax1, ax2), interval=50, blit=True)
         ani.save(filename, writer='ffmpeg', fps=8, dpi=300)
 
-        # URL of the image
-        url = ""
+    # URL of the image
+    url = ""
 
-        # Download the image and create the animation
-        image = download_image(url)
-        create_animation(image)
+    # Download the image and create the animation
+    image = download_image(url)
+    create_animation(image)
     ```
 
 
 ### Convergence rates
 
-1. [6 points] Determine (it means to prove the character of convergence if it is convergent) the convergence or divergence of a given sequences
+1. [6 points] Determine (it means to prove the character of convergence if it is convergent) the convergence or divergence of the given sequences
     * $r_{k} = \frac{1}{\sqrt{k+5}}$.
     * $r_{k} = 0.101^k$.
     * $r_{k} = 0.101^{2^k}$.
@@ -418,7 +418,7 @@ toc: true
     **Visualization and Analysis:** [12/22 points]
     * Plot the timing results for the three methods on the same graph. For each method, display error bars corresponding to the standard deviation over the runs.
     * Label the axes clearly (e.g., "Number of Layers" vs. "Computation Time (seconds)") and include a legend indicating which curve corresponds to which method.
-    * Analyze the scaling behavior. Try analytically derive the scaling of the methods and compare it with the experimental results.
+    * Analyze the scaling behavior. Try to analytically derive the scaling of the methods and compare it with the experimental results.
 
 1. [15 points] We can use automatic differentiation not only to calculate necessary gradients but also for tuning hyperparameters of the algorithm like learning rate in gradient descent (with gradient descent 🤯). Suppose, we have the following function $f(x) = \frac{1}{2}\Vert x\Vert^2$, select a random point $x_0 \in \mathbb{B}^{1000} = \{0 \leq x_i \leq 1 \mid \forall i\}$. Consider $10$ steps of the gradient descent starting from the point $x_0$:
     $$
@@ -490,7 +490,7 @@ toc: true
 
 ### Optimality conditions. KKT. Duality
 
-In this section, you can consider either the arbitrary norm or the Euclidian norm if nothing else is specified.
+In this section, you can consider either the arbitrary norm or the Euclidean norm if nothing else is specified.
 
 1. **Toy example** [10 points]
     $$
@@ -690,7 +690,7 @@ should be made to maximize the profit?
 
     To do this, for given parameters $n$ and $\kappa$, randomly generate a quadratic problem of size $n$ with condition number $\kappa$ and run gradient descent on it with some fixed required precision. Measure the number of iterations $T(n, \kappa)$ that the method required for convergence (successful termination based on the stopping criterion).
 
-    Recommendation: The simplest way to generate a random quadratic problem of size $n$ with a given condition number $\kappa$ is as follows. It is convenient to take a diagonal matrix $A \in S_{n}^{++}$ as simply the diagonal matrix $A = \text{Diag}(a)$, whose diagonal elements are randomly generated within $[1, \kappa]$, and where $\min(a) = 1$, $\max(a) = \kappa$. As the vector $b \in \mathbb{R}^n$, you can take a vector with random elements. Diagonal matrices are convenient to consider since they can be efficiently processed with even for large values of $n$.
+    Recommendation: The simplest way to generate a random quadratic problem of size $n$ with a given condition number $\kappa$ is as follows. It is convenient to take a diagonal matrix $A \in \mathbb{S}_{n}^{++}$ as simply the diagonal matrix $A = \text{Diag}(a)$, whose diagonal elements are randomly generated within $[1, \kappa]$, and where $\min(a) = 1$, $\max(a) = \kappa$. As the vector $b \in \mathbb{R}^n$, you can take a vector with random elements. Diagonal matrices are convenient to consider since they can be efficiently processed with even for large values of $n$.
 
     Fix a certain value of the dimensionality $n$. Iterate over different condition numbers $\kappa$ on a grid and plot the dependence of $T(n,\kappa)$ against $\kappa$. Since the quadratic problem is generated randomly each time, repeat this experiment several times. As a result, for a fixed value of $n$, you should obtain a whole family of curves showing the dependence of $T(n, \kappa)$ on $\kappa$. Draw all these curves in the same color for clarity (for example, red).
 
@@ -859,7 +859,7 @@ should be made to maximize the profit?
 
     *Preconditioners*
 
-    We know, that the convergence bound of the CG applied for the problem depends on the condition number of the matrix. Note, that for the problem above we have the matrix $\hat{A}^T \hat{A}$ and the condition number is squared after this operation ($\kappa (X^T X) =  \kappa^2 \left(X \right)$). That is the reason, why we typically need to use *preconditioners* ([read 12. for more details](https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf)) with CG.
+    We know, that the convergence bound of the CG applied to the problem depends on the condition number of the matrix. Note, that for the problem above we have the matrix $\hat{A}^T \hat{A}$ and the condition number is squared after this operation ($\kappa (X^T X) =  \kappa^2 \left(X \right)$). That is the reason, why we typically need to use *preconditioners* ([read 12. for more details](https://www.cs.cmu.edu/~quake-papers/painless-conjugate-gradient.pdf)) with CG.
 
     The general idea of using preconditioners implies switching from solving $Ax = b$ to $MAx = Mb$ with hope, that $\kappa \left( MA\right) \ll \kappa \left( A\right)$ or eigenvalues of $MA$ are better clustered than those of $A$ (note, that matrix $A$ here is for the general case, here we have $\hat{A}^T\hat{A}$ instead).
 
@@ -885,8 +885,8 @@ should be made to maximize the profit?
 
     1. Let $S = \text{diag}(S_{11}, \ldots, S_{mm})$, where $S_{jj}$ are random $\{-1,+1\}$ signs
     2. Let $p \in \mathbb{Z}^+$ be a small positive integer, say $20$ for this problem.
-    3. Let $R \in \{0, 1\}^{n+p \times m}$ be a *row selection matrix*, meaning that each row of $R$ has only 1 non-zero entry, chosen uniformly at random.
-    4. Define $\Phi = R H^{(\text{norm})}_m S \in \mathbb{R}^{n+p \times m}$
+    3. Let $R \in \{0, 1\}^{(n+p) \times m}$ be a *row selection matrix*, meaning that each row of $R$ has only 1 non-zero entry, chosen uniformly at random.
+    4. Define $\Phi = R H^{(\text{norm})}_m S \in \mathbb{R}^{(n+p) \times m}$
 
     We then define the matrix $M$ via its inverse $M^{-1} = \hat{A}^T \Phi^T \Phi \hat{A} \in \mathbb{R}^{n \times n}$.
 
