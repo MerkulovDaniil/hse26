@@ -221,6 +221,11 @@ window.Quarto = {
   <li><a href="#conditional-gradient-methods" id="toc-conditional-gradient-methods" class="nav-link" data-scroll-target="#conditional-gradient-methods">Conditional gradient methods</a></li>
   <li><a href="#subgradient-method" id="toc-subgradient-method" class="nav-link" data-scroll-target="#subgradient-method">Subgradient method</a></li>
   <li><a href="#proximal-gradient-method" id="toc-proximal-gradient-method" class="nav-link" data-scroll-target="#proximal-gradient-method">Proximal gradient method</a></li>
+  <li><a href="#stochastic-gradient-methods" id="toc-stochastic-gradient-methods" class="nav-link" data-scroll-target="#stochastic-gradient-methods">Stochastic gradient methods</a></li>
+  <li><a href="#neural-network-training" id="toc-neural-network-training" class="nav-link" data-scroll-target="#neural-network-training">Neural network training</a></li>
+  <li><a href="#big-models" id="toc-big-models" class="nav-link" data-scroll-target="#big-models">Big models</a></li>
+  <li><a href="#admm-dual-methods" id="toc-admm-dual-methods" class="nav-link" data-scroll-target="#admm-dual-methods">ADMM (Dual methods)</a></li>
+  <li><a href="#bonus-continuous-time-methods" id="toc-bonus-continuous-time-methods" class="nav-link" data-scroll-target="#bonus-continuous-time-methods">Bonus: Continuous time methods</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/MerkulovDaniil/hse26/edit/main/homework.md" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li></ul></div></nav>
     </div>
@@ -769,14 +774,6 @@ w = \text{vec}(W_1, W_2, \ldots, W_L) \in \mathbb{R}^{n},
 &amp; t \succeq 0
 \end{split}
 </span></p></li>
-<li><p>[20 points] Show, that the following problem has a unique solution and find it:</p>
-<p><span class="math display">
-\begin{split}
-&amp; \langle C^{-1}, X\rangle - \log \det X \to \min\limits_{x \in \mathbb{R}^{n \times n} }\\
-\text{s.t. } &amp; \langle Xa, a\rangle \leq 1,
-\end{split}
-</span></p>
-<p>where <span class="math inline">C \in \mathbb{S}^n_{++}, a \in \mathbb{R}^n \neq 0</span>. The answer should not involve inversion of the matrix <span class="math inline">C</span>.</p></li>
 <li><p><strong>Maximum entropy and the softmax.</strong> [15 points] In machine learning, the softmax function plays a central role in classification. Here we derive it from first principles using the maximum entropy principle. Given <span class="math inline">n</span> classes with features <span class="math inline">z_1, \ldots, z_n \in \mathbb{R}</span>, find the probability distribution <span class="math inline">p = (p_1, \ldots, p_n)</span> that maximizes entropy subject to a feature-matching constraint:</p>
 <p><span class="math display">
 \begin{split}
@@ -1127,6 +1124,176 @@ B_n = \{ X \in \mathbb{R}^{n \times n} \mid X_{ij} \ge 0 \;\forall i,j, \quad X 
 <li>[4 points] Write exact update rules for subgradient and proximal gradient methods.</li>
 <li>[6 points] With <span class="math inline">\lambda = 0</span>: find max learning rates, report convergence and sparsity.</li>
 <li>[10 points] Fill convergence table for <span class="math inline">\lambda \in \{10^{-2}, 10^{-3}, 10^{-1}, 1\}</span> and <span class="math inline">\varepsilon \in \{10^{-1}, \ldots, 10^{-5}\}</span>: iterations, sparsity, test accuracy.</li>
+</ol></li>
+</ol>
+</section>
+<section id="stochastic-gradient-methods" class="level3">
+<h3 class="anchored" data-anchor-id="stochastic-gradient-methods">Stochastic gradient methods</h3>
+<ol type="1">
+<li><p><strong>Variance reduction for stochastic gradient methods</strong>. [20 points]</p>
+<p>Implement SAG and SVRG methods and compare them with SGD on two problem types.</p>
+<ol type="1">
+<li>[5 points] Linear least squares (convex, <span class="math inline">\mu = 0</span>): <span class="math inline">m = 50</span>, <span class="math inline">n = 100</span>. Compare SGD (batch size 2 and full batch), SAG (batch size 2), SVRG (batch size 2, epoch length 2). Report convergence curves.</li>
+<li>[5 points] Strongly convex linear least squares (<span class="math inline">\mu = 0.1</span>): same setup, 2000 iterations. Compare convergence behavior.</li>
+<li>[5 points] Convex binary logistic regression (<span class="math inline">\mu = 0</span>): <span class="math inline">m = 100</span>, <span class="math inline">n = 200</span>. Compare SGD (batch 2 and full), SAG (batch 2), SVRG (batch 2, epoch 3). Describe convergence.</li>
+<li>[5 points] Strongly convex logistic regression (<span class="math inline">\mu = 0.1</span>): same setup, 3000 iterations. Describe obtained convergence and compare methods across all settings.</li>
+</ol></li>
+<li><p><strong>Batch size scaling law for SGD.</strong> [10 points]</p>
+<p>In the lectures, we discussed the linear scaling rule: when the batch size <span class="math inline">B</span> is increased by a factor <span class="math inline">k</span>, the learning rate <span class="math inline">\eta</span> should also be increased by a factor <span class="math inline">k</span> to maintain similar training dynamics. This leads to the rule <span class="math inline">\eta / B = \text{const}</span>.</p>
+<p>Verify this scaling law empirically by training a shallow MLP on Fashion MNIST.</p>
+<ol type="1">
+<li>[5 points] Train the model for 30 epochs with at least 6 different combinations of batch size <span class="math inline">B \in \{32, 64, 128, 256, 512, 1024\}</span> and corresponding learning rates that follow the linear scaling rule. Record the final test accuracy for each combination.</li>
+<li>[5 points] Plot the final test accuracy as a function of <span class="math inline">\eta / B</span> (on a log scale). Does the linear scaling rule hold? At what batch sizes does it start to break down? Discuss the results in the context of the critical batch size concept from the lectures.</li>
+</ol></li>
+<li><p><strong>Matrix Sensing: GD vs SGD generalization.</strong> [15 points]</p>
+<p>Let <span class="math inline">X^* \in \mathbb{R}^{n \times n}</span> be an unknown rank-<span class="math inline">r</span> symmetric positive semidefinite (PSD) matrix with unit 2-norm. Given <span class="math inline">m</span> symmetric measurement matrices <span class="math inline">A_1, \ldots, A_m \in \mathbb{R}^{n \times n}</span>, we observe linear measurements <span class="math inline">y_i = \langle A_i, X^* \rangle = \text{trace}(A_i^T X^*)</span>. We parametrize <span class="math inline">X = UU^\top</span> with <span class="math inline">U \in \mathbb{R}^{n \times r}</span> and minimize</p>
+<p><span class="math display">
+L(U) = \frac{1}{m} \sum_{i=1}^m L_i(U), \quad L_i(U) = \frac{1}{2}(y_i - \langle A_i, UU^\top \rangle)^2
+</span></p>
+<p>Note that <span class="math inline">\nabla L_i(U) = -2 \cdot (y_i - \langle A_i, UU^\top \rangle) \cdot A_i U</span>.</p>
+<ol type="1">
+<li>[5 points] Implement GD and SGD for this problem. Generate synthetic data with <span class="math inline">n = 10</span>, <span class="math inline">r = 2</span>, <span class="math inline">m = 200</span>. Compare GD and SGD (with different batch sizes <span class="math inline">B</span>) in terms of <strong>train loss</strong> and <strong>test loss</strong> (on held-out measurements). Report your observations.</li>
+<li>[5 points] Study the effect of <strong>batch size</strong> <span class="math inline">B</span> on generalization: for <span class="math inline">B \in \{1, 5, 10, 50, m\}</span>, plot final train and test loss. Does SGD with small batch size achieve better generalization (lower test loss) than GD?</li>
+<li>[5 points] Study the effect of <strong>problem rank</strong> <span class="math inline">r</span> and <strong>dimension</strong> <span class="math inline">n</span> on the GD-vs-SGD generalization gap. Draw conclusions about when stochastic methods have a clear advantage.</li>
+</ol></li>
+</ol>
+</section>
+<section id="neural-network-training" class="level3">
+<h3 class="anchored" data-anchor-id="neural-network-training">Neural network training</h3>
+<ol type="1">
+<li><p><strong>Deep Chain: how depth affects the optimization landscape.</strong> [15 points]</p>
+<p>Consider the scalar deep linear network loss: <span class="math display">
+L(w) = \frac{1}{2}(w_L w_{L-1} \cdots w_1 - 1)^2,
+</span> where <span class="math inline">w = (w_1, w_2, \ldots, w_L) \in \mathbb{R}^L</span> are scalar parameters.</p>
+<ol type="1">
+<li>[4 points] Compute the gradient <span class="math inline">\nabla L(w)</span> and the Hessian <span class="math inline">\nabla^2 L(w)</span> analytically. Verify your formulas numerically using JAX automatic differentiation.</li>
+<li>[4 points] For several depths <span class="math inline">L \in \{2, 5, 10, 20, 50\}</span>, randomly initialize <span class="math inline">w_i \in [0, 1]</span> and compute the Hessian eigenvalues. What do you observe as depth <span class="math inline">L</span> increases? Plot the condition number of the Hessian as a function of <span class="math inline">L</span>.</li>
+<li>[4 points] Assume all <span class="math inline">w_i \in [0,1]</span> are equal: <span class="math inline">w_i = w</span> for all <span class="math inline">i</span>. Study the Hessian convergence as <span class="math inline">L \to \infty</span>. Show that the Hessian eigenvalues vanish, implying the landscape becomes increasingly flat.</li>
+<li>[3 points] Run gradient descent on this problem for different depths <span class="math inline">L</span>. Compare convergence speed. Relate your observations to the Hessian analysis above.</li>
+</ol></li>
+<li><p><strong>Anomaly detection with neural network.</strong> [30 points]</p>
+<p>In this problem we will try to detect anomalies in time series with neural network. We will train the model to reconstruct normal data and when the reconstruction error for the actual data on trained model is high, we report an anomaly. The default solution uses Adam and after training it can detect 4 out of 5 anomalies. Train and compare several methods on the same problem. For each method try to find hyperparameters which ensure at least 3 out of 5 anomaly detections. Present learning curves and anomaly predictions for each method.</p>
+<ul>
+<li>SGD with momentum [5 points] from optax</li>
+<li>Adadelta [5 points] from optax</li>
+<li>BFGS [10 points] implemented manually</li>
+<li><a href="https://github.com/KellerJordan/Muon">Muon</a> <a href="https://arxiv.org/pdf/2502.16982">optimizer</a> [10 points] implemented manually</li>
+</ul></li>
+</ol>
+</section>
+<section id="big-models" class="level3">
+<h3 class="anchored" data-anchor-id="big-models">Big models</h3>
+<ol type="1">
+<li><p><strong>Fit the largest model you can on a single GPU.</strong> [15 points]</p>
+<p>In this assignment, you will train a language model (LM) using the TinyStories dataset, focusing on optimizing model performance within the constraints of Google Colab’s hardware (~ 16GB VRAM).</p>
+<p>Your objective is to maximize the size of the model without exceeding the available computational resources. You could experiment with various memory optimization techniques, such as (but not limited to):</p>
+<ul>
+<li>Different batch size</li>
+<li>Different optimizer</li>
+<li>Gradient accumulation</li>
+<li>Activation checkpointing</li>
+<li>CPU offloading</li>
+<li>8bit optimizers</li>
+</ul>
+<p>You have to fill the comparison table with your description/observations.</p>
+<div class="table-responsive">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Setup</th>
+<th style="text-align: center;"># of parameters</th>
+<th style="text-align: center;">GPU peak memory, MB</th>
+<th style="text-align: center;">Final eval loss</th>
+<th style="text-align: center;">Batch Size</th>
+<th style="text-align: center;">Time to run 5 epochs, s</th>
+<th style="text-align: center;">Generation example</th>
+<th style="text-align: center;">Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Baseline (OPT-125M)</td>
+<td style="text-align: center;">125 M</td>
+<td style="text-align: center;">9044</td>
+<td style="text-align: center;">1.928</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">442.34</td>
+<td style="text-align: center;"><code>A long time ago...</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Baseline (GPT2-S)</td>
+<td style="text-align: center;">124 M</td>
+<td style="text-align: center;">13016</td>
+<td style="text-align: center;">2.001</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">487.75</td>
+<td style="text-align: center;"><code>A long time ago...</code></td>
+<td style="text-align: center;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For each unique trick for memory optimization, you will get 3 points (maximum 15 points). The maximum grade is bounded with the size of the trained model:</p>
+<ul>
+<li>If the model size you train is <span class="math inline">\leq</span> 125M — maximum of 6 points.</li>
+<li>If the model size you train is 126M <span class="math inline">\leq</span> 350M — maximum of 8 points.</li>
+<li>If the model size you train is 350M <span class="math inline">\leq</span> 1B — maximum of 12 points.</li>
+<li>If you fit 1B model or more — maximum 15 points.</li>
+</ul></li>
+</ol>
+</section>
+<section id="admm-dual-methods" class="level3">
+<h3 class="anchored" data-anchor-id="admm-dual-methods">ADMM (Dual methods)</h3>
+<ol type="1">
+<li><p><strong>Low-Rank Matrix Completion via ADMM</strong> [25 points]</p>
+<p><strong>Background.</strong> In many applications such as recommender systems, computer vision and system identification, the data matrix is approximately low-rank but only a subset of its entries are observed. We are given a partially observed matrix <span class="math inline">M \in \mathbb{R}^{m\times n}</span> and the index set of observed entries <span class="math inline">\Omega</span>. Define the sampling operator <span class="math inline">P_\Omega</span> by <span class="math inline">(P_\Omega(X))_{ij}= X_{ij}</span> if <span class="math inline">(i,j)\in\Omega</span> and <span class="math inline">0</span> otherwise.</p>
+<p>We consider the optimization problem <span class="math display">
+\min_{X\in\mathbb{R}^{m\times n}}\;\frac12\|P_\Omega(X-M)\|_F^2\; + \;\lambda\|X\|_*,
+</span> where <span class="math inline">\|X\|_* = \sum_k \sigma_k(X)</span> is the nuclear norm.</p>
+<ol type="1">
+<li><p><strong>(a) [10 points] Derive a two-block ADMM algorithm.</strong> Introduce an auxiliary variable <span class="math inline">Z</span> and rewrite as <span class="math display">
+\min_{X,Z}\; \frac12\|P_\Omega(Z-M)\|_F^2 + \lambda\|X\|_* \quad\text{s.t. } X-Z = 0.
+</span> Derive explicit closed-form expressions for each ADMM update:</p>
+<ul>
+<li><strong><span class="math inline">X</span>-update:</strong> singular-value soft-thresholding (SVT);</li>
+<li><strong><span class="math inline">Z</span>-update:</strong> projection onto the observed entries;</li>
+<li><strong>dual-variable update.</strong> State a practical stopping rule based on primal and dual residuals.</li>
+</ul></li>
+<li><p><strong>(b) [10 points] Implement the algorithm on synthetic data.</strong> Use: <code>python      import numpy as np      np.random.seed(0)      m, n, r = 50, 40, 3      U = np.random.randn(m, r)      V = np.random.randn(n, r)      M_star = U @ V.T                      # ground-truth low-rank matrix      mask = np.random.rand(m, n) &lt; 0.3     # 30% observations      noise = 0.01 * np.random.randn(m, n)      M = mask * (M_star + noise)      lambda_ = 1 / np.sqrt(max(m, n))</code> Run from <span class="math inline">X^0 = 0</span> for <span class="math inline">\rho \in \{0.1, 1, 10\}</span>. For each <span class="math inline">\rho</span>: plot objective and relative reconstruction error <span class="math inline">\frac{\|X^k - M_\star\|_F}{\|M_\star\|_F}</span> vs iteration; report iterations until <span class="math inline">\max(\|r_p^k\|_F, \|r_d^k\|_F) \le 10^{-3}</span>.</p></li>
+<li><p><strong>(c) [5 points] Discussion.</strong> Compare convergence for three <span class="math inline">\rho</span> values. How does <span class="math inline">\rho</span> influence primal/dual residual decrease? Comment on rank of iterates, data-fit vs nuclear-norm trade-off, and reconstruction quality.</p></li>
+</ol></li>
+</ol>
+</section>
+<section id="bonus-continuous-time-methods" class="level3">
+<h3 class="anchored" data-anchor-id="bonus-continuous-time-methods">Bonus: Continuous time methods</h3>
+<ol type="1">
+<li><p><strong>SGD as a splitting scheme and the importance of batch order</strong> [30 points]</p>
+<p><strong>Background.</strong> The standard GD for minimizing <span class="math inline">f(x) = \frac{1}{n} \sum_{i=1}^n f_i(x)</span> can be viewed as an Euler discretization of the gradient flow ODE. SGD with cycling through batches without replacement can be interpreted as a <em>splitting scheme</em>. For linear least squares <span class="math inline">f(x) = \frac{1}{2n}\|X x - y\|^2</span>, splitting <span class="math inline">X</span> into row blocks <span class="math inline">X_i</span> with projectors <span class="math inline">\Pi_i = I - Q_i Q_i^*</span> (from QR decomposition of <span class="math inline">X_i^T</span>), the asymptotic error of the splitting scheme depends on the product <span class="math inline">\|\prod_{i=1}^m \Pi_{\sigma(i)}\|</span> for permutation <span class="math inline">\sigma</span>.</p>
+<ol type="1">
+<li><p><strong>[5 points] Investigating the bound distribution.</strong> Generate <span class="math inline">X \in \mathbb{R}^{80 \times 20}</span>, split into <span class="math inline">m=8</span> blocks of size <span class="math inline">10 \times 20</span>. Compute projectors <span class="math inline">\Pi_i</span>. Calculate <span class="math inline">E(\sigma) = \|\prod_{j=1}^m \Pi_{\sigma(j)}\|_2</span> for all <span class="math inline">8! = 40320</span> permutations. Plot histogram of <span class="math inline">E(\sigma)</span>.</p></li>
+<li><p><strong>[20 points] Maximizing order dependence.</strong> Modify <span class="math inline">X</span> to create a scenario where the ratio <span class="math inline">\max E(\sigma) / \min E(\sigma)</span> is maximized. <em>Hint: think about how projector null spaces interact.</em> Explain your reasoning. Repeat Task 1 for the modified problem.</p></li>
+<li><p><strong>[5 points] Testing SGD convergence.</strong> Using the adversarial dataset, pick <span class="math inline">\sigma_{\text{low}}</span> and <span class="math inline">\sigma_{\text{high}}</span>. Run deterministic-order SGD (fixed small <span class="math inline">\alpha = 0.01/L</span>) for 50-100 epochs with each ordering. Plot convergence curves. Does the observed speed correlate with <span class="math inline">E(\sigma)</span>?</p></li>
 </ol></li>
 </ol>
 
