@@ -1142,14 +1142,14 @@ B_n = \{ X \in \mathbb{R}^{n \times n} \mid X_{ij} \ge 0 \;\forall i,j, \quad X 
 <p>The Polyak stepsize (1987) is the first truly adaptive method: it converges without knowing the smoothness parameter <span class="math inline">\ell</span>. Consider a convex function <span class="math inline">L</span> with minimum at <span class="math inline">w^*</span>. The Polyak stepsize in the GD update <span class="math inline">w^{k+1} = w^k - \eta_k \nabla L(w^k)</span> is: <span class="math display">
 \eta_k = \frac{L(w^k) - L(w^*)}{\|\nabla L(w^k)\|^2}.
 </span></p>
-<p>Assume bounded gradients: <span class="math inline">\|\nabla L(w)\|^2 \leq G^2</span> for all <span class="math inline">w \in \mathbb{R}^d</span>.</p>
+<p>Assume bounded gradients: <span class="math inline">\|\nabla L(w)\|^2 \leq G^2</span> for all <span class="math inline">w \in \mathbb{R}^d</span>. A modern reference: <a href="https://arxiv.org/abs/2002.10542">arXiv:2002.10542</a>.</p>
 <ol type="1">
-<li>[2 points] Expand <span class="math inline">\frac{1}{2}\|w^{k+1} - w^*\|^2</span> by substituting the GD update. Use convexity to upper-bound the inner product term: <span class="math inline">-\langle \nabla L(w^k), w^k - w^* \rangle \leq -(L(w^k) - L(w^*))</span>.</li>
-<li>[3 points] Show that the Polyak stepsize is the value of <span class="math inline">\eta</span> that <strong>minimizes</strong> the right-hand side. Verify it is a minimizer.</li>
-<li>[3 points] Use the gradient bound to show: <span class="math inline">G^2\|w^{k+1} - w^*\|^2 \leq G^2\|w^k - w^*\|^2 - (L(w^k) - L(w^*))^2</span>.</li>
-<li>[3 points] Telescope and show: <span class="math inline">\min_{i \in [k]} L(w^i) - L(w^*) \leq \frac{G\|w^0 - w^*\|}{\sqrt{k+1}} = O(1/\sqrt{k})</span>.</li>
-<li>[2 points] This rate holds for <em>any</em> convex function — even non-smooth! The catch: you need <span class="math inline">L(w^*)</span>. In what practical setting is this natural? <em>Hint: overparametrized models where <span class="math inline">L(w^*) = 0</span>.</em></li>
-<li>[2 points] Now assume <span class="math inline">\ell</span>-smoothness: <span class="math inline">\|\nabla L(w)\|^2 \leq 2\ell(L(w) - L(w^*))</span>. Show the rate improves to <span class="math inline">O(1/k)</span>. Show that for <span class="math inline">L(w) = \frac{\ell}{2}w^2</span>, the Polyak stepsize equals <span class="math inline">\frac{1}{2\ell}</span> — the method auto-adapts!</li>
+<li>[5 points] Prove that gradient descent with the Polyak stepsize converges at rate <span class="math inline">O(1/\sqrt{k})</span>: <span class="math display">
+\min_{i \in [k]} L(w^i) - L(w^*) \leq \frac{G\|w^0 - w^*\|}{\sqrt{k+1}}.
+</span> <em>Hint: expand <span class="math inline">\|w^{k+1} - w^*\|^2</span>, use convexity, show that the Polyak stepsize minimizes the resulting bound, telescope.</em></li>
+<li>[3 points] This rate holds for <em>any</em> convex function — even non-smooth, without knowing <span class="math inline">\ell</span>! The catch: you need <span class="math inline">L(w^*)</span>. In what practical setting is this natural? When can the assumption <span class="math inline">\|\nabla L(w)\|^2 \leq G^2</span> fail?</li>
+<li>[5 points] Now assume additionally that <span class="math inline">L</span> is <span class="math inline">\ell</span>-smooth. Using the inequality <span class="math inline">\|\nabla L(w)\|^2 \leq 2\ell(L(w) - L(w^*))</span>, prove that the rate improves to <span class="math inline">O(1/k)</span>.</li>
+<li>[2 points] For the quadratic <span class="math inline">L(w) = \frac{\ell}{2}w^2</span>, compute the Polyak stepsize explicitly. Compare it with the optimal GD stepsize <span class="math inline">1/\ell</span>. What do you observe?</li>
 </ol></li>
 <li><p><strong>Adam non-convergence on a quadratic.</strong> [10 points]</p>
 <p>Consider <span class="math inline">L(w) = \frac{\ell}{2}w^2</span>. The simplified Adam (<span class="math inline">\epsilon = 0</span>, <span class="math inline">\beta_1 = 0</span>): <span class="math display">
