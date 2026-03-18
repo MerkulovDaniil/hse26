@@ -1138,6 +1138,31 @@ B_n = \{ X \in \mathbb{R}^{n \times n} \mid X_{ij} \ge 0 \;\forall i,j, \quad X 
 <li>[5 points] Convex binary logistic regression (<span class="math inline">\mu = 0</span>): <span class="math inline">m = 100</span>, <span class="math inline">n = 200</span>. Compare SGD (batch 2 and full), SAG (batch 2), SVRG (batch 2, epoch 3). Describe convergence.</li>
 <li>[5 points] Strongly convex logistic regression (<span class="math inline">\mu = 0.1</span>): same setup, 3000 iterations. Describe obtained convergence and compare methods across all settings.</li>
 </ol></li>
+<li><p><strong>Polyak Stepsize: convergence without knowing the smoothness constant.</strong> [15 points]</p>
+<p>The Polyak stepsize (1987) is the first truly adaptive method: it converges without knowing the smoothness parameter <span class="math inline">\ell</span>. Consider a convex function <span class="math inline">L</span> with minimum at <span class="math inline">w^*</span>. The Polyak stepsize in the GD update <span class="math inline">w^{k+1} = w^k - \eta_k \nabla L(w^k)</span> is: <span class="math display">
+\eta_k = \frac{L(w^k) - L(w^*)}{\|\nabla L(w^k)\|^2}.
+</span></p>
+<p>Assume bounded gradients: <span class="math inline">\|\nabla L(w)\|^2 \leq G^2</span> for all <span class="math inline">w \in \mathbb{R}^d</span>.</p>
+<ol type="1">
+<li>[2 points] Expand <span class="math inline">\frac{1}{2}\|w^{k+1} - w^*\|^2</span> by substituting the GD update. Use convexity to upper-bound the inner product term: <span class="math inline">-\langle \nabla L(w^k), w^k - w^* \rangle \leq -(L(w^k) - L(w^*))</span>.</li>
+<li>[3 points] Show that the Polyak stepsize is the value of <span class="math inline">\eta</span> that <strong>minimizes</strong> the right-hand side. Verify it is a minimizer.</li>
+<li>[3 points] Use the gradient bound to show: <span class="math inline">G^2\|w^{k+1} - w^*\|^2 \leq G^2\|w^k - w^*\|^2 - (L(w^k) - L(w^*))^2</span>.</li>
+<li>[3 points] Telescope and show: <span class="math inline">\min_{i \in [k]} L(w^i) - L(w^*) \leq \frac{G\|w^0 - w^*\|}{\sqrt{k+1}} = O(1/\sqrt{k})</span>.</li>
+<li>[2 points] This rate holds for <em>any</em> convex function — even non-smooth! The catch: you need <span class="math inline">L(w^*)</span>. In what practical setting is this natural? <em>Hint: overparametrized models where <span class="math inline">L(w^*) = 0</span>.</em></li>
+<li>[2 points] Now assume <span class="math inline">\ell</span>-smoothness: <span class="math inline">\|\nabla L(w)\|^2 \leq 2\ell(L(w) - L(w^*))</span>. Show the rate improves to <span class="math inline">O(1/k)</span>. Show that for <span class="math inline">L(w) = \frac{\ell}{2}w^2</span>, the Polyak stepsize equals <span class="math inline">\frac{1}{2\ell}</span> — the method auto-adapts!</li>
+</ol></li>
+<li><p><strong>Adam non-convergence on a quadratic.</strong> [10 points]</p>
+<p>Consider <span class="math inline">L(w) = \frac{\ell}{2}w^2</span>. The simplified Adam (<span class="math inline">\epsilon = 0</span>, <span class="math inline">\beta_1 = 0</span>): <span class="math display">
+\begin{cases}
+w^{k+1} = w^k - \frac{\eta}{\sqrt{v^k}} \ell w^k \\
+v^{k+1} = \beta_2 v^k + (1-\beta_2) \ell^2 (w^{k+1})^2
+\end{cases}
+</span></p>
+<ol type="1">
+<li>[3 points] Write a closed-form for <span class="math inline">v^k</span> using the EMA recursion.</li>
+<li>[3 points] Define <span class="math inline">a^k = 1 - \frac{\eta\ell}{\sqrt{v^k}}</span>. Derive conditions for <span class="math inline">w^{k+1} = w^k</span>. Show convergence requires either <span class="math inline">w^k = 0</span> or <span class="math inline">v^k \to \infty</span>.</li>
+<li>[4 points] Find the <strong>oscillating</strong> fixed point: show <span class="math inline">(w^{k+1})^2 = (w^k)^2</span> with <span class="math inline">a^k = -1</span> gives <span class="math inline">\sqrt{v^k} = \eta\ell/2</span> and <span class="math inline">(w^k)^2 = \eta^2/4</span>. Adam gets stuck oscillating on the simplest quadratic!</li>
+</ol></li>
 <li><p><strong>Batch size scaling law for SGD.</strong> [10 points]</p>
 <p>In the lectures, we discussed the linear scaling rule: when the batch size <span class="math inline">B</span> is increased by a factor <span class="math inline">k</span>, the learning rate <span class="math inline">\eta</span> should also be increased by a factor <span class="math inline">k</span> to maintain similar training dynamics. This leads to the rule <span class="math inline">\eta / B = \text{const}</span>.</p>
 <p>Verify this scaling law empirically by training a shallow MLP on Fashion MNIST.</p>
@@ -1161,6 +1186,14 @@ L(U) = \frac{1}{m} \sum_{i=1}^m L_i(U), \quad L_i(U) = \frac{1}{2}(y_i - \langle
 <section id="neural-network-training" class="level3">
 <h3 class="anchored" data-anchor-id="neural-network-training">Neural network training</h3>
 <ol type="1">
+<li><p><strong>Noise helps choosing minima.</strong> [8 points]</p>
+<p>Consider the nonconvex Styblinski-Tang function: <span class="math display">
+L(w_1, w_2) = \frac{1}{2}\left[w_1^4 - 16w_1^2 + 5w_1 + w_2^4 - 16w_2^2 + 5w_2\right]
+</span></p>
+<ol type="1">
+<li>[4 points] <strong>Without noise:</strong> run GD with stepsize <span class="math inline">0.02</span> from <span class="math inline">(w_1, w_2) = (-1.4, 0.5)</span> for 2000 iterations. Plot the loss landscape contour with GD trajectory overlaid. Plot loss vs iteration.</li>
+<li>[4 points] <strong>With noise:</strong> run <span class="math inline">w^k = w^{k-1} - 0.02 \nabla L(w^k) + 30\epsilon</span>, <span class="math inline">\epsilon \sim \mathcal{N}(0, I)</span> for 2000 iterations. Overlay the noisy trajectory. Does noisy GD explore multiple minima? Compare final losses. <em>This demonstrates why SGD noise helps escape poor local minima.</em></li>
+</ol></li>
 <li><p><strong>Deep Chain: how depth affects the optimization landscape.</strong> [15 points]</p>
 <p>Consider the scalar deep linear network loss: <span class="math display">
 L(w) = \frac{1}{2}(w_L w_{L-1} \cdots w_1 - 1)^2,
