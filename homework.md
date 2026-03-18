@@ -1012,14 +1012,16 @@ should be made to maximize the profit?
     \eta_k = \frac{L(w^k) - L(w^*)}{\|\nabla L(w^k)\|^2}.
     $$
 
-    Assume bounded gradients: $\|\nabla L(w)\|^2 \leq G^2$ for all $w \in \mathbb{R}^d$.
+    Assume bounded gradients: $\|\nabla L(w)\|^2 \leq G^2$ for all $w \in \mathbb{R}^d$. A modern reference: [arXiv:2002.10542](https://arxiv.org/abs/2002.10542).
 
-    1. [2 points] Expand $\frac{1}{2}\|w^{k+1} - w^*\|^2$ by substituting the GD update. Use convexity to upper-bound the inner product term: $-\langle \nabla L(w^k), w^k - w^* \rangle \leq -(L(w^k) - L(w^*))$.
-    1. [3 points] Show that the Polyak stepsize is the value of $\eta$ that **minimizes** the right-hand side. Verify it is a minimizer.
-    1. [3 points] Use the gradient bound to show: $G^2\|w^{k+1} - w^*\|^2 \leq G^2\|w^k - w^*\|^2 - (L(w^k) - L(w^*))^2$.
-    1. [3 points] Telescope and show: $\min_{i \in [k]} L(w^i) - L(w^*) \leq \frac{G\|w^0 - w^*\|}{\sqrt{k+1}} = O(1/\sqrt{k})$.
-    1. [2 points] This rate holds for *any* convex function — even non-smooth! The catch: you need $L(w^*)$. In what practical setting is this natural? *Hint: overparametrized models where $L(w^*) = 0$.*
-    1. [2 points] Now assume $\ell$-smoothness: $\|\nabla L(w)\|^2 \leq 2\ell(L(w) - L(w^*))$. Show the rate improves to $O(1/k)$. Show that for $L(w) = \frac{\ell}{2}w^2$, the Polyak stepsize equals $\frac{1}{2\ell}$ — the method auto-adapts!
+    1. [5 points] Prove that gradient descent with the Polyak stepsize converges at rate $O(1/\sqrt{k})$:
+        $$
+        \min_{i \in [k]} L(w^i) - L(w^*) \leq \frac{G\|w^0 - w^*\|}{\sqrt{k+1}}.
+        $$
+        *Hint: expand $\|w^{k+1} - w^*\|^2$, use convexity, show that the Polyak stepsize minimizes the resulting bound, telescope.*
+    1. [3 points] This rate holds for *any* convex function — even non-smooth, without knowing $\ell$! The catch: you need $L(w^*)$. In what practical setting is this natural? When can the assumption $\|\nabla L(w)\|^2 \leq G^2$ fail?
+    1. [5 points] Now assume additionally that $L$ is $\ell$-smooth. Using the inequality $\|\nabla L(w)\|^2 \leq 2\ell(L(w) - L(w^*))$, prove that the rate improves to $O(1/k)$.
+    1. [2 points] For the quadratic $L(w) = \frac{\ell}{2}w^2$, compute the Polyak stepsize explicitly. Compare it with the optimal GD stepsize $1/\ell$. What do you observe?
 
 1. **Adam non-convergence on a quadratic.** [10 points]
 
