@@ -1005,6 +1005,36 @@ should be made to maximize the profit?
     1. [5 points] Convex binary logistic regression ($\mu = 0$): $m = 100$, $n = 200$. Compare SGD (batch 2 and full), SAG (batch 2), SVRG (batch 2, epoch 3). Describe convergence.
     1. [5 points] Strongly convex logistic regression ($\mu = 0.1$): same setup, 3000 iterations. Describe obtained convergence and compare methods across all settings.
 
+1. **Polyak Stepsize: convergence without knowing the smoothness constant.** [15 points]
+
+    The Polyak stepsize (1987) is the first truly adaptive method: it converges without knowing the smoothness parameter $\ell$. Consider a convex function $L$ with minimum at $w^*$. The Polyak stepsize in the GD update $w^{k+1} = w^k - \eta_k \nabla L(w^k)$ is:
+    $$
+    \eta_k = \frac{L(w^k) - L(w^*)}{\|\nabla L(w^k)\|^2}.
+    $$
+
+    Assume bounded gradients: $\|\nabla L(w)\|^2 \leq G^2$ for all $w \in \mathbb{R}^d$.
+
+    1. [2 points] Expand $\frac{1}{2}\|w^{k+1} - w^*\|^2$ by substituting the GD update. Use convexity to upper-bound the inner product term: $-\langle \nabla L(w^k), w^k - w^* \rangle \leq -(L(w^k) - L(w^*))$.
+    1. [3 points] Show that the Polyak stepsize is the value of $\eta$ that **minimizes** the right-hand side. Verify it is a minimizer.
+    1. [3 points] Use the gradient bound to show: $G^2\|w^{k+1} - w^*\|^2 \leq G^2\|w^k - w^*\|^2 - (L(w^k) - L(w^*))^2$.
+    1. [3 points] Telescope and show: $\min_{i \in [k]} L(w^i) - L(w^*) \leq \frac{G\|w^0 - w^*\|}{\sqrt{k+1}} = O(1/\sqrt{k})$.
+    1. [2 points] This rate holds for *any* convex function — even non-smooth! The catch: you need $L(w^*)$. In what practical setting is this natural? *Hint: overparametrized models where $L(w^*) = 0$.*
+    1. [2 points] Now assume $\ell$-smoothness: $\|\nabla L(w)\|^2 \leq 2\ell(L(w) - L(w^*))$. Show the rate improves to $O(1/k)$. Show that for $L(w) = \frac{\ell}{2}w^2$, the Polyak stepsize equals $\frac{1}{2\ell}$ — the method auto-adapts!
+
+1. **Adam non-convergence on a quadratic.** [10 points]
+
+    Consider $L(w) = \frac{\ell}{2}w^2$. The simplified Adam ($\epsilon = 0$, $\beta_1 = 0$):
+    $$
+    \begin{cases}
+    w^{k+1} = w^k - \frac{\eta}{\sqrt{v^k}} \ell w^k \\
+    v^{k+1} = \beta_2 v^k + (1-\beta_2) \ell^2 (w^{k+1})^2
+    \end{cases}
+    $$
+
+    1. [3 points] Write a closed-form for $v^k$ using the EMA recursion.
+    1. [3 points] Define $a^k = 1 - \frac{\eta\ell}{\sqrt{v^k}}$. Derive conditions for $w^{k+1} = w^k$. Show convergence requires either $w^k = 0$ or $v^k \to \infty$.
+    1. [4 points] Find the **oscillating** fixed point: show $(w^{k+1})^2 = (w^k)^2$ with $a^k = -1$ gives $\sqrt{v^k} = \eta\ell/2$ and $(w^k)^2 = \eta^2/4$. Adam gets stuck oscillating on the simplest quadratic!
+
 1. **Batch size scaling law for SGD.** [10 points]
 
     In the lectures, we discussed the linear scaling rule: when the batch size $B$ is increased by a factor $k$, the learning rate $\eta$ should also be increased by a factor $k$ to maintain similar training dynamics. This leads to the rule $\eta / B = \text{const}$.
@@ -1029,6 +1059,16 @@ should be made to maximize the profit?
     1. [5 points] Study the effect of **problem rank** $r$ and **dimension** $n$ on the GD-vs-SGD generalization gap. Draw conclusions about when stochastic methods have a clear advantage.
 
 ### Neural network training
+
+1. **Noise helps choosing minima.** [8 points]
+
+    Consider the nonconvex Styblinski-Tang function:
+    $$
+    L(w_1, w_2) = \frac{1}{2}\left[w_1^4 - 16w_1^2 + 5w_1 + w_2^4 - 16w_2^2 + 5w_2\right]
+    $$
+
+    1. [4 points] **Without noise:** run GD with stepsize $0.02$ from $(w_1, w_2) = (-1.4, 0.5)$ for 2000 iterations. Plot the loss landscape contour with GD trajectory overlaid. Plot loss vs iteration.
+    1. [4 points] **With noise:** run $w^k = w^{k-1} - 0.02 \nabla L(w^k) + 30\epsilon$, $\epsilon \sim \mathcal{N}(0, I)$ for 2000 iterations. Overlay the noisy trajectory. Does noisy GD explore multiple minima? Compare final losses. *This demonstrates why SGD noise helps escape poor local minima.*
 
 1. **Deep Chain: how depth affects the optimization landscape.** [15 points]
 
