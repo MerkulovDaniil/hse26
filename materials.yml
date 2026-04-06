@@ -37,7 +37,6 @@
   seminar: /seminars/5.pdf
   youtube: https://youtu.be/w9ySZNm1YzE
   download: https://disk.360.yandex.ru/i/ngfY3IeSHW1tFg
-  test: /tests/5.html
 
 - title: Функция Лагранжа. Задачи с ограничениями-равенствами. Теорема Каруша - Куна - Таккера. Двойственность.
   number: 6
@@ -46,7 +45,6 @@
   seminar: /seminars/6.pdf
   youtube: https://youtu.be/FOFE_IObfKM
   download: https://disk.360.yandex.com/i/px_fVdFxG7kvTQ
-  test: /tests/6.html
 
 - title: Задача линейного программирования. Симплекс метод.
   number: 7
@@ -54,8 +52,7 @@
   notes: /notes/7.pdf
   seminar: /seminars/7.pdf
   youtube: https://youtu.be/vQKRY-VfB3E
-  download:
-  test: /tests/7.html
+  download: https://disk.360.yandex.ru/i/PdYZkN-1ctr8fQ
 
 - title: Градиентный спуск. Теоремы сходимости в гладком случае (выпуклые, сильно выпуклые, PL). Верхние и нижние оценки сходимости.
   number: 8
@@ -63,8 +60,7 @@
   # notes: /notes/8.pdf
   seminar: /seminars/8.pdf
   youtube:
-  download:
-  test: /tests/8.html
+  download: 
 
 - title: "Ускоренные градиентные методы. Метод Поляка, Нестерова."
   number: 9
@@ -72,8 +68,7 @@
   # notes: /notes/9.pdf
   seminar: /seminars/9.pdf
   youtube:
-  download:
-  test: /tests/9.html
+  download: https://disk.360.yandex.ru/i/d43FB6DX0AkZYA
 
 - title: Метод сопряженных градиентов.
   number: 10
