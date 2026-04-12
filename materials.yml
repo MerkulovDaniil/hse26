@@ -60,7 +60,7 @@
   # notes: /notes/8.pdf
   seminar: /seminars/8.pdf
   youtube:
-  download: 
+  download:
 
 - title: "Ускоренные градиентные методы. Метод Поляка, Нестерова."
   number: 9
@@ -86,7 +86,7 @@
   youtube:
   download:
 
-- title: Градиентные методы в условных задачах оптимизации - метод проекции градиента. Метод Франк - Вульфа. Идея метода зеркального спуска.
+- title: "Градиентные методы для задач с ограничениями. Метод проекции градиента. Метод Франк-Вульфа. Метод зеркального спуска."
   number: 12
   materials: /lectures/12.pdf
   # notes: /notes/12.pdf
@@ -94,7 +94,7 @@
   youtube:
   download:
 
-- title: Субградиент. Субдифференциал. Субградиентный спуск. Теоремы сходимости в негладком случае. Особенности работы градиентного метода в практических негладких задачах.
+- title: Прямо-двойственные методы. PDHG
   number: 13
   materials: /lectures/13.pdf
   # notes: /notes/13.pdf
@@ -102,7 +102,7 @@
   youtube:
   download:
 
-- title: Проксимальный градиентный метод.
+- title: Метод Франк-Вульфа (Условный градиент)
   number: 14
   materials: /lectures/14.pdf
   # notes: /notes/14.pdf
@@ -110,7 +110,7 @@
   youtube:
   download:
 
-- title: "Стохастический градиентный спуск."
+- title: Методы второго порядка
   number: 15
   materials: /lectures/15.pdf
   # notes: /notes/15.pdf
@@ -118,7 +118,7 @@
   youtube:
   download:
 
-- title: "Методы редукции дисперсии: SAG, SVRG, SAGA. Адаптивные стохастические градиентные методы."
+- title: Невыпуклая оптимизация
   number: 16
   materials: /lectures/16.pdf
   # notes: /notes/16.pdf
@@ -126,7 +126,7 @@
   youtube:
   download:
 
-- title: "Обучение нейронных сетей с точки зрения методов оптимизации. Обобщающая способность моделей машинного обучения. Double Descent. Grokking. Mode connectivity."
+- title: Распределённая и федеративная оптимизация
   number: 17
   materials: /lectures/17.pdf
   # notes: /notes/17.pdf
@@ -134,18 +134,10 @@
   youtube:
   download:
 
-- title: "Вопросы обучения больших моделей. Lars, Lamb. Learning rate schedulers. Warm-up. MultiGPU training."
+- title: Синтез курса. Современные направления.
   number: 18
   materials: /lectures/18.pdf
   # notes: /notes/18.pdf
   seminar: /seminars/18.pdf
-  youtube:
-  download:
-
-- title: Введение в двойственные методы оптимизации. Метод двойственного градиентного подъёма. Метод модифицированной функции Лагранжа. ADMM.
-  number: 19
-  materials: /lectures/19.pdf
-  # notes: /notes/19.pdf
-  seminar: /seminars/19.pdf
   youtube:
   download:
