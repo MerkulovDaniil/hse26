@@ -520,11 +520,11 @@ In this section, you can consider either the arbitrary norm or the Euclidean nor
     $$
     where we can define $\delta x = x - x_k$ and $g = \nabla f(x_k)$. Thus, the expansion can be rewritten as:
     $$
-    f^I_{x_k}(\delta x) = f(x_k) + g^\top \delta x.
+    f^I_{x_k}(x_k + \delta x) = f(x_k) + g^\top \delta x.
     $$
     Suppose, we would like to design the family of optimization methods that will be defined as:
     $$
-    x_{k+1} = \text{arg}\min_{\delta x} \left\{f^I_{x_k}(\delta x) + \frac{\lambda}{2} \|\delta x\|^2\right\},
+    x_{k+1} = x_k \text{arg}\min_{\delta x} \left\{f^I_{x_k}(x_k + \delta x) + \frac{\lambda}{2} \|\delta x\|^2\right\},
     $$
     where $\lambda > 0$ is a parameter.
 
