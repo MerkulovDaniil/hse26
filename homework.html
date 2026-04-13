@@ -747,9 +747,9 @@ f(\lambda x_1 + (1 - \lambda)x_2) \le \lambda f(x_1) + (1 - \lambda)f(x_2) - \fr
 <li><p>Consider a smooth convex function <span class="math inline">f(x)</span> at some point <span class="math inline">x_k</span>. One can define the first-order Taylor expansion of the function as: <span class="math display">
 f^I_{x_k}(x) = f(x_k) + \nabla f(x_k)^\top (x - x_k),
 </span> where we can define <span class="math inline">\delta x = x - x_k</span> and <span class="math inline">g = \nabla f(x_k)</span>. Thus, the expansion can be rewritten as: <span class="math display">
-f^I_{x_k}(\delta x) = f(x_k) + g^\top \delta x.
+f^I_{x_k}(x_k + \delta x) = f(x_k) + g^\top \delta x.
 </span> Suppose, we would like to design the family of optimization methods that will be defined as: <span class="math display">
-x_{k+1} = \text{arg}\min_{\delta x} \left\{f^I_{x_k}(\delta x) + \frac{\lambda}{2} \|\delta x\|^2\right\},
+x_{k+1} = x_k + \text{arg}\min_{\delta x} \left\{f^I_{x_k}(x_k + \delta x) + \frac{\lambda}{2} \|\delta x\|^2\right\},
 </span> where <span class="math inline">\lambda &gt; 0</span> is a parameter.</p>
 <ol type="1">
 <li>[5 points] Show, that this method is equivalent to the gradient descent method with the choice of Euclidean norm of the vector <span class="math inline">\|\delta x\| = \|\delta x\|_2</span>. Find the corresponding learning rate.</li>
