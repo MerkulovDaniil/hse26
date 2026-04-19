@@ -110,7 +110,7 @@
   youtube:
   download:
 
-- title: Методы второго порядка
+- title: "Субградиент. Субдифференциал. Субградиентный спуск. Теоремы сходимости в негладком случае."
   number: 15
   materials: /lectures/15.pdf
   # notes: /notes/15.pdf
@@ -118,7 +118,7 @@
   youtube:
   download:
 
-- title: Невыпуклая оптимизация
+- title: "Проксимальный градиентный метод."
   number: 16
   materials: /lectures/16.pdf
   # notes: /notes/16.pdf
@@ -126,7 +126,7 @@
   youtube:
   download:
 
-- title: Распределённая и федеративная оптимизация
+- title: "Стохастический градиентный спуск."
   number: 17
   materials: /lectures/17.pdf
   # notes: /notes/17.pdf
@@ -134,10 +134,18 @@
   youtube:
   download:
 
-- title: Синтез курса. Современные направления.
+- title: "Методы редукции дисперсии: SAG, SVRG, SAGA. Адаптивные стохастические градиентные методы."
   number: 18
   materials: /lectures/18.pdf
   # notes: /notes/18.pdf
   seminar: /seminars/18.pdf
+  youtube:
+  download:
+
+- title: "Обучение нейронных сетей с точки зрения методов оптимизации. Обобщающая способность моделей машинного обучения. Double Descent. Grokking. Вопросы обучения больших моделей."
+  number: 19
+  materials: /lectures/19.pdf
+  # notes: /notes/19.pdf
+  seminar: /seminars/19.pdf
   youtube:
   download:
