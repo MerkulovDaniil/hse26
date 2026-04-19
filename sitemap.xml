@@ -2,66 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://hse26.fmin.xyz/notebooks/s1_lora_trump.html</loc>
-    <lastmod>2026-04-13T12:45:42.880Z</lastmod>
+    <lastmod>2026-04-19T18:33:22.516Z</lastmod>
   </url>
   <url>
     <loc>https://hse26.fmin.xyz/notebooks/s10_ex2.html</loc>
-    <lastmod>2026-04-13T12:45:42.877Z</lastmod>
+    <lastmod>2026-04-19T18:33:22.512Z</lastmod>
   </url>
   <url>
-    <loc>https://hse26.fmin.xyz/notebooks/s10_pathological_example.html</loc>
-    <lastmod>2026-04-13T12:45:42.878Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hse26.fmin.xyz/notebooks/s2_brent.html</loc>
-    <lastmod>2026-04-13T12:45:42.881Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hse26.fmin.xyz/notebooks/s13_svm_hingeloss.html</loc>
-    <lastmod>2026-04-13T12:45:42.880Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hse26.fmin.xyz/notebooks/s5_probability_simplex_projection.html</loc>
-    <lastmod>2026-04-13T12:45:42.883Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hse26.fmin.xyz/homework.html</loc>
-    <lastmod>2026-04-13T12:45:42.874Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hse26.fmin.xyz/program.html</loc>
-    <lastmod>2026-04-13T12:45:43.181Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hse26.fmin.xyz/projects.html</loc>
-    <lastmod>2026-04-13T12:45:43.181Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hse26.fmin.xyz/index.html</loc>
-    <lastmod>2026-04-13T12:45:42.874Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hse26.fmin.xyz/notebooks/s9_hobbit_village.html</loc>
-    <lastmod>2026-04-13T12:45:42.884Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hse26.fmin.xyz/notebooks/s4_benchmarx_convex.html</loc>
-    <lastmod>2026-04-13T12:45:42.882Z</lastmod>
-  </url>
-  <url>
-    <loc>https://hse26.fmin.xyz/notebooks/s11_quasinewton_cg_gd.html</loc>
-    <lastmod>2026-04-13T12:45:42.879Z</lastmod>
+    <loc>https://hse26.fmin.xyz/notebooks/benchmarx_subgrad.html</loc>
+    <lastmod>2026-04-19T18:33:22.511Z</lastmod>
   </url>
   <url>
     <loc>https://hse26.fmin.xyz/notebooks/s10_ex1.html</loc>
-    <lastmod>2026-04-13T12:45:42.877Z</lastmod>
+    <lastmod>2026-04-19T18:33:22.511Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/notebooks/s11_quasinewton_cg_gd.html</loc>
+    <lastmod>2026-04-19T18:33:22.514Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/notebooks/s4_benchmarx_convex.html</loc>
+    <lastmod>2026-04-19T18:33:22.521Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/notebooks/s9_hobbit_village.html</loc>
+    <lastmod>2026-04-19T18:33:22.528Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/homework.html</loc>
+    <lastmod>2026-04-19T18:33:22.497Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/program.html</loc>
+    <lastmod>2026-04-19T18:33:23.307Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/projects.html</loc>
+    <lastmod>2026-04-19T18:33:23.307Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/index.html</loc>
+    <lastmod>2026-04-19T18:33:22.497Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/notebooks/s5_probability_simplex_projection.html</loc>
+    <lastmod>2026-04-19T18:33:22.524Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/notebooks/s13_svm_hingeloss.html</loc>
+    <lastmod>2026-04-19T18:33:22.516Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/notebooks/s2_brent.html</loc>
+    <lastmod>2026-04-19T18:33:22.517Z</lastmod>
+  </url>
+  <url>
+    <loc>https://hse26.fmin.xyz/notebooks/s10_pathological_example.html</loc>
+    <lastmod>2026-04-19T18:33:22.512Z</lastmod>
   </url>
   <url>
     <loc>https://hse26.fmin.xyz/notebooks/s9_agd_problems.html</loc>
-    <lastmod>2026-04-13T12:45:42.884Z</lastmod>
+    <lastmod>2026-04-19T18:33:22.527Z</lastmod>
   </url>
   <url>
     <loc>https://hse26.fmin.xyz/notebooks/s_17_muon.html</loc>
-    <lastmod>2026-04-13T12:45:42.884Z</lastmod>
+    <lastmod>2026-04-19T18:33:22.528Z</lastmod>
   </url>
 </urlset>
