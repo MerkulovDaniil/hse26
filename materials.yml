@@ -94,7 +94,7 @@
   youtube:
   download:
 
-- title: Прямо-двойственные методы. PDHG
+- title: "Субградиент. Субдифференциал. Субградиентный спуск. Теоремы сходимости в негладком случае. Особенности работы градиентного метода в практических негладких задачах."
   number: 13
   materials: /lectures/13.pdf
   # notes: /notes/13.pdf
@@ -102,7 +102,7 @@
   youtube:
   download:
 
-- title: Метод Франк-Вульфа (Условный градиент)
+- title: "Проксимальный градиентный метод."
   number: 14
   materials: /lectures/14.pdf
   # notes: /notes/14.pdf
@@ -110,7 +110,7 @@
   youtube:
   download:
 
-- title: "Субградиент. Субдифференциал. Субградиентный спуск. Теоремы сходимости в негладком случае."
+- title: "Стохастический градиентный спуск."
   number: 15
   materials: /lectures/15.pdf
   # notes: /notes/15.pdf
@@ -118,7 +118,7 @@
   youtube:
   download:
 
-- title: "Проксимальный градиентный метод."
+- title: "Методы редукции дисперсии: SAG, SVRG, SAGA. Адаптивные стохастические градиентные методы."
   number: 16
   materials: /lectures/16.pdf
   # notes: /notes/16.pdf
@@ -126,7 +126,7 @@
   youtube:
   download:
 
-- title: "Стохастический градиентный спуск."
+- title: "Методы матричной оптимизации на основе ортогонализации. Muon, Neon."
   number: 17
   materials: /lectures/17.pdf
   # notes: /notes/17.pdf
@@ -134,7 +134,7 @@
   youtube:
   download:
 
-- title: "Методы редукции дисперсии: SAG, SVRG, SAGA. Адаптивные стохастические градиентные методы."
+- title: "Обучение нейронных сетей с точки зрения методов оптимизации. Обобщающая способность моделей машинного обучения. Double Descent. Grokking. Mode connectivity."
   number: 18
   materials: /lectures/18.pdf
   # notes: /notes/18.pdf
@@ -142,10 +142,18 @@
   youtube:
   download:
 
-- title: "Обучение нейронных сетей с точки зрения методов оптимизации. Обобщающая способность моделей машинного обучения. Double Descent. Grokking. Вопросы обучения больших моделей."
+- title: "Вопросы обучения больших моделей. Lars, Lamb. Learning rate schedulers. Warm-up. MultiGPU training."
   number: 19
   materials: /lectures/19.pdf
   # notes: /notes/19.pdf
   seminar: /seminars/19.pdf
+  youtube:
+  download:
+
+- title: "Введение в двойственные методы оптимизации. Метод двойственного градиентного подъёма. Метод модифицированной функции Лагранжа. ADMM."
+  number: 20
+  materials: /lectures/20.pdf
+  # notes: /notes/20.pdf
+  seminar: /seminars/20.pdf
   youtube:
   download:
