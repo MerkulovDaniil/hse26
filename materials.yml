@@ -134,7 +134,7 @@
   youtube:
   download:
 
-- title: "Вопросы обучения больших моделей. Lars, Lamb. Learning rate schedulers. Warm-up. MultiGPU training."
+- title: "Вопросы обучения больших моделей. Lars, Lamb. Learning rate schedulers. Warm-up. MultiGPU training. Обобщающая способность. Double Descent. Grokking."
   number: 18
   materials: /lectures/18.pdf
   # notes: /notes/18.pdf
