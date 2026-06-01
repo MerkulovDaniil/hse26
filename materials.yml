@@ -144,7 +144,7 @@
 
 - title: Введение в двойственные методы оптимизации. Метод двойственного градиентного подъёма. Метод модифицированной функции Лагранжа. ADMM.
   number: 19
-  materials: /lectures/19.pdf
+  # materials: /lectures/19.pdf (лекция в разработке)
   # notes: /notes/19.pdf
   seminar: /seminars/19.pdf
   youtube:
