@@ -1033,7 +1033,9 @@ should be made to maximize the profit?
     \end{cases}
     $$
 
-    1. [3 points] Write a closed-form for $v^k$ using the EMA recursion.
+    Here $w^0 \neq 0$ and $v^0 > 0$ are arbitrary (the result doesn't depend on them).
+
+    1. [3 points] Write $v^k$ in closed form (unroll the EMA into a $\beta_2$-weighted sum of past $(w^j)^2$; the $w^j$ stay inside). Notice that $\sqrt{v^k} \propto |w|$.
     1. [3 points] Define $a^k = 1 - \frac{\eta\ell}{\sqrt{v^k}}$. Derive conditions for $w^{k+1} = w^k$. Show convergence requires either $w^k = 0$ or $v^k \to \infty$.
     1. [4 points] Find the **oscillating** fixed point: show $(w^{k+1})^2 = (w^k)^2$ with $a^k = -1$ gives $\sqrt{v^k} = \eta\ell/2$ and $(w^k)^2 = \eta^2/4$. Adam gets stuck oscillating on the simplest quadratic!
 
