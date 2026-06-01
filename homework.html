@@ -1164,8 +1164,9 @@ w^{k+1} = w^k - \frac{\eta}{\sqrt{v^k}} \ell w^k \\
 v^{k+1} = \beta_2 v^k + (1-\beta_2) \ell^2 (w^{k+1})^2
 \end{cases}
 </span></p>
+<p>Here <span class="math inline">w^0 \neq 0</span> and <span class="math inline">v^0 &gt; 0</span> are arbitrary (the result doesn’t depend on them).</p>
 <ol type="1">
-<li>[3 points] Write a closed-form for <span class="math inline">v^k</span> using the EMA recursion.</li>
+<li>[3 points] Write <span class="math inline">v^k</span> in closed form (unroll the EMA into a <span class="math inline">\beta_2</span>-weighted sum of past <span class="math inline">(w^j)^2</span>; the <span class="math inline">w^j</span> stay inside). Notice that <span class="math inline">\sqrt{v^k} \propto |w|</span>.</li>
 <li>[3 points] Define <span class="math inline">a^k = 1 - \frac{\eta\ell}{\sqrt{v^k}}</span>. Derive conditions for <span class="math inline">w^{k+1} = w^k</span>. Show convergence requires either <span class="math inline">w^k = 0</span> or <span class="math inline">v^k \to \infty</span>.</li>
 <li>[4 points] Find the <strong>oscillating</strong> fixed point: show <span class="math inline">(w^{k+1})^2 = (w^k)^2</span> with <span class="math inline">a^k = -1</span> gives <span class="math inline">\sqrt{v^k} = \eta\ell/2</span> and <span class="math inline">(w^k)^2 = \eta^2/4</span>. Adam gets stuck oscillating on the simplest quadratic!</li>
 </ol></li>
