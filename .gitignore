@@ -21,3 +21,8 @@ _site/
 *.synctex(busy)
 **/.DS_Store
 **/*.quarto_ipynb
+
+# exam: ключи не коммитим, PDF собирает CI
+exam/exam_keys.qmd
+exam/exam_keys.pdf
+exam/exam.pdf
